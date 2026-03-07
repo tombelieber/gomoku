@@ -34,14 +34,14 @@ export function GameControls() {
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        gap: "clamp(0.5rem, 2vw, 1rem)",
+        gap: "clamp(6px, 1.5vw, 10px)",
         padding: "clamp(4px, 1vw, 8px) 0",
       }}
     >
       {/* Status */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flex: 1, minWidth: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}>
         <span
           style={{
             display: "inline-block",
@@ -76,17 +76,18 @@ export function GameControls() {
       </div>
 
       {/* Action buttons */}
-      <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0 }}>
+      <div style={{ display: "flex", gap: "0.5rem", width: "100%", maxWidth: 320 }}>
         <button
           onClick={undo}
           disabled={isThinking || !!winner}
           style={{
+            flex: 1,
             fontFamily: "'Noto Serif TC', serif",
-            fontSize: "0.85rem",
-            padding: "6px 14px",
+            fontSize: "1rem",
+            padding: "10px 0",
             background: "var(--paper-dark)",
             color: "var(--ink-light)",
-            borderRadius: 4,
+            borderRadius: 8,
             border: "none",
             letterSpacing: "0.05em",
             cursor: isThinking || !!winner ? "default" : "pointer",
@@ -99,12 +100,13 @@ export function GameControls() {
         <button
           onClick={reset}
           style={{
+            flex: 1,
             fontFamily: "'Noto Serif TC', serif",
-            fontSize: "0.85rem",
-            padding: "6px 14px",
+            fontSize: "1rem",
+            padding: "10px 0",
             background: "var(--paper-dark)",
             color: "var(--ink-light)",
-            borderRadius: 4,
+            borderRadius: 8,
             border: "none",
             letterSpacing: "0.05em",
             cursor: "pointer",
