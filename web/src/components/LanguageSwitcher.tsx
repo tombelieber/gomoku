@@ -11,8 +11,8 @@ export function LanguageSwitcher() {
       aria-label="Language"
       style={{
         fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
-        fontSize: "0.7rem",
-        padding: "4px 8px",
+        fontSize: "1rem",
+        padding: "10px 14px",
         borderRadius: 12,
         border: "1px solid rgba(139,69,19,0.15)",
         background: "rgba(139,69,19,0.04)",
@@ -24,8 +24,8 @@ export function LanguageSwitcher() {
         backgroundImage:
           "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 2l4 4 4-4' fill='none' stroke='%238B4513' stroke-width='1.5'/%3E%3C/svg%3E\")",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "right 8px center",
-        paddingRight: 22,
+        backgroundPosition: "right 10px center",
+        paddingRight: 28,
         transition: "border-color 0.2s, background 0.2s",
       }}
       onMouseEnter={(e) => {

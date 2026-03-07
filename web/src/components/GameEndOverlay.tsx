@@ -130,9 +130,9 @@ export function GameEndOverlay() {
       <div
         style={{
           fontFamily: "'Noto Serif TC', serif",
-          fontSize: "0.75rem",
+          fontSize: "0.9rem",
           color: "var(--paper)",
-          opacity: 0.45,
+          opacity: 0.5,
           marginTop: "1.5rem",
           letterSpacing: "0.15em",
           animation: "fadeIn 0.6s ease 1s both",

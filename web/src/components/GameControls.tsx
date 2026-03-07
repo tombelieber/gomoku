@@ -3,6 +3,8 @@ import { useI18n } from "@/i18n/store";
 
 export function GameControls() {
   const {
+    difficulty,
+    setDifficulty,
     reset,
     undo,
     winner,
@@ -23,6 +25,8 @@ export function GameControls() {
 
   const isBlack = currentPlayer === "black";
   const stoneColor = isBlack ? "#1a1a1a" : "#f5f5f5";
+
+  const difficultyLabels = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard];
 
   let statusText = "";
   if (winner === "black") statusText = t.game.status.blackWins;
@@ -81,6 +85,53 @@ export function GameControls() {
             />
           ))}
         </div>
+      </div>
+
+      {/* Difficulty buttons */}
+      <div
+        style={{
+          display: "flex",
+          gap: "0.6rem",
+          animation: "fadeIn 0.6s ease 0.6s both",
+        }}
+      >
+        {difficultyLabels.map((label, i) => {
+          const isActive = difficulty === i;
+          return (
+            <button
+              key={i}
+              onClick={() => {
+                setDifficulty(i as 0 | 1 | 2);
+                reset();
+              }}
+              style={{
+                fontFamily: "'Noto Serif TC', serif",
+                fontSize: "1rem",
+                padding: "10px 24px",
+                border: "1px solid var(--accent)",
+                background: isActive ? "var(--accent)" : "transparent",
+                color: isActive ? "var(--paper)" : "var(--accent)",
+                borderRadius: 24,
+                letterSpacing: "0.1em",
+                cursor: "pointer",
+                transition: "background 0.2s, color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLButtonElement).style.background =
+                    "rgba(139,69,19,0.08)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+                }
+              }}
+            >
+              {label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Action buttons */}
