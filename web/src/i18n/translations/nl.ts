@@ -83,6 +83,11 @@ const nl: Translation = {
     updateAction: "Vernieuwen",
     dismiss: "Later",
     installed: "Geïnstalleerd",
+    iosStep1: "Tik op",
+    iosStep2: "Scroll & tik op",
+    iosHomeScreen: "Zet op beginscherm",
+    iosStep3: "Tik op",
+    iosAdd: "Voeg toe",
   },
 };
 

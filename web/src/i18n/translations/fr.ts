@@ -83,6 +83,11 @@ const fr: Translation = {
     updateAction: "Rafraîchir",
     dismiss: "Plus tard",
     installed: "Installée",
+    iosStep1: "Appuyez sur",
+    iosStep2: "Faites défiler et appuyez sur",
+    iosHomeScreen: "Sur l'écran d'accueil",
+    iosStep3: "Appuyez sur",
+    iosAdd: "Ajouter",
   },
 };
 

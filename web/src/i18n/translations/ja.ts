@@ -83,6 +83,11 @@ const ja: Translation = {
     updateAction: "更新",
     dismiss: "後で",
     installed: "インストール済み",
+    iosStep1: "タップ",
+    iosStep2: "スクロールしてタップ",
+    iosHomeScreen: "ホーム画面に追加",
+    iosStep3: "タップ",
+    iosAdd: "追加",
   },
 };
 

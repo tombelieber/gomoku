@@ -5,6 +5,7 @@ import { useI18n } from "@/i18n/store";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { HistoryPanel } from "@/components/HistoryPanel";
 import { getStats } from "@/lib/game-history";
+import { usePWA } from "@/hooks/usePWA";
 
 declare const APP_VERSION: string;
 
@@ -294,6 +295,9 @@ export function SettingsSheet({ open, onClose }: Props) {
           <LanguageSwitcher />
         </div>
 
+        {/* Install App */}
+        <InstallAppRow />
+
         {/* Stats summary */}
         <StatsSection />
 
@@ -316,6 +320,80 @@ export function SettingsSheet({ open, onClose }: Props) {
         </div>{/* end scrollable content */}
       </div>
     </>
+  );
+}
+
+function InstallAppRow() {
+  const { t } = useI18n();
+  const { isInstalled, isIOS, installPrompt } = usePWA();
+  const promptInstall = usePWA((s) => s.promptInstall);
+  const setShowIOSGuide = usePWA((s) => s.setShowIOSGuide);
+
+  // Don't show if already installed and not iOS (nothing to do)
+  const canInstall = !!installPrompt || isIOS;
+  if (!canInstall && !isInstalled) return null;
+
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <button
+        onClick={() => {
+          if (isInstalled) return;
+          if (isIOS) {
+            setShowIOSGuide(true);
+          } else {
+            promptInstall();
+          }
+        }}
+        disabled={isInstalled}
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          padding: "12px 14px",
+          background: isInstalled ? "var(--paper-dark)" : "var(--paper-dark)",
+          border: "none",
+          borderRadius: 10,
+          cursor: isInstalled ? "default" : "pointer",
+          fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
+          transition: "background 0.2s",
+          opacity: isInstalled ? 0.6 : 1,
+        }}
+      >
+        <img
+          src="/icon-192.png"
+          alt=""
+          style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0 }}
+        />
+        <div style={{ flex: 1, textAlign: "left" }}>
+          <div style={{
+            fontSize: "0.85rem",
+            fontWeight: 600,
+            color: "var(--ink)",
+            lineHeight: 1.2,
+          }}>
+            {isInstalled ? t.pwa.installed : t.pwa.installAction}
+          </div>
+          <div style={{
+            fontSize: "0.75rem",
+            color: "var(--ink-light)",
+            marginTop: 2,
+          }}>
+            {t.pwa.installTitle}
+          </div>
+        </div>
+        {!isInstalled && (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-light)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        )}
+        {isInstalled && (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d6a30" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        )}
+      </button>
+    </div>
   );
 }
 

@@ -83,6 +83,11 @@ const it: Translation = {
     updateAction: "Aggiorna",
     dismiss: "Non ora",
     installed: "Installata",
+    iosStep1: "Tocca",
+    iosStep2: "Scorri e tocca",
+    iosHomeScreen: "Aggiungi alla schermata Home",
+    iosStep3: "Tocca",
+    iosAdd: "Aggiungi",
   },
 };
 

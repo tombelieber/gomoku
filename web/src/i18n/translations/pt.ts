@@ -83,6 +83,11 @@ const pt: Translation = {
     updateAction: "Atualizar",
     dismiss: "Agora não",
     installed: "Instalado",
+    iosStep1: "Toque em",
+    iosStep2: "Role e toque em",
+    iosHomeScreen: "Adicionar à Tela de Início",
+    iosStep3: "Toque em",
+    iosAdd: "Adicionar",
   },
 };
 

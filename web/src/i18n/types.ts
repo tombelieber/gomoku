@@ -81,6 +81,11 @@ export interface Translation {
     updateAction: string;
     dismiss: string;
     installed: string;
+    iosStep1: string;
+    iosStep2: string;
+    iosHomeScreen: string;
+    iosStep3: string;
+    iosAdd: string;
   };
 }
 

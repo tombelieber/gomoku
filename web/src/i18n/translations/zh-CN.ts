@@ -83,6 +83,11 @@ const zhCN: Translation = {
     updateAction: "刷新",
     dismiss: "暂不",
     installed: "已安装",
+    iosStep1: "点击",
+    iosStep2: "滑动并点击",
+    iosHomeScreen: "添加到主屏幕",
+    iosStep3: "点击",
+    iosAdd: "添加",
   },
 };
 

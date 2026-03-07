@@ -83,6 +83,11 @@ const ko: Translation = {
     updateAction: "새로고침",
     dismiss: "나중에",
     installed: "설치됨",
+    iosStep1: "탭",
+    iosStep2: "스크롤하여 탭",
+    iosHomeScreen: "홈 화면에 추가",
+    iosStep3: "탭",
+    iosAdd: "추가",
   },
 };
 

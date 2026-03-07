@@ -83,6 +83,11 @@ const zhTW: Translation = {
     updateAction: "重新整理",
     dismiss: "暫不",
     installed: "已安裝",
+    iosStep1: "點選",
+    iosStep2: "滑動並點選",
+    iosHomeScreen: "加入主畫面",
+    iosStep3: "點選",
+    iosAdd: "加入",
   },
 };
 
