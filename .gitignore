@@ -1,0 +1,6 @@
+node_modules/
+dist/
+target/
+.tmp/
+*.log
+web/src/wasm/
