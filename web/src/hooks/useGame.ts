@@ -14,7 +14,10 @@ type GameStore = {
   isReady: boolean;
   lastAiMove: { x: number; y: number } | null;
   lastPlayerMove: { x: number; y: number } | null;
-  moveLog: { x: number; y: number; player: "black" | "white" }[];
+  moveLog: { x: number; y: number; player: "black" | "white"; thinkMs?: number }[];
+  playerColor: "black" | "white";
+  waitingToStart: boolean;
+  turnStartTime: number | null;
 
   bridge: EngineBridge | null;
   init: () => Promise<void>;
@@ -22,6 +25,8 @@ type GameStore = {
   undo: () => void;
   reset: () => void;
   setDifficulty: (d: Difficulty) => void;
+  setPlayerColor: (color: "black" | "white") => void;
+  startGame: () => Promise<void>;
   destroy: () => void;
 };
 
@@ -38,6 +43,9 @@ export const useGame = create<GameStore>((set, get) => ({
   lastAiMove: null,
   lastPlayerMove: null,
   moveLog: [],
+  playerColor: "black",
+  waitingToStart: false,
+  turnStartTime: null,
   bridge: null,
 
   init: async () => {
@@ -52,7 +60,7 @@ export const useGame = create<GameStore>((set, get) => ({
     set({ bridge });
     try {
       await bridge.init();
-      set({ isReady: true });
+      set({ isReady: true, turnStartTime: get().playerColor === "black" ? Date.now() : null });
     } catch {
       bridge.destroy();
       set({ bridge: null, isReady: false });
@@ -60,12 +68,15 @@ export const useGame = create<GameStore>((set, get) => ({
   },
 
   playMove: async (x: number, y: number) => {
-    const { bridge, winner, isThinking, difficulty } = get();
+    const { bridge, winner, isThinking, difficulty, playerColor, turnStartTime } = get();
     if (!bridge || winner || isThinking) return;
+
+    const aiColor = playerColor === "black" ? "white" : "black";
+    const thinkMs = turnStartTime ? Date.now() - turnStartTime : 0;
 
     set((s) => ({
       lastPlayerMove: { x, y },
-      moveLog: [...s.moveLog, { x, y, player: "black" as const }],
+      moveLog: [...s.moveLog, { x, y, player: playerColor as "black" | "white", thinkMs }],
     }));
     const moveState = await bridge.playMove(x, y);
 
@@ -75,18 +86,22 @@ export const useGame = create<GameStore>((set, get) => ({
         moves: log,
         winner: moveState.winner ? (moveState.winner as "black" | "white") : "draw",
         difficulty,
+        playerColor,
       });
+      set({ turnStartTime: null });
       return;
     }
 
-    set({ isThinking: true });
+    set({ isThinking: true, turnStartTime: Date.now() });
     const result = await bridge.aiMove(difficulty);
+    const aiThinkMs = Date.now() - (get().turnStartTime ?? Date.now());
     set((s) => ({
       isThinking: false,
       lastAiMove: result ? { x: result.x, y: result.y } : null,
       moveLog: result
-        ? [...s.moveLog, { x: result.x, y: result.y, player: "white" as const }]
+        ? [...s.moveLog, { x: result.x, y: result.y, player: aiColor as "black" | "white", thinkMs: aiThinkMs }]
         : s.moveLog,
+      turnStartTime: Date.now(),
     }));
 
     const state = get();
@@ -95,18 +110,58 @@ export const useGame = create<GameStore>((set, get) => ({
         moves: state.moveLog,
         winner: state.winner ? (state.winner as "black" | "white") : "draw",
         difficulty: state.difficulty,
+        playerColor,
       });
+      set({ turnStartTime: null });
     }
   },
 
-  undo: () => get().bridge?.undo(),
+  undo: () => {
+    get().bridge?.undo();
+    // Engine undoes 2 moves (player + AI) — trim moveLog to match
+    set((s) => ({
+      turnStartTime: Date.now(),
+      lastAiMove: null,
+      lastPlayerMove: null,
+      moveLog: s.moveLog.slice(0, -2),
+    }));
+  },
 
   reset: () => {
     get().bridge?.reset();
-    set({ winner: null, isDraw: false, isThinking: false, lastAiMove: null, lastPlayerMove: null, moveLog: [] });
+    const playerColor = get().playerColor;
+    set({
+      winner: null,
+      isDraw: false,
+      isThinking: false,
+      lastAiMove: null,
+      lastPlayerMove: null,
+      moveLog: [],
+      waitingToStart: playerColor === "white",
+      turnStartTime: playerColor === "black" ? Date.now() : null,
+    });
   },
 
   setDifficulty: (d) => set({ difficulty: d }),
+
+  setPlayerColor: (color) => set({ playerColor: color }),
+
+  startGame: async () => {
+    const { bridge, difficulty, waitingToStart } = get();
+    if (!bridge || !waitingToStart) return;
+
+    set({ waitingToStart: false, isThinking: true, turnStartTime: Date.now() });
+    const result = await bridge.aiMove(difficulty);
+    const thinkMs = Date.now() - (get().turnStartTime ?? Date.now());
+    set((s) => ({
+      isThinking: false,
+      lastAiMove: result ? { x: result.x, y: result.y } : null,
+      moveLog: result
+        ? [...s.moveLog, { x: result.x, y: result.y, player: "black" as const, thinkMs }]
+        : s.moveLog,
+      turnStartTime: Date.now(),
+    }));
+  },
 
   destroy: () => {
     get().bridge?.destroy();

@@ -18,6 +18,7 @@ export interface Translation {
     controls: {
       undo: string;
       newGame: string;
+      start: string;
     };
     ai: {
       thinking: string;
@@ -51,10 +52,16 @@ export interface Translation {
     by: string;
     starOnGithub: string;
   };
+  stats: {
+    title: string;
+  };
   settings: {
     title: string;
     difficulty: string;
     language: string;
+    playAs: string;
+    playFirst: string;
+    playSecond: string;
   };
 }
 

@@ -20,6 +20,7 @@ const zhCN: Translation = {
     controls: {
       undo: "悔棋",
       newGame: "新局",
+      start: "开始",
     },
     ai: {
       thinking: "AI 思考中",
@@ -53,10 +54,16 @@ const zhCN: Translation = {
     by: "by",
     starOnGithub: "在 GitHub 上加星",
   },
+  stats: {
+    title: "胜败记录",
+  },
   settings: {
     title: "设置",
     difficulty: "难度",
     language: "语言",
+    playAs: "执棋",
+    playFirst: "先手 (黑)",
+    playSecond: "后手 (白)",
   },
 };
 

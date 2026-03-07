@@ -20,6 +20,7 @@ const ja: Translation = {
     controls: {
       undo: "待った",
       newGame: "新しい対局",
+      start: "開始",
     },
     ai: {
       thinking: "AI 思考中",
@@ -53,10 +54,16 @@ const ja: Translation = {
     by: "by",
     starOnGithub: "GitHub でスター",
   },
+  stats: {
+    title: "戦績",
+  },
   settings: {
     title: "設定",
     difficulty: "難易度",
     language: "言語",
+    playAs: "手番",
+    playFirst: "先手 (黒)",
+    playSecond: "後手 (白)",
   },
 };
 

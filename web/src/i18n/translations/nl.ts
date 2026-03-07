@@ -20,6 +20,7 @@ const nl: Translation = {
     controls: {
       undo: "Ongedaan maken",
       newGame: "Nieuw spel",
+      start: "Start",
     },
     ai: {
       thinking: "AI denkt na",
@@ -53,10 +54,16 @@ const nl: Translation = {
     by: "door",
     starOnGithub: "Ster op GitHub",
   },
+  stats: {
+    title: "Stand",
+  },
   settings: {
     title: "Instellingen",
     difficulty: "Moeilijkheid",
     language: "Taal",
+    playAs: "Speel als",
+    playFirst: "Eerste (Zwart)",
+    playSecond: "Tweede (Wit)",
   },
 };
 

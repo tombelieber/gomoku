@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useGame } from "@/hooks/useGame";
+import { useI18n } from "@/i18n/store";
 
 const SIZE = 15;
 const CELL = 34;
@@ -30,18 +31,19 @@ type BoardProps = {
 
 export function Board({ replayBoard, replayLastMove }: BoardProps) {
   const isReplay = !!replayBoard;
-  const { board: gameBoard, playMove, winner, isThinking, lastAiMove, lastPlayerMove, currentPlayer } =
+  const { board: gameBoard, playMove, winner, isThinking, lastAiMove, lastPlayerMove, currentPlayer, playerColor, waitingToStart, startGame } =
     useGame();
+  const { t } = useI18n();
   const board = replayBoard ?? gameBoard;
 
   const handleClick = useCallback(
     (x: number, y: number) => {
       if (isReplay) return;
-      if (winner || isThinking || currentPlayer !== "black") return;
+      if (winner || isThinking || waitingToStart || currentPlayer !== playerColor) return;
       if (board[y][x] !== 0) return;
       playMove(x, y);
     },
-    [isReplay, winner, isThinking, currentPlayer, board, playMove],
+    [isReplay, winner, isThinking, waitingToStart, currentPlayer, playerColor, board, playMove],
   );
 
   const cx = (x: number) => PAD + x * CELL;
@@ -213,6 +215,46 @@ export function Board({ replayBoard, replayLastMove }: BoardProps) {
           {/* Tap targets — use CSS :hover instead of React state */}
           {!isReplay && emptyCards(emptycells, handleClick, cx, cy)}
         </svg>
+        {!isReplay && waitingToStart && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(26,16,8,0.55)",
+              borderRadius: 2,
+            }}
+          >
+            <button
+              onClick={() => startGame()}
+              style={{
+                fontFamily: "'Noto Serif TC', serif",
+                fontSize: "clamp(1.1rem, 2.5dvh, 1.4rem)",
+                padding: "clamp(10px, 2dvh, 16px) clamp(28px, 6dvh, 48px)",
+                background: "var(--accent)",
+                color: "var(--paper)",
+                border: "none",
+                borderRadius: 12,
+                letterSpacing: "0.15em",
+                cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
+                transition: "transform 0.15s, box-shadow 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.06)";
+                e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.3)";
+              }}
+            >
+              {t.game.controls.start}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

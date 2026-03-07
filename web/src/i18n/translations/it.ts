@@ -20,6 +20,7 @@ const it: Translation = {
     controls: {
       undo: "Annulla",
       newGame: "Nuova partita",
+      start: "Inizia",
     },
     ai: {
       thinking: "IA sta pensando",
@@ -53,10 +54,16 @@ const it: Translation = {
     by: "da",
     starOnGithub: "Stella su GitHub",
   },
+  stats: {
+    title: "Bilancio",
+  },
   settings: {
     title: "Impostazioni",
     difficulty: "Difficoltà",
     language: "Lingua",
+    playAs: "Gioca come",
+    playFirst: "Primo (Nero)",
+    playSecond: "Secondo (Bianco)",
   },
 };
 

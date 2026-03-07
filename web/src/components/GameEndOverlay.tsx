@@ -20,8 +20,9 @@ export function GameEndOverlay() {
     setVisible(false);
   }, [isGameOver]);
 
-  const isPlayerWin = winner === "black";
-  const isAiWin = winner === "white";
+  const playerColor = useGame((s) => s.playerColor);
+  const isPlayerWin = winner === playerColor;
+  const isAiWin = winner !== null && winner !== playerColor;
 
   const particles = useMemo(() => {
     if (!isPlayerWin) return [];
@@ -127,6 +128,16 @@ export function GameEndOverlay() {
       >
         {subtitle}
       </div>
+      {isPlayerWin && (
+        <div style={{ fontSize: "1.3rem", marginTop: "0.4rem", color: "var(--paper)", opacity: 0.9, animation: "subtitleSlideUp 0.6s ease 0.5s both" }}>
+          ٩(˃̶͈̀௰˂̶͈́)و✧
+        </div>
+      )}
+      {isAiWin && (
+        <div style={{ fontSize: "1.3rem", marginTop: "0.4rem", color: "var(--paper)", opacity: 0.9, animation: "subtitleSlideUp 0.6s ease 0.5s both" }}>
+          (╯°□°)╯︵ ┻━┻
+        </div>
+      )}
 
       <div
         style={{
@@ -178,23 +189,28 @@ export function GameEndOverlay() {
         onClick={handleReview}
         style={{
           fontFamily: "'Noto Serif TC', serif",
-          fontSize: "0.85rem",
-          padding: "6px 20px",
+          fontSize: "0.9rem",
+          padding: "8px 28px",
           marginTop: "0.75rem",
-          background: "transparent",
+          background: "rgba(255,255,255,0.08)",
           color: "var(--paper)",
-          border: "none",
+          border: "1px solid rgba(255,255,255,0.15)",
+          borderRadius: 24,
           letterSpacing: "0.2em",
           cursor: "pointer",
-          opacity: 0.5,
+          opacity: 0.7,
           animation: "fadeIn 0.6s ease 1s both",
-          transition: "opacity 0.2s",
+          transition: "opacity 0.2s, background 0.2s, border-color 0.2s",
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.opacity = "0.85";
+          e.currentTarget.style.opacity = "1";
+          e.currentTarget.style.background = "rgba(255,255,255,0.14)";
+          e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.opacity = "0.5";
+          e.currentTarget.style.opacity = "0.7";
+          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+          e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
         }}
       >
         {t.gameEnd.review}

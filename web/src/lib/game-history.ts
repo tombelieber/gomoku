@@ -3,9 +3,10 @@ const MAX_GAMES = 50;
 
 export type GameRecord = {
   id: string;
-  moves: { x: number; y: number; player: "black" | "white" }[];
+  moves: { x: number; y: number; player: "black" | "white"; thinkMs?: number }[];
   winner: "black" | "white" | "draw";
   difficulty: number;
+  playerColor?: "black" | "white";
   date: string;
   totalMoves: number;
 };
@@ -40,4 +41,18 @@ export function deleteGame(id: string) {
 
 export function clearHistory() {
   localStorage.removeItem(STORAGE_KEY);
+}
+
+export type GameStats = { wins: number; losses: number; draws: number };
+
+export function getStats(): GameStats {
+  const history = loadHistory();
+  const stats: GameStats = { wins: 0, losses: 0, draws: 0 };
+  for (const r of history) {
+    const humanColor = r.playerColor ?? "black";
+    if (r.winner === "draw") stats.draws++;
+    else if (r.winner === humanColor) stats.wins++;
+    else stats.losses++;
+  }
+  return stats;
 }

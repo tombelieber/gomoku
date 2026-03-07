@@ -20,6 +20,7 @@ const zhTW: Translation = {
     controls: {
       undo: "悔棋",
       newGame: "開新局",
+      start: "開始",
     },
     ai: {
       thinking: "AI 思考中",
@@ -53,10 +54,16 @@ const zhTW: Translation = {
     by: "by",
     starOnGithub: "在 GitHub 上加星",
   },
+  stats: {
+    title: "勝敗紀錄",
+  },
   settings: {
     title: "設定",
     difficulty: "難度",
     language: "語言",
+    playAs: "執棋",
+    playFirst: "先手 (黑)",
+    playSecond: "後手 (白)",
   },
 };
 

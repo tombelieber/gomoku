@@ -19,15 +19,15 @@ function relativeDate(iso: string, t: Translation): string {
   return `${d.getMonth() + 1}/${d.getDate()}`;
 }
 
-function resultLabel(winner: GameRecord["winner"], t: Translation): { text: string; color: string } {
-  switch (winner) {
-    case "black":
-      return { text: t.history.labels.won, color: "#2d6a30" };
-    case "white":
-      return { text: t.history.labels.lost, color: "var(--red)" };
-    case "draw":
-      return { text: t.history.labels.draw, color: "var(--accent)" };
+function resultLabel(record: GameRecord, t: Translation): { text: string; color: string } {
+  const humanColor = record.playerColor ?? "black"; // backward compat
+  if (record.winner === "draw") {
+    return { text: t.history.labels.draw, color: "var(--accent)" };
   }
+  if (record.winner === humanColor) {
+    return { text: t.history.labels.won, color: "#2d6a30" };
+  }
+  return { text: t.history.labels.lost, color: "var(--red)" };
 }
 
 export function HistoryPanel() {
@@ -72,7 +72,7 @@ export function HistoryPanel() {
       >
         {history.map((record, index) => {
           const gameNumber = history.length - index;
-          const { text: resultText, color: resultColor } = resultLabel(record.winner, t);
+          const { text: resultText, color: resultColor } = resultLabel(record, t);
           const diffLabels = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard];
           const diffLabel = diffLabels[record.difficulty] ?? diffLabels[1];
 

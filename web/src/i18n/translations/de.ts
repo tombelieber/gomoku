@@ -20,6 +20,7 @@ const de: Translation = {
     controls: {
       undo: "Rückgängig",
       newGame: "Neues Spiel",
+      start: "Start",
     },
     ai: {
       thinking: "KI denkt nach",
@@ -53,10 +54,16 @@ const de: Translation = {
     by: "von",
     starOnGithub: "Stern auf GitHub",
   },
+  stats: {
+    title: "Bilanz",
+  },
   settings: {
     title: "Einstellungen",
     difficulty: "Schwierigkeit",
     language: "Sprache",
+    playAs: "Spielen als",
+    playFirst: "Erster (Schwarz)",
+    playSecond: "Zweiter (Weiß)",
   },
 };
 

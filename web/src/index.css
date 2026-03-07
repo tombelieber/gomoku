@@ -205,3 +205,45 @@ body::after {
 .settings-sheet select {
   width: 100%;
 }
+
+/* ── Apple-style scrollbars ─────────────────── */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+*:hover {
+  scrollbar-color: rgba(139, 69, 19, 0.25) transparent;
+}
+
+/* WebKit (Safari / Chrome) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 69, 19, 0.18);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 69, 19, 0.35);
+}
+
+/* Hide scrollbar until container is hovered (WebKit) */
+.settings-sheet ::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.settings-sheet:hover ::-webkit-scrollbar-thumb {
+  background: rgba(139, 69, 19, 0.18);
+}
+.settings-sheet:hover ::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 69, 19, 0.35);
+}

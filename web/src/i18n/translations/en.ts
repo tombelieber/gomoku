@@ -21,6 +21,7 @@ const en: Translation = {
     controls: {
       undo: "Undo",
       newGame: "New Game",
+      start: "Start",
     },
     ai: {
       thinking: "AI thinking",
@@ -54,10 +55,16 @@ const en: Translation = {
     by: "by",
     starOnGithub: "Star on GitHub",
   },
+  stats: {
+    title: "Record",
+  },
   settings: {
     title: "Settings",
     difficulty: "Difficulty",
     language: "Language",
+    playAs: "Play as",
+    playFirst: "First (Black)",
+    playSecond: "Second (White)",
   },
 };
 

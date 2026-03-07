@@ -11,9 +11,9 @@ export function LanguageSwitcher() {
       aria-label="Language"
       style={{
         fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
-        fontSize: "1rem",
-        padding: "10px 14px",
-        borderRadius: 12,
+        fontSize: "0.9rem",
+        padding: "8px 14px",
+        borderRadius: 10,
         border: "1px solid rgba(139,69,19,0.15)",
         background: "rgba(139,69,19,0.04)",
         color: "var(--ink-light)",

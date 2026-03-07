@@ -122,6 +122,17 @@ export function ReplayControls() {
         }}
       >
         第 {step} / {totalMoves} 手
+        {step > 0 && record.moves[step - 1]?.thinkMs != null && (
+          <span style={{
+            fontSize: "0.85rem",
+            color: "var(--accent)",
+            opacity: 0.6,
+            marginLeft: "0.5rem",
+            fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
+          }}>
+            {(record.moves[step - 1].thinkMs! / 1000).toFixed(1)}s
+          </span>
+        )}
       </div>
 
       {/* Transport buttons */}

@@ -20,6 +20,7 @@ const ko: Translation = {
     controls: {
       undo: "무르기",
       newGame: "새 게임",
+      start: "시작",
     },
     ai: {
       thinking: "AI 생각 중",
@@ -53,10 +54,16 @@ const ko: Translation = {
     by: "by",
     starOnGithub: "GitHub에서 스타",
   },
+  stats: {
+    title: "전적",
+  },
   settings: {
     title: "설정",
     difficulty: "난이도",
     language: "언어",
+    playAs: "플레이",
+    playFirst: "선공 (흑돌)",
+    playSecond: "후공 (백돌)",
   },
 };
 

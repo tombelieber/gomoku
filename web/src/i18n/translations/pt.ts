@@ -20,6 +20,7 @@ const pt: Translation = {
     controls: {
       undo: "Desfazer",
       newGame: "Nova partida",
+      start: "Iniciar",
     },
     ai: {
       thinking: "IA pensando",
@@ -53,10 +54,16 @@ const pt: Translation = {
     by: "por",
     starOnGithub: "Estrela no GitHub",
   },
+  stats: {
+    title: "Placar",
+  },
   settings: {
     title: "Configurações",
     difficulty: "Dificuldade",
     language: "Idioma",
+    playAs: "Jogar como",
+    playFirst: "Primeiro (Pretas)",
+    playSecond: "Segundo (Brancas)",
   },
 };
 
