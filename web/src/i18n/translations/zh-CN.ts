@@ -44,11 +44,19 @@ const zhCN: Translation = {
     back: "返回",
   },
   gameEnd: {
-    win: "黑棋胜！",
-    lose: "白棋胜",
+    win: "你赢了！",
+    lose: "你输了！",
     draw: "平局！",
     playAgain: "再来一局",
     review: "复盘",
+    displayChar: {
+      win: "胜",
+      lose: "败",
+      draw: "和",
+    },
+  },
+  replay: {
+    step: "第 {0} / {1} 手",
   },
   footer: {
     madeWith: "用心制作",

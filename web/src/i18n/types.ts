@@ -47,6 +47,14 @@ export interface Translation {
     draw: string;
     playAgain: string;
     review: string;
+    displayChar: {
+      win: string;
+      lose: string;
+      draw: string;
+    };
+  };
+  replay: {
+    step: string; // e.g. "Move {0} / {1}" — {0}=current, {1}=total
   };
   footer: {
     madeWith: string;

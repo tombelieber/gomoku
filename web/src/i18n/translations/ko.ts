@@ -44,11 +44,19 @@ const ko: Translation = {
     back: "돌아가기",
   },
   gameEnd: {
-    win: "흑돌 승리!",
-    lose: "백돌 승리",
+    win: "승리!",
+    lose: "패배!",
     draw: "무승부!",
     playAgain: "다시 하기",
     review: "복기",
+    displayChar: {
+      win: "승",
+      lose: "패",
+      draw: "무",
+    },
+  },
+  replay: {
+    step: "{0} / {1} 수",
   },
   footer: {
     madeWith: "Made with",

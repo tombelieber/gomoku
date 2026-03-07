@@ -44,11 +44,19 @@ const ja: Translation = {
     back: "戻る",
   },
   gameEnd: {
-    win: "黒の勝ち！",
-    lose: "白の勝ち",
+    win: "あなたの勝ち！",
+    lose: "あなたの負け！",
     draw: "引き分け！",
     playAgain: "もう一局",
     review: "検討",
+    displayChar: {
+      win: "勝",
+      lose: "敗",
+      draw: "和",
+    },
+  },
+  replay: {
+    step: "第 {0} / {1} 手",
   },
   footer: {
     madeWith: "Made with",

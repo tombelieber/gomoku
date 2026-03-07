@@ -44,11 +44,19 @@ const es: Translation = {
     back: "Volver",
   },
   gameEnd: {
-    win: "¡Negras ganan!",
-    lose: "Blancas ganan",
+    win: "¡Ganaste!",
+    lose: "¡Perdiste!",
     draw: "¡Empate!",
     playAgain: "Jugar de nuevo",
     review: "Revisar",
+    displayChar: {
+      win: "VICTORIA",
+      lose: "DERROTA",
+      draw: "EMPATE",
+    },
+  },
+  replay: {
+    step: "Jugada {0} / {1}",
   },
   footer: {
     madeWith: "Hecho con",

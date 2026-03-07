@@ -7,7 +7,7 @@ A fully playable Gomoku (五子棋) game with an unbeatable AI opponent, built w
 **[▶ Play Online Now](https://open-gomoku.pages.dev)** • [Learn by Example](#learning-paths) • [See the Code](#technical-breakdown)
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Gomoku gameplay demo — iPhone view, English → 繁體中文" width="300" />
+  <img src="assets/demo.gif" alt="Gomoku gameplay demo — iPhone view, English → 繁體中文" width="300" />
 </p>
 
 ---
@@ -462,6 +462,12 @@ open-gomoku/
 ├── README.md                 # You are here
 ├── package.json             # Root workspace config
 │
+├── assets/                  # Public media (demo, screenshots)
+│   ├── demo.gif            # README demo animation
+│   ├── palette.png         # Color palette
+│   ├── mockups/            # Design mockups
+│   └── screenshots/        # Language & gameplay screenshots
+│
 ├── engine/                  # Rust WASM AI engine
 │   ├── Cargo.toml          # Rust dependencies
 │   ├── src/
@@ -490,8 +496,7 @@ open-gomoku/
 │   ├── tailwind.config.js   # Tailwind CSS config
 │   └── dist/               # Built frontend (after build)
 │
-└── docs/
-    └── plans/              # Implementation documentation
+└── docs/                    # Documentation (no assets)
 ```
 
 **Key insight:** `web/src/wasm/engine/` is **generated** by `bun run build:engine` — don't edit it directly.

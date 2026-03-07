@@ -49,6 +49,14 @@ const pt: Translation = {
     draw: "Empate!",
     playAgain: "Jogar novamente",
     review: "Revisar",
+    displayChar: {
+      win: "VITÓRIA",
+      lose: "DERROTA",
+      draw: "EMPATE",
+    },
+  },
+  replay: {
+    step: "Jogada {0} / {1}",
   },
   footer: {
     madeWith: "Feito com",

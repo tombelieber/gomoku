@@ -119,7 +119,7 @@ export function ReplayControls() {
           color: "var(--ink)",
         }}
       >
-        第 {step} / {totalMoves} 手
+        {t.replay.step.replace("{0}", String(step)).replace("{1}", String(totalMoves))}
         {step > 0 && record.moves[step - 1]?.thinkMs != null && (
           <span style={{
             fontSize: "0.85rem",

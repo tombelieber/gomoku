@@ -44,11 +44,19 @@ const fr: Translation = {
     back: "Retour",
   },
   gameEnd: {
-    win: "Noir gagne !",
-    lose: "Blanc gagne",
+    win: "Victoire !",
+    lose: "Défaite !",
     draw: "Match nul !",
     playAgain: "Rejouer",
     review: "Revoir",
+    displayChar: {
+      win: "GAGNÉ",
+      lose: "PERDU",
+      draw: "NUL",
+    },
+  },
+  replay: {
+    step: "Coup {0} / {1}",
   },
   footer: {
     madeWith: "Fait avec",

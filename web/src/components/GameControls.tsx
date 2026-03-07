@@ -117,9 +117,10 @@ export function GameControls() {
           disabled={isThinking || !!winner}
           style={{
             flex: 1,
+            minWidth: 0,
             fontFamily: "'Noto Serif TC', serif",
-            fontSize: "clamp(0.9rem, 2dvh, 1.15rem)",
-            padding: "clamp(8px, 1.5dvh, 14px) 0",
+            fontSize: "clamp(0.85rem, 2dvh, 1.15rem)",
+            padding: "clamp(8px, 1.5dvh, 14px) 8px",
             background: "var(--paper-dark)",
             color: "var(--ink-light)",
             borderRadius: 8,
@@ -128,6 +129,9 @@ export function GameControls() {
             cursor: isThinking || !!winner ? "default" : "pointer",
             opacity: isThinking || !!winner ? 0.4 : 1,
             transition: "background 0.2s, color 0.2s",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
           }}
         >
           {t.game.controls.undo}
@@ -136,9 +140,10 @@ export function GameControls() {
           onClick={reset}
           style={{
             flex: 1,
+            minWidth: 0,
             fontFamily: "'Noto Serif TC', serif",
-            fontSize: "clamp(0.9rem, 2dvh, 1.15rem)",
-            padding: "clamp(8px, 1.5dvh, 14px) 0",
+            fontSize: "clamp(0.85rem, 2dvh, 1.15rem)",
+            padding: "clamp(8px, 1.5dvh, 14px) 8px",
             background: "var(--paper-dark)",
             color: "var(--ink-light)",
             borderRadius: 8,
@@ -146,6 +151,9 @@ export function GameControls() {
             letterSpacing: "0.05em",
             cursor: "pointer",
             transition: "background 0.2s, color 0.2s",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
           }}
         >
           {t.game.controls.newGame}

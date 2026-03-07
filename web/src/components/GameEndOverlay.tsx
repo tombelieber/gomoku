@@ -7,7 +7,8 @@ import { useI18n } from "@/i18n/store";
 export function GameEndOverlay() {
   const { winner, isDraw, reset } = useGame();
   const startReplay = useReplay((s) => s.startReplay);
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const isCJK = /^(zh|ja|ko)/.test(locale);
   const [visible, setVisible] = useState(false);
 
   const isGameOver = !!winner || isDraw;
@@ -56,7 +57,7 @@ export function GameEndOverlay() {
   let charStyle: React.CSSProperties;
 
   if (isPlayerWin) {
-    mainChar = "\u52DD";
+    mainChar = t.gameEnd.displayChar.win;
     subtitle = t.gameEnd.win;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(196,154,60,0.25) 0%, rgba(26,16,8,0.88) 100%)";
@@ -66,7 +67,7 @@ export function GameEndOverlay() {
         "0 0 80px rgba(237,203,106,0.6), 0 0 40px rgba(196,154,60,0.5), 0 4px 24px rgba(0,0,0,0.6)",
     };
   } else if (isAiWin) {
-    mainChar = "\u6557";
+    mainChar = t.gameEnd.displayChar.lose;
     subtitle = t.gameEnd.lose;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(26,16,8,0.55) 0%, rgba(26,16,8,0.92) 100%)";
@@ -76,7 +77,7 @@ export function GameEndOverlay() {
         "0 0 60px rgba(232,224,212,0.35), 0 4px 24px rgba(0,0,0,0.7)",
     };
   } else {
-    mainChar = "\u548C";
+    mainChar = t.gameEnd.displayChar.draw;
     subtitle = t.gameEnd.draw;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(139,69,19,0.2) 0%, rgba(26,16,8,0.85) 100%)";
@@ -86,6 +87,21 @@ export function GameEndOverlay() {
         "0 0 60px rgba(212,184,150,0.35), 0 4px 24px rgba(0,0,0,0.5)",
     };
   }
+
+  // Adaptive font sizing: CJK single chars get full size, longer Latin words scale down
+  const charLen = mainChar.length;
+  const displayFontSize =
+    charLen <= 1
+      ? "clamp(6rem, 22vw, 11rem)"
+      : charLen <= 4
+        ? "clamp(4rem, 16vw, 8rem)"
+        : charLen <= 6
+          ? "clamp(3rem, 12vw, 6rem)"
+          : "clamp(2.2rem, 10vw, 4.5rem)";
+
+  const displayFontFamily = isCJK
+    ? "'ZCOOL KuaiLe', serif"
+    : "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif";
 
   return (
     <div
@@ -103,8 +119,10 @@ export function GameEndOverlay() {
     >
       <div
         style={{
-          fontFamily: "'ZCOOL KuaiLe', serif",
-          fontSize: "clamp(6rem, 22vw, 11rem)",
+          fontFamily: displayFontFamily,
+          fontSize: displayFontSize,
+          fontWeight: isCJK ? 400 : 800,
+          letterSpacing: isCJK ? 0 : "0.08em",
           lineHeight: 1,
           animation: isAiWin
             ? "charRevealShake 0.8s cubic-bezier(0.16, 1, 0.3, 1) both"

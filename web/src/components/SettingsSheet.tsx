@@ -191,10 +191,11 @@ export function SettingsSheet({ open, onClose }: Props) {
                   }}
                   style={{
                     flex: 1,
+                    minWidth: 0,
                     fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.78rem, 2.2vw, 0.9rem)",
                     fontWeight: isActive ? 600 : 400,
-                    padding: "8px 0",
+                    padding: "8px 4px",
                     border: "none",
                     borderRadius: 8,
                     background: isActive ? "#fff" : "transparent",
@@ -202,6 +203,9 @@ export function SettingsSheet({ open, onClose }: Props) {
                     cursor: "pointer",
                     transition: "background 0.2s, color 0.2s, box-shadow 0.2s",
                     boxShadow: isActive ? "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)" : "none",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {label}
@@ -245,11 +249,12 @@ export function SettingsSheet({ open, onClose }: Props) {
                   }}
                   style={{
                     flex: 1,
+                    minWidth: 0,
                     fontFamily:
                       "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif",
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.78rem, 2.2vw, 0.9rem)",
                     fontWeight: isActive ? 600 : 400,
-                    padding: "8px 0",
+                    padding: "8px 4px",
                     border: "none",
                     borderRadius: 8,
                     background: isActive ? "#fff" : "transparent",
@@ -260,6 +265,9 @@ export function SettingsSheet({ open, onClose }: Props) {
                     boxShadow: isActive
                       ? "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)"
                       : "none",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {label}

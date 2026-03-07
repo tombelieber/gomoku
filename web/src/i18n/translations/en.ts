@@ -45,11 +45,19 @@ const en: Translation = {
     back: "Return",
   },
   gameEnd: {
-    win: "Black wins!",
-    lose: "White wins",
+    win: "You win!",
+    lose: "You lose!",
     draw: "Draw!",
     playAgain: "Play Again",
     review: "Review",
+    displayChar: {
+      win: "WIN",
+      lose: "LOSS",
+      draw: "DRAW",
+    },
+  },
+  replay: {
+    step: "Move {0} / {1}",
   },
   footer: {
     madeWith: "Made with",

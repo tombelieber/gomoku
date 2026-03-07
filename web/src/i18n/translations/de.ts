@@ -44,11 +44,19 @@ const de: Translation = {
     back: "Zurück",
   },
   gameEnd: {
-    win: "Schwarz gewinnt!",
-    lose: "Weiß gewinnt",
+    win: "Du gewinnst!",
+    lose: "Du verlierst!",
     draw: "Unentschieden!",
     playAgain: "Nochmal spielen",
     review: "Nachspiel",
+    displayChar: {
+      win: "SIEG",
+      lose: "VERLOREN",
+      draw: "REMIS",
+    },
+  },
+  replay: {
+    step: "Zug {0} / {1}",
   },
   footer: {
     madeWith: "Erstellt mit",

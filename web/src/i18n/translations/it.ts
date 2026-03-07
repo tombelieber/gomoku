@@ -49,6 +49,14 @@ const it: Translation = {
     draw: "Pareggio!",
     playAgain: "Gioca ancora",
     review: "Rivedi",
+    displayChar: {
+      win: "VINTO",
+      lose: "PERSO",
+      draw: "PARI",
+    },
+  },
+  replay: {
+    step: "Mossa {0} / {1}",
   },
   footer: {
     madeWith: "Fatto con",

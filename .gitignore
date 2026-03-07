@@ -6,10 +6,13 @@ target/
 web/src/wasm/
 demo-output/
 
-# Private: demo tooling and GTM plans (not open-sourced)
+# Private: "how I build" — process, plans, GTM, Claude config (not open-sourced)
+CLAUDE.md
+.claude/
 scripts/ai-demo/
 scripts/demo.config.json
 scripts/record-demo.ts
 scripts/screenshot-themes.ts
 scripts/take-screenshots.md
 docs/plans/
+docs/internal/

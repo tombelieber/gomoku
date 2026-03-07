@@ -109,7 +109,7 @@ export function HistoryPanel() {
                   fontWeight: 600,
                   color: resultColor,
                   flexShrink: 0,
-                  width: "1.2em",
+                  minWidth: "1.2em",
                   textAlign: "center",
                 }}
               >

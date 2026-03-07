@@ -49,6 +49,14 @@ const nl: Translation = {
     draw: "Gelijkspel!",
     playAgain: "Opnieuw spelen",
     review: "Terugkijken",
+    displayChar: {
+      win: "WINST",
+      lose: "VERLIES",
+      draw: "GELIJK",
+    },
+  },
+  replay: {
+    step: "Zet {0} / {1}",
   },
   footer: {
     madeWith: "Gemaakt met",
