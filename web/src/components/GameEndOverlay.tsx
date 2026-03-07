@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useGame } from "@/hooks/useGame";
-import { useReplay } from "@/hooks/useReplay";
+import { useI18n } from "@/i18n/store";
 
 export function GameEndOverlay() {
   const { winner, isDraw, reset } = useGame();
+  const { t } = useI18n();
   const [visible, setVisible] = useState(false);
 
   const isGameOver = !!winner || isDraw;
@@ -19,7 +20,6 @@ export function GameEndOverlay() {
   const isPlayerWin = winner === "black";
   const isAiWin = winner === "white";
 
-  // Stable particle positions derived from index, not Math.random()
   const particles = useMemo(() => {
     if (!isPlayerWin) return [];
     return Array.from({ length: 28 }, (_, i) => ({
@@ -35,9 +35,7 @@ export function GameEndOverlay() {
     }));
   }, [isPlayerWin]);
 
-  const isReplaying = useReplay((s) => !!s.record);
-
-  if (!visible || isReplaying) return null;
+  if (!visible) return null;
 
   let mainChar: string;
   let subtitle: string;
@@ -45,8 +43,8 @@ export function GameEndOverlay() {
   let charStyle: React.CSSProperties;
 
   if (isPlayerWin) {
-    mainChar = "\u52DD"; // 勝
-    subtitle = "\u9ED1\u68CB\u52DD\uFF01"; // 黑棋勝！
+    mainChar = "\u52DD";
+    subtitle = t.gameEnd.winSubtitle;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(196,154,60,0.12) 0%, rgba(26,16,8,0.7) 100%)";
     charStyle = {
@@ -54,8 +52,8 @@ export function GameEndOverlay() {
       textShadow: "0 0 60px rgba(196,154,60,0.5), 0 4px 24px rgba(0,0,0,0.4)",
     };
   } else if (isAiWin) {
-    mainChar = "\u6557"; // 敗
-    subtitle = "\u767D\u68CB\u52DD"; // 白棋勝
+    mainChar = "\u6557";
+    subtitle = t.gameEnd.loseSubtitle;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(26,16,8,0.3) 0%, rgba(26,16,8,0.78) 100%)";
     charStyle = {
@@ -63,8 +61,8 @@ export function GameEndOverlay() {
       textShadow: "0 4px 24px rgba(0,0,0,0.5)",
     };
   } else {
-    mainChar = "\u548C"; // 和
-    subtitle = "\u548C\u68CB\uFF01"; // 和棋！
+    mainChar = "\u548C";
+    subtitle = t.gameEnd.drawSubtitle;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(139,69,19,0.08) 0%, rgba(26,16,8,0.6) 100%)";
     charStyle = {
@@ -89,7 +87,6 @@ export function GameEndOverlay() {
       }}
       onClick={reset}
     >
-      {/* Main calligraphy character */}
       <div
         style={{
           fontFamily: "'ZCOOL KuaiLe', serif",
@@ -104,7 +101,6 @@ export function GameEndOverlay() {
         {mainChar}
       </div>
 
-      {/* Subtitle */}
       <div
         style={{
           fontFamily: "'Noto Serif TC', serif",
@@ -119,7 +115,6 @@ export function GameEndOverlay() {
         {subtitle}
       </div>
 
-      {/* Decorative line */}
       <div
         style={{
           width: "clamp(80px, 20vw, 140px)",
@@ -132,7 +127,6 @@ export function GameEndOverlay() {
         }}
       />
 
-      {/* Play again hint */}
       <div
         style={{
           fontFamily: "'Noto Serif TC', serif",
@@ -144,10 +138,9 @@ export function GameEndOverlay() {
           animation: "fadeIn 0.6s ease 1s both",
         }}
       >
-        {"\u9EDE\u64CA\u4EFB\u610F\u8655\u958B\u65B0\u5C40"}
+        {t.gameEnd.clickToRestart}
       </div>
 
-      {/* Win celebration particles */}
       {particles.map((p) => (
         <div
           key={p.id}

@@ -2,29 +2,24 @@ import { useEffect, useState } from "react";
 import { Board } from "@/components/Board";
 import { GameControls } from "@/components/GameControls";
 import { GameEndOverlay } from "@/components/GameEndOverlay";
-import { HistoryPanel } from "@/components/HistoryPanel";
-import { ReplayControls } from "@/components/ReplayControls";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useGame } from "@/hooks/useGame";
-import { useReplay } from "@/hooks/useReplay";
+import { useI18n } from "@/i18n/store";
 
 export default function App() {
   const init = useGame((s) => s.init);
   const destroy = useGame((s) => s.destroy);
+  const { t, locale } = useI18n();
   const [starCount, setStarCount] = useState<number | null>(null);
-  const replayRecord = useReplay((s) => s.record);
-  const replayBoard = useReplay((s) => s.board);
-  const replayStep = useReplay((s) => s.step);
-  const isReplaying = !!replayRecord;
-
-  const replayLastMove =
-    replayRecord && replayStep > 0
-      ? replayRecord.moves[replayStep - 1]
-      : null;
 
   useEffect(() => {
     init();
     return () => destroy();
   }, [init, destroy]);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
 
   useEffect(() => {
     fetch("https://api.github.com/repos/tombelieber/gomoku")
@@ -43,7 +38,6 @@ export default function App() {
         justifyContent: "center",
       }}
     >
-      {/* Main container */}
       <div
         style={{
           position: "relative",
@@ -58,7 +52,7 @@ export default function App() {
           animation: "fadeIn 1.2s ease",
         }}
       >
-        {/* Title */}
+        {/* Title — decorative Chinese stays */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <h1
             style={{
@@ -71,7 +65,6 @@ export default function App() {
           >
             五子棋
           </h1>
-          {/* Decorative underline */}
           <div
             style={{
               height: 2,
@@ -82,7 +75,7 @@ export default function App() {
           />
         </div>
 
-        {/* Subtitle */}
+        {/* Subtitle — translated */}
         <span
           style={{
             fontSize: "0.75rem",
@@ -92,24 +85,14 @@ export default function App() {
             opacity: 0.7,
           }}
         >
-          GOMOKU
+          {t.subtitle}
         </span>
 
-        {isReplaying ? (
-          <>
-            <Board replayBoard={replayBoard} replayLastMove={replayLastMove} />
-            <ReplayControls />
-          </>
-        ) : (
-          <>
-            <Board />
-            <GameControls />
-            <HistoryPanel />
-          </>
-        )}
+        <Board />
+        <GameControls />
       </div>
 
-      {/* Footer signature */}
+      {/* Footer */}
       <footer
         className="site-footer"
         style={{
@@ -129,7 +112,6 @@ export default function App() {
           letterSpacing: "0.01em",
         }}
       >
-        {/* Made with love line */}
         <div
           style={{
             display: "flex",
@@ -138,7 +120,7 @@ export default function App() {
             lineHeight: 1,
           }}
         >
-          <span style={{ opacity: 0.6 }}>Made with</span>
+          <span style={{ opacity: 0.6 }}>{t.footer.madeWith}</span>
           <span
             style={{
               color: "var(--red)",
@@ -149,7 +131,7 @@ export default function App() {
           >
             &#9829;
           </span>
-          <span style={{ opacity: 0.6 }}>by</span>
+          <span style={{ opacity: 0.6 }}>{t.footer.by}</span>
           <a
             href="https://tomtang3.ai/"
             target="_blank"
@@ -166,7 +148,6 @@ export default function App() {
           </a>
         </div>
 
-        {/* GitHub star pill */}
         <a
           href="https://github.com/tombelieber/gomoku"
           target="_blank"
@@ -197,7 +178,7 @@ export default function App() {
           >
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
           </svg>
-          <span>Star on GitHub</span>
+          <span>{t.footer.starOnGithub}</span>
           {starCount != null && (
             <>
               <span style={{ opacity: 0.3, margin: "0 0.1rem" }}>|</span>
@@ -205,11 +186,14 @@ export default function App() {
             </>
           )}
         </a>
+
+        {/* Language switcher */}
+        <LanguageSwitcher />
       </footer>
 
       <GameEndOverlay />
 
-      {/* Decorative seal */}
+      {/* Decorative seal — stays Chinese */}
       <div
         style={{
           position: "fixed",

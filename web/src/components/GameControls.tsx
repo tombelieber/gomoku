@@ -1,6 +1,5 @@
 import { useGame } from "@/hooks/useGame";
-
-const DIFFICULTY_LABELS = ["簡單", "中等", "困難"] as const;
+import { useI18n } from "@/i18n/store";
 
 export function GameControls() {
   const {
@@ -14,11 +13,12 @@ export function GameControls() {
     currentPlayer,
     isReady,
   } = useGame();
+  const { t } = useI18n();
 
   if (!isReady) {
     return (
       <div style={{ color: "var(--accent)", textAlign: "center", padding: "2rem 0" }}>
-        載入引擎中...
+        {t.loading}
       </div>
     );
   }
@@ -26,11 +26,13 @@ export function GameControls() {
   const isBlack = currentPlayer === "black";
   const stoneColor = isBlack ? "#1a1a1a" : "#f5f5f5";
 
+  const difficultyLabels = [t.difficulty.easy, t.difficulty.medium, t.difficulty.hard];
+
   let statusText = "";
-  if (winner === "black") statusText = "黑棋勝！";
-  else if (winner === "white") statusText = "白棋勝！";
-  else if (isDraw) statusText = "和棋！";
-  else statusText = isBlack ? "你嘅回合 — 黑棋" : "你嘅回合 — 白棋";
+  if (winner === "black") statusText = t.status.blackWins;
+  else if (winner === "white") statusText = t.status.whiteWins;
+  else if (isDraw) statusText = t.status.draw;
+  else statusText = isBlack ? t.status.yourTurnBlack : t.status.yourTurnWhite;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center" }}>
@@ -57,7 +59,7 @@ export function GameControls() {
         <span style={{ fontSize: "1rem", color: "var(--ink-light)" }}>{statusText}</span>
       </div>
 
-      {/* Thinking indicator — always in flow to prevent layout shift */}
+      {/* Thinking indicator */}
       <div
         style={{
           display: "flex",
@@ -70,7 +72,7 @@ export function GameControls() {
           transition: "opacity 0.25s ease",
         }}
       >
-        <span>AI 思考中</span>
+        <span>{t.aiThinking}</span>
         {[0, 0.2, 0.4].map((delay, i) => (
           <span
             key={i}
@@ -94,11 +96,11 @@ export function GameControls() {
           animation: "fadeIn 0.6s ease 0.6s both",
         }}
       >
-        {DIFFICULTY_LABELS.map((label, i) => {
+        {difficultyLabels.map((label, i) => {
           const isActive = difficulty === i;
           return (
             <button
-              key={label}
+              key={i}
               onClick={() => {
                 setDifficulty(i as 0 | 1 | 2);
                 reset();
@@ -178,7 +180,7 @@ export function GameControls() {
             (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
           }}
         >
-          悔棋
+          {t.undo}
         </button>
         <button
           onClick={reset}
@@ -213,7 +215,7 @@ export function GameControls() {
             (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
           }}
         >
-          開新局
+          {t.newGame}
         </button>
       </div>
     </div>
