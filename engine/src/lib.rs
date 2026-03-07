@@ -134,7 +134,3 @@ impl Game {
         self.move_history.len()
     }
 }
-
-pub fn ping() -> String {
-    "gomoku-engine ready".to_string()
-}
