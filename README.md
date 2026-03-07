@@ -20,17 +20,34 @@
 
 ---
 
-## Gameplay
+## See It In Action
 
-Play as Black or White against a Rust-powered AI with three difficulty levels. Every move is computed in under 100ms via WebAssembly.
-
-<p align="center">
-  <img src="assets/screenshots/screenshot-initial.png" alt="Opening — empty board" width="220" />
-  &nbsp;&nbsp;
-  <img src="assets/screenshots/screenshot-midgame.png" alt="Midgame — tactical battle" width="220" />
-  &nbsp;&nbsp;
-  <img src="assets/screenshots/screenshot-final.png" alt="Endgame — five in a row" width="220" />
-</p>
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="assets/screenshots/screenshot-midgame.png" alt="Gameplay with timer and controls" width="280" />
+      <br /><b>Real-time Gameplay</b>
+      <br /><sub>Turn timer, AI thinking indicator, undo — all at your fingertips</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="assets/screenshots/screenshot-win.png" alt="Game end screen" width="280" />
+      <br /><b>Can You Beat the AI?</b>
+      <br /><sub>Dramatic endings with animated kaomoji — win or lose</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="assets/screenshots/screenshot-settings.png" alt="Settings sheet" width="280" />
+      <br /><b>Customize Everything</b>
+      <br /><sub>3 difficulty levels, play as Black or White, W/L/D stats</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="assets/screenshots/screenshot-replay.png" alt="Move-by-move replay" width="280" />
+      <br /><b>Review Any Game</b>
+      <br /><sub>Step through moves, auto-play, see AI thinking time</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -42,12 +59,14 @@ Play as Black or White against a Rust-powered AI with three difficulty levels. E
 | **3 Difficulty Levels** | Easy, Medium, Hard — adapt the challenge to your skill |
 | **Play as Black or White** | Choose your side, or switch mid-session in Settings |
 | **Game History** | All games saved locally with W/L/D records |
-| **Move-by-Move Replay** | Step through any past game to study your moves |
+| **Move-by-Move Replay** | Step through any past game, see AI thinking time per move |
 | **Win/Loss/Draw Stats** | Track your performance over time |
-| **Undo** | Take back your last move |
+| **Undo** | Take back your last move (undoes both yours and AI's) |
+| **Turn Timer** | See how long you've been thinking |
+| **Cinematic Endings** | Animated kaomoji, dramatic overlays — confetti on victory |
 | **Mobile-First** | Touch-optimized, fully playable on phones and tablets |
 | **Instant Load** | No server, no signup — runs entirely in your browser |
-| **11 Languages** | English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Español, Français, Italiano, Nederlands, Português |
+| **11 Languages** | English, Chinese, Japanese, Korean, German, Spanish, French, Italian, Dutch, Portuguese |
 
 ---
 
