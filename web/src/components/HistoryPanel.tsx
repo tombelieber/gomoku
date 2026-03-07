@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { loadHistory, type GameRecord } from "@/lib/game-history";
 import { useReplay } from "@/hooks/useReplay";
 import { useGame } from "@/hooks/useGame";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useI18n } from "@/i18n/store";
 import type { Translation } from "@/i18n/types";
 
 const SYSTEM_FONT =
@@ -31,7 +31,7 @@ function resultLabel(winner: GameRecord["winner"], t: Translation): { text: stri
 }
 
 export function HistoryPanel() {
-  const t = useTranslation();
+  const { t } = useI18n();
   const winner = useGame((s) => s.winner);
   const startReplay = useReplay((s) => s.startReplay);
 

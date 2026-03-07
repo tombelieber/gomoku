@@ -44,7 +44,7 @@ export function GameEndOverlay() {
 
   if (isPlayerWin) {
     mainChar = "\u52DD";
-    subtitle = t.gameEnd.winSubtitle;
+    subtitle = t.gameEnd.win;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(196,154,60,0.12) 0%, rgba(26,16,8,0.7) 100%)";
     charStyle = {
@@ -53,7 +53,7 @@ export function GameEndOverlay() {
     };
   } else if (isAiWin) {
     mainChar = "\u6557";
-    subtitle = t.gameEnd.loseSubtitle;
+    subtitle = t.gameEnd.lose;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(26,16,8,0.3) 0%, rgba(26,16,8,0.78) 100%)";
     charStyle = {
@@ -62,7 +62,7 @@ export function GameEndOverlay() {
     };
   } else {
     mainChar = "\u548C";
-    subtitle = t.gameEnd.drawSubtitle;
+    subtitle = t.gameEnd.draw;
     bgGradient =
       "radial-gradient(ellipse at center, rgba(139,69,19,0.08) 0%, rgba(26,16,8,0.6) 100%)";
     charStyle = {
@@ -138,7 +138,7 @@ export function GameEndOverlay() {
           animation: "fadeIn 0.6s ease 1s both",
         }}
       >
-        {t.gameEnd.clickToRestart}
+        {t.gameEnd.restartPrompt}
       </div>
 
       {particles.map((p) => (
