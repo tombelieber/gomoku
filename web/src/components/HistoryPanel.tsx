@@ -1,35 +1,37 @@
+// web/src/components/HistoryPanel.tsx
 import { useMemo } from "react";
 import { loadHistory, type GameRecord } from "@/lib/game-history";
 import { useReplay } from "@/hooks/useReplay";
 import { useGame } from "@/hooks/useGame";
-
-const DIFFICULTY_LABELS = ["簡單", "中等", "困難"] as const;
+import { useTranslation } from "@/hooks/useTranslation";
+import type { Translation } from "@/i18n/types";
 
 const SYSTEM_FONT =
   "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif";
 
-function relativeDate(iso: string): string {
+function relativeDate(iso: string, t: Translation): string {
   const d = new Date(iso);
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   const diffDays = Math.floor(diffMs / 86400000);
-  if (diffDays === 0) return "今天";
-  if (diffDays === 1) return "昨天";
+  if (diffDays === 0) return t.history.dates.today;
+  if (diffDays === 1) return t.history.dates.yesterday;
   return `${d.getMonth() + 1}/${d.getDate()}`;
 }
 
-function resultLabel(winner: GameRecord["winner"]): { text: string; color: string } {
+function resultLabel(winner: GameRecord["winner"], t: Translation): { text: string; color: string } {
   switch (winner) {
     case "black":
-      return { text: "勝", color: "#2d6a30" };
+      return { text: t.history.labels.won, color: "#2d6a30" };
     case "white":
-      return { text: "敗", color: "var(--red)" };
+      return { text: t.history.labels.lost, color: "var(--red)" };
     case "draw":
-      return { text: "和", color: "var(--accent)" };
+      return { text: t.history.labels.draw, color: "var(--accent)" };
   }
 }
 
 export function HistoryPanel() {
+  const t = useTranslation();
   const winner = useGame((s) => s.winner);
   const startReplay = useReplay((s) => s.startReplay);
 
@@ -64,7 +66,7 @@ export function HistoryPanel() {
           padding: "0 4px 6px",
         }}
       >
-        棋譜
+        {t.history.panel.header}
       </div>
 
       {/* Scrollable list */}
@@ -76,9 +78,9 @@ export function HistoryPanel() {
         }}
       >
         {history.map((record) => {
-          const { text: resultText, color: resultColor } = resultLabel(record.winner);
-          const diffLabel =
-            DIFFICULTY_LABELS[record.difficulty] ?? DIFFICULTY_LABELS[1];
+          const { text: resultText, color: resultColor } = resultLabel(record.winner, t);
+          const diffLabels = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard];
+          const diffLabel = diffLabels[record.difficulty] ?? diffLabels[1];
 
           return (
             <div
@@ -120,7 +122,7 @@ export function HistoryPanel() {
 
               {/* Move count */}
               <span style={{ opacity: 0.5, flexShrink: 0 }}>
-                {record.totalMoves}手
+                {record.totalMoves} {t.history.moves}
               </span>
 
               {/* Spacer */}
@@ -128,7 +130,7 @@ export function HistoryPanel() {
 
               {/* Date */}
               <span style={{ opacity: 0.4, flexShrink: 0 }}>
-                {relativeDate(record.date)}
+                {relativeDate(record.date, t)}
               </span>
             </div>
           );
