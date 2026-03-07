@@ -1,138 +1,65 @@
-# open-gomoku
+# GOMOKU
 
-> The classic board game, reimagined for the browser. Free, beautiful, and unbeatable AI — in 11 languages.
+### Think you can beat an AI at the world's oldest strategy game?
 
 <p align="center">
-  <a href="https://open-gomoku.pages.dev"><strong>Play Now</strong></a>
+  <a href="https://open-gomoku.pages.dev"><img src="https://img.shields.io/badge/%E2%96%B6%EF%B8%8F_Play_Now-open--gomoku.pages.dev-black?style=for-the-badge&labelColor=000" alt="Play Now" /></a>
 </p>
 
 <p align="center">
   <video src="assets/demo.mp4" width="320" autoplay loop muted playsinline>
-    <img src="assets/screenshots/screenshot-midgame.png" alt="Gomoku gameplay demo" width="320" />
+    <img src="assets/screenshots/en/midgame.png" alt="Gomoku gameplay demo" width="320" />
   </video>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Rust-WASM-orange?logo=rust" alt="Rust WASM" />
-  <img src="https://img.shields.io/badge/React_19-TypeScript-blue?logo=react" alt="React 19" />
-  <img src="https://img.shields.io/badge/Mobile-First-green?logo=apple" alt="Mobile First" />
-  <img src="https://img.shields.io/badge/Languages-11-purple?logo=googletranslate" alt="11 Languages" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License" />
+  Free. No signup. No download. Just play.
 </p>
 
 ---
 
-## See It In Action
-
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="assets/screenshots/screenshot-midgame.png" alt="Gameplay with timer and controls" width="280" />
+      <img src="assets/screenshots/en/midgame.png" alt="Gameplay" width="280" />
       <br /><b>Real-time Gameplay</b>
-      <br /><sub>Turn timer, AI thinking indicator, undo — all at your fingertips</sub>
+      <br /><sub>Turn timer, AI thinking indicator, undo</sub>
     </td>
     <td align="center" width="50%">
-      <img src="assets/screenshots/screenshot-win.png" alt="Game end screen" width="280" />
+      <img src="assets/screenshots/en/win.png" alt="Victory screen" width="280" />
       <br /><b>Can You Beat the AI?</b>
-      <br /><sub>Dramatic endings with animated kaomoji — win or lose</sub>
+      <br /><sub>Dramatic endings with animated kaomoji</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="50%">
-      <img src="assets/screenshots/screenshot-settings.png" alt="Settings sheet" width="280" />
+      <img src="assets/screenshots/en/settings.png" alt="Settings" width="280" />
       <br /><b>Customize Everything</b>
-      <br /><sub>3 difficulty levels, play as Black or White, W/L/D stats</sub>
+      <br /><sub>3 difficulty levels, play as Black or White</sub>
     </td>
     <td align="center" width="50%">
-      <img src="assets/screenshots/screenshot-replay.png" alt="Move-by-move replay" width="280" />
+      <img src="assets/screenshots/en/replay.png" alt="Replay" width="280" />
       <br /><b>Review Any Game</b>
-      <br /><sub>Step through moves, auto-play, see AI thinking time</sub>
+      <br /><sub>Step through moves, see AI thinking time</sub>
     </td>
   </tr>
 </table>
 
 ---
 
-## Features
+## Why This One?
 
-| | |
-|---|---|
-| **Unbeatable AI** | Minimax with alpha-beta pruning, running as compiled Rust → WebAssembly |
-| **3 Difficulty Levels** | Easy, Medium, Hard — adapt the challenge to your skill |
-| **Play as Black or White** | Choose your side, or switch mid-session in Settings |
-| **Game History** | All games saved locally with W/L/D records |
-| **Move-by-Move Replay** | Step through any past game, see AI thinking time per move |
-| **Win/Loss/Draw Stats** | Track your performance over time |
-| **Undo** | Take back your last move (undoes both yours and AI's) |
-| **Turn Timer** | See how long you've been thinking |
-| **Cinematic Endings** | Animated kaomoji, dramatic overlays — confetti on victory |
-| **Mobile-First** | Touch-optimized, fully playable on phones and tablets |
-| **Instant Load** | No server, no signup — runs entirely in your browser |
-| **11 Languages** | English, Chinese, Japanese, Korean, German, Spanish, French, Italian, Dutch, Portuguese |
+- **Unbeatable AI** — Rust-powered engine compiled to WebAssembly. Sub-100ms moves. Good luck.
+- **Runs in your browser** — No app to install, no account to create. Works on any device.
+- **Mobile-first** — Touch-optimized for phones and tablets. Instant load.
+- **11 languages** — English, 中文, 日本語, 한국어, Deutsch, Español, Français, Italiano, Nederlands, Português.
+- **Game history & replay** — Every game saved. Step through any past match move-by-move.
 
 ---
-
-## 11 Languages
-
-Every string is localized. Switch instantly from the settings drawer.
-
-**English** · **简体中文** · **繁體中文** · **日本語** · **한국어** · **Deutsch** · **Español** · **Français** · **Italiano** · **Nederlands** · **Português**
-
-<p align="center">
-  <img src="assets/screenshots/screenshot-lang-en.png" width="160" />
-  &nbsp;
-  <img src="assets/screenshots/screenshot-lang-ja.png" width="160" />
-  &nbsp;
-  <img src="assets/screenshots/screenshot-lang-zh-CN.png" width="160" />
-  &nbsp;
-  <img src="assets/screenshots/screenshot-lang-ko.png" width="160" />
-</p>
 
 <details>
-<summary>See all 11 languages</summary>
+<summary><b>For Developers</b></summary>
 <br />
-<table>
-  <tr>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-en.png" width="140" /><br /><b>English</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-zh-CN.png" width="140" /><br /><b>简体中文</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-zh-TW.png" width="140" /><br /><b>繁體中文</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-ja.png" width="140" /><br /><b>日本語</b></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-ko.png" width="140" /><br /><b>한국어</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-de.png" width="140" /><br /><b>Deutsch</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-es.png" width="140" /><br /><b>Español</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-fr.png" width="140" /><br /><b>Français</b></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-it.png" width="140" /><br /><b>Italiano</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-nl.png" width="140" /><br /><b>Nederlands</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-pt.png" width="140" /><br /><b>Português</b></td>
-    <td></td>
-  </tr>
-</table>
-</details>
-
----
-
-## How It Works
-
-```
-  React 19 + TypeScript        Web Worker           Rust → WebAssembly
-┌───────────────────────┐   ┌──────────────┐   ┌──────────────────────┐
-│  UI · State · i18n    │──▶│  Background  │──▶│  Minimax + Alpha-    │
-│  Touch · History      │◀──│  Thread      │◀──│  Beta Pruning        │
-└───────────────────────┘   └──────────────┘   └──────────────────────┘
-       Your screen            Non-blocking          <100ms per move
-```
-
-The AI runs in a Web Worker so the UI never freezes — even on mobile. The Rust engine compiles to WASM for near-native speed in the browser.
-
----
-
-## For Developers
-
-### Quick Start
 
 ```bash
 git clone https://github.com/tombelieber/gomoku.git
@@ -144,35 +71,24 @@ bun run dev            # http://localhost:5173
 
 **Prerequisites:** [Rust](https://rustup.rs/) · [Bun](https://bun.sh) · [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
 
-### Go Deeper
-
-| Doc | What's inside |
-|-----|---------------|
-| [**CONTRIBUTING.md**](CONTRIBUTING.md) | Dev setup, project structure, how to extend the game, code style |
-| [**docs/ARCHITECTURE.md**](docs/ARCHITECTURE.md) | AI algorithm deep-dive, WASM integration, evaluation function, design decisions |
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
+| Layer | Tech |
+|-------|------|
 | Engine | Rust, WebAssembly, wasm-pack |
-| Frontend | React 19, TypeScript, Zustand |
-| Build | Vite, Bun |
-| i18n | Custom lightweight system (11 locales, zero dependencies) |
+| Frontend | React 19, TypeScript, Zustand, Vite |
 | Hosting | Cloudflare Pages |
 
----
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [ARCHITECTURE.md](docs/ARCHITECTURE.md) for deep dives.
 
-## License
-
-[MIT](LICENSE) — free to use, modify, and distribute.
+</details>
 
 ---
 
 <p align="center">
-  Made with <a href="https://github.com/tombelieber">Tom Tang</a>
-  <br />
-  <a href="https://github.com/tombelieber/gomoku">Star on GitHub</a>
+  <img src="https://img.shields.io/badge/Rust-WASM-orange?logo=rust" alt="Rust WASM" />
+  <img src="https://img.shields.io/badge/React_19-TypeScript-blue?logo=react" alt="React 19" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/tombelieber/gomoku">Star on GitHub</a> · MIT License · Made by <a href="https://github.com/tombelieber">Tom Tang</a>
 </p>

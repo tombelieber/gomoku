@@ -10,5 +10,7 @@ assets/*.webm
 scripts/ai-demo/
 scripts/demo.config.json
 scripts/record-demo.ts
+scripts/pipeline-benchmark.ts
+scripts/pipeline-benchmark.jsonl
 docs/plans/
 docs/internal/
