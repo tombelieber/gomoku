@@ -171,6 +171,7 @@ export function GameEndOverlay() {
 
       {/* Primary CTA — Play Again */}
       <button
+        data-testid="play-again-btn"
         onClick={(e) => { e.stopPropagation(); reset(); }}
         style={{
           fontFamily: "'Noto Serif TC', serif",
