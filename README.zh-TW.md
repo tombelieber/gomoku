@@ -4,7 +4,7 @@
 
 一款完全可玩的五子棋遊戲，配備無敵的 AI 對手，採用 Rust WebAssembly 和 React 構建。這是最先進的 AI 在一個週末能打造的成品。它是免費、開源且具有教育意義的—複製它、從中學習、修改它。
 
-**[▶ 立即線上遊玩](https://open-open-gomoku.pages.dev)** • [按主題學習](#學習路徑) • [查看代碼](#完整技術分解)
+**[▶ 立即線上遊玩](https://open-gomoku.pages.dev)** • [按主題學習](#學習路徑) • [查看代碼](#完整技術分解)
 
 ---
 
@@ -24,7 +24,7 @@
 ## 快速開始
 
 ### 線上遊玩（立即開始）
-[在 Cloudflare Pages 上遊玩](https://open-open-gomoku.pages.dev)
+[在 Cloudflare Pages 上遊玩](https://open-gomoku.pages.dev)
 
 ### 本地運行
 ```bash

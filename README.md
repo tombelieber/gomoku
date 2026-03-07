@@ -4,7 +4,11 @@
 
 A fully playable Gomoku (五子棋) game with an unbeatable AI opponent, built with Rust WebAssembly and React. This is what state-of-the-art AI can build in a weekend. It's free, open-source, and educational—clone it, learn from it, modify it.
 
-**[▶ Play Online Now](https://open-open-gomoku.pages.dev)** • [Learn by Example](#learning-paths) • [See the Code](#technical-breakdown)
+**[▶ Play Online Now](https://open-gomoku.pages.dev)** • [Learn by Example](#learning-paths) • [See the Code](#technical-breakdown)
+
+<p align="center">
+  <img src="docs/demo.gif" alt="Gomoku gameplay demo — iPhone view, English → 繁體中文" width="300" />
+</p>
 
 ---
 
@@ -24,7 +28,7 @@ Built to showcase what modern AI engineering looks like in March 2026.
 ## Quick Start
 
 ### Play Online (Right Now)
-[Play on Cloudflare Pages](https://open-open-gomoku.pages.dev)
+[Play on Cloudflare Pages](https://open-gomoku.pages.dev)
 
 ### Run Locally
 ```bash

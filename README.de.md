@@ -4,7 +4,7 @@
 
 Ein vollständig spielbares Gomoku (五子棋) Spiel mit einem unbesiegbaren KI-Gegner, entwickelt mit Rust WebAssembly und React. Das ist, was hochmoderne KI an einem Wochenende schaffen kann. Es ist kostenlos, quelloffen und pädagogisch – klonen Sie es, lernen Sie davon, modifizieren Sie es.
 
-**[▶ Jetzt online spielen](https://open-open-gomoku.pages.dev)** • [Learn by Example](#learning-paths) • [See the Code](#technical-breakdown)
+**[▶ Jetzt online spielen](https://open-gomoku.pages.dev)** • [Learn by Example](#learning-paths) • [See the Code](#technical-breakdown)
 
 ---
 
@@ -24,7 +24,7 @@ Entwickelt, um zu zeigen, wie modernes KI-Engineering im März 2026 aussieht.
 ## Schnellstart
 
 ### Online spielen (Sofort)
-[Spielen Sie auf Cloudflare Pages](https://open-open-gomoku.pages.dev)
+[Spielen Sie auf Cloudflare Pages](https://open-gomoku.pages.dev)
 
 ### Lokal ausführen
 ```bash

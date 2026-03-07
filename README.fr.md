@@ -4,7 +4,7 @@
 
 Un jeu Gomoku complètement jouable (五子棋) avec un adversaire IA imbattable, construit avec Rust WebAssembly et React. C'est ce que l'IA de pointe peut construire en un week-end. C'est gratuit, open-source et éducatif : clonez-le, apprenez-le, modifiez-le.
 
-**[▶ Jouer en ligne maintenant](https://open-open-gomoku.pages.dev)** • [Learn by Example](#learning-paths) • [See the Code](#technical-breakdown)
+**[▶ Jouer en ligne maintenant](https://open-gomoku.pages.dev)** • [Learn by Example](#learning-paths) • [See the Code](#technical-breakdown)
 
 ---
 
@@ -24,7 +24,7 @@ Construit pour montrer à quoi ressemble l'ingénierie de l'IA moderne en mars 2
 ## Démarrage rapide
 
 ### Jouer en ligne (Dès maintenant)
-[Jouer sur Cloudflare Pages](https://open-open-gomoku.pages.dev)
+[Jouer sur Cloudflare Pages](https://open-gomoku.pages.dev)
 
 ### Exécuter localement
 ```bash
