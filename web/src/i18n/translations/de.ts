@@ -41,6 +41,7 @@ const de: Translation = {
       yesterday: "Gestern",
     },
     moves: "Züge",
+    back: "Zurück",
   },
   gameEnd: {
     win: "Schwarz gewinnt!",

@@ -41,6 +41,7 @@ const it: Translation = {
       yesterday: "Ieri",
     },
     moves: "mosse",
+    back: "Indietro",
   },
   gameEnd: {
     win: "Nero vince!",

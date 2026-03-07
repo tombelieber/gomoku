@@ -41,6 +41,7 @@ const fr: Translation = {
       yesterday: "Hier",
     },
     moves: "coups",
+    back: "Retour",
   },
   gameEnd: {
     win: "Noir gagne !",

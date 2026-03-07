@@ -41,6 +41,7 @@ const es: Translation = {
       yesterday: "Ayer",
     },
     moves: "movimientos",
+    back: "Volver",
   },
   gameEnd: {
     win: "¡Negras ganan!",

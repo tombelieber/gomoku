@@ -1,21 +1,10 @@
 import { useEffect, useMemo } from "react";
 import { useReplay } from "@/hooks/useReplay";
 import { loadHistory } from "@/lib/game-history";
+import { useI18n } from "@/i18n/store";
 
-const DIFFICULTY_LABELS = ["簡單", "中等", "困難"] as const;
 const SYSTEM_FONT =
   "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif";
-
-function resultText(winner: "black" | "white" | "draw"): string {
-  switch (winner) {
-    case "black":
-      return "黑棋勝";
-    case "white":
-      return "白棋勝";
-    case "draw":
-      return "和棋";
-  }
-}
 
 type TransportButtonProps = {
   label: string;
@@ -61,6 +50,7 @@ function TransportButton({ label, onClick, disabled }: TransportButtonProps) {
 export function ReplayControls() {
   const { record, step, isPlaying, stepForward, stepBack, goToStep, togglePlay, stopReplay } =
     useReplay();
+  const { t } = useI18n();
 
   // Auto-play effect
   useEffect(() => {
@@ -88,7 +78,15 @@ export function ReplayControls() {
   const totalMoves = record.moves.length;
   const atStart = step === 0;
   const atEnd = step >= totalMoves;
-  const diffLabel = DIFFICULTY_LABELS[record.difficulty] ?? DIFFICULTY_LABELS[1];
+  const diffLabels = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard];
+  const diffLabel = diffLabels[record.difficulty] ?? diffLabels[1];
+
+  const resultText =
+    record.winner === "draw"
+      ? t.game.status.draw
+      : record.winner === "black"
+        ? t.game.status.blackWins
+        : t.game.status.whiteWins;
 
   return (
     <div
@@ -110,7 +108,7 @@ export function ReplayControls() {
         }}
       >
         {gameNumber > 0 && <span style={{ opacity: 0.5 }}>#{gameNumber}</span>}{" "}
-        {resultText(record.winner)} · {diffLabel}
+        {resultText} · {diffLabel}
       </div>
 
       {/* Step counter */}
@@ -197,7 +195,7 @@ export function ReplayControls() {
           e.currentTarget.style.transform = "scale(1)";
         }}
       >
-        返回
+        {t.history.back}
       </button>
     </div>
   );

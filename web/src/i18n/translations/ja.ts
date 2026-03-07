@@ -41,6 +41,7 @@ const ja: Translation = {
       yesterday: "昨日",
     },
     moves: "手",
+    back: "戻る",
   },
   gameEnd: {
     win: "黒の勝ち！",

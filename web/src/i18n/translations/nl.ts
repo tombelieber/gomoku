@@ -41,6 +41,7 @@ const nl: Translation = {
       yesterday: "Gisteren",
     },
     moves: "zetten",
+    back: "Terug",
   },
   gameEnd: {
     win: "Zwart wint!",

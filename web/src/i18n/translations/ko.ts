@@ -41,6 +41,7 @@ const ko: Translation = {
       yesterday: "어제",
     },
     moves: "수",
+    back: "돌아가기",
   },
   gameEnd: {
     win: "흑돌 승리!",

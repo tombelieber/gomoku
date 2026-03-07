@@ -41,6 +41,7 @@ const pt: Translation = {
       yesterday: "Ontem",
     },
     moves: "movimentos",
+    back: "Voltar",
   },
   gameEnd: {
     win: "Pretas vencem!",

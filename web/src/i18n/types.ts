@@ -39,6 +39,7 @@ export interface Translation {
       yesterday: string;
     };
     moves: string;
+    back: string;
   };
   gameEnd: {
     win: string;

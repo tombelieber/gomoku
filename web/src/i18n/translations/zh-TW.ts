@@ -41,6 +41,7 @@ const zhTW: Translation = {
       yesterday: "昨天",
     },
     moves: "步",
+    back: "返回",
   },
   gameEnd: {
     win: "黑棋勝！",
