@@ -7,7 +7,6 @@ web/src/wasm/
 demo-output/
 
 # Private: "how I build" — process, plans, GTM, Claude config (not open-sourced)
-CLAUDE.md
 .claude/
 scripts/ai-demo/
 scripts/demo.config.json
