@@ -8,6 +8,12 @@
     "build:engine": "wasm-pack build engine/ --target web --out-dir ../web/src/wasm/engine",
     "build:web": "cd web && bun run build",
     "build": "bun run build:engine && bun run build:web",
-    "deploy": "bun run build && cd web && bunx wrangler pages deploy dist --project-name open-gomoku"
+    "deploy": "bun run build && cd web && bunx wrangler pages deploy dist --project-name open-gomoku",
+    "demo": "bun run scripts/record-demo.ts",
+    "demo:screenshots": "bun run scripts/screenshot-themes.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "playwright": "^1.58.2"
   }
 }

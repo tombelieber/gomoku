@@ -218,6 +218,9 @@ function emptyCards(
     <rect
       key={`tap-${x}-${y}`}
       className="tap-target"
+      data-testid={`cell-${x}-${y}`}
+      data-x={x}
+      data-y={y}
       x={cx(x) - CELL / 2}
       y={cy(y) - CELL / 2}
       width={CELL}
