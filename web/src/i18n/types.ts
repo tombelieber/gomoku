@@ -1,26 +1,49 @@
 export interface Translation {
-  subtitle: string;
-  difficulty: {
-    easy: string;
-    medium: string;
-    hard: string;
+  common: {
+    appTitle: string;
   };
-  loading: string;
-  status: {
-    blackWins: string;
-    whiteWins: string;
-    draw: string;
-    yourTurnBlack: string;
-    yourTurnWhite: string;
+  game: {
+    difficulty: {
+      easy: string;
+      medium: string;
+      hard: string;
+    };
+    status: {
+      blackWins: string;
+      whiteWins: string;
+      draw: string;
+      yourTurnBlack: string;
+      yourTurnWhite: string;
+    };
+    controls: {
+      undo: string;
+      newGame: string;
+    };
+    ai: {
+      thinking: string;
+    };
+    loading: string;
   };
-  aiThinking: string;
-  undo: string;
-  newGame: string;
+  history: {
+    panel: {
+      header: string;
+    };
+    labels: {
+      won: string;
+      lost: string;
+      draw: string;
+    };
+    dates: {
+      today: string;
+      yesterday: string;
+    };
+    moves: string;
+  };
   gameEnd: {
-    winSubtitle: string;
-    loseSubtitle: string;
-    drawSubtitle: string;
-    clickToRestart: string;
+    win: string;
+    lose: string;
+    draw: string;
+    restartPrompt: string;
   };
   footer: {
     madeWith: string;
