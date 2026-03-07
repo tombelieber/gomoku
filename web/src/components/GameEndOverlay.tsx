@@ -204,6 +204,7 @@ export function GameEndOverlay() {
 
       {/* Secondary — Review */}
       <button
+        data-testid="review-game-btn"
         onClick={handleReview}
         style={{
           fontFamily: "'Noto Serif TC', serif",

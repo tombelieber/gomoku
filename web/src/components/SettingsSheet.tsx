@@ -241,9 +241,11 @@ export function SettingsSheet({ open, onClose }: Props) {
           >
             {difficultyLabels.map((label, i) => {
               const isActive = difficulty === i;
+              const testIds = ["difficulty-easy", "difficulty-medium", "difficulty-hard"] as const;
               return (
                 <button
                   key={i}
+                  data-testid={testIds[i]}
                   onClick={() => {
                     setDifficulty(i as 0 | 1 | 2);
                     reset();

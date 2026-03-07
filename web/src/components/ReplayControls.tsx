@@ -10,13 +10,15 @@ type TransportButtonProps = {
   label: string;
   onClick: () => void;
   disabled?: boolean;
+  "data-testid"?: string;
 };
 
-function TransportButton({ label, onClick, disabled }: TransportButtonProps) {
+function TransportButton({ label, onClick, disabled, "data-testid": testId }: TransportButtonProps) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
+      data-testid={testId}
       style={{
         fontFamily: SYSTEM_FONT,
         fontSize: "0.9rem",
@@ -153,6 +155,7 @@ export function ReplayControls() {
           label={"▷"}
           onClick={stepForward}
           disabled={atEnd}
+          data-testid="replay-step-fwd-btn"
         />
         <TransportButton
           label={"▷|"}
@@ -163,6 +166,7 @@ export function ReplayControls() {
 
       {/* Return button */}
       <button
+        data-testid="replay-return-btn"
         onClick={stopReplay}
         style={{
           fontFamily: "'Noto Serif TC', serif",

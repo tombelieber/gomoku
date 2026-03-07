@@ -28,6 +28,7 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((v) => !v)}
         aria-label="Language"
         aria-expanded={open}
+        data-testid="language-selector"
         style={{
           width: "100%",
           fontFamily: FONT,
