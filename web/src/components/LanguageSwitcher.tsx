@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useI18n } from "@/i18n/store";
-import { SUPPORTED_LOCALES, LOCALE_LABELS, type Locale } from "@/i18n/types";
+import { SUPPORTED_LOCALES, LOCALE_LABELS } from "@/i18n/types";
 
 const FONT =
   "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif";
