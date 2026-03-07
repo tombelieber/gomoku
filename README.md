@@ -72,28 +72,44 @@
 
 ## 11 Languages
 
-Every string is localized. Switch languages instantly from the settings drawer.
+Every string is localized. Switch instantly from the settings drawer.
 
+**English** · **简体中文** · **繁體中文** · **日本語** · **한국어** · **Deutsch** · **Español** · **Français** · **Italiano** · **Nederlands** · **Português**
+
+<p align="center">
+  <img src="assets/screenshots/screenshot-lang-en.png" width="160" />
+  &nbsp;
+  <img src="assets/screenshots/screenshot-lang-ja.png" width="160" />
+  &nbsp;
+  <img src="assets/screenshots/screenshot-lang-zh-CN.png" width="160" />
+  &nbsp;
+  <img src="assets/screenshots/screenshot-lang-ko.png" width="160" />
+</p>
+
+<details>
+<summary>See all 11 languages</summary>
+<br />
 <table>
   <tr>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-en.png" width="160" /><br /><b>English</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-zh-CN.png" width="160" /><br /><b>简体中文</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-zh-TW.png" width="160" /><br /><b>繁體中文</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-ja.png" width="160" /><br /><b>日本語</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-en.png" width="140" /><br /><b>English</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-zh-CN.png" width="140" /><br /><b>简体中文</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-zh-TW.png" width="140" /><br /><b>繁體中文</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-ja.png" width="140" /><br /><b>日本語</b></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-ko.png" width="160" /><br /><b>한국어</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-de.png" width="160" /><br /><b>Deutsch</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-es.png" width="160" /><br /><b>Español</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-fr.png" width="160" /><br /><b>Français</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-ko.png" width="140" /><br /><b>한국어</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-de.png" width="140" /><br /><b>Deutsch</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-es.png" width="140" /><br /><b>Español</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-fr.png" width="140" /><br /><b>Français</b></td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-it.png" width="160" /><br /><b>Italiano</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-nl.png" width="160" /><br /><b>Nederlands</b></td>
-    <td align="center"><img src="assets/screenshots/screenshot-lang-pt.png" width="160" /><br /><b>Português</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-it.png" width="140" /><br /><b>Italiano</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-nl.png" width="140" /><br /><b>Nederlands</b></td>
+    <td align="center"><img src="assets/screenshots/screenshot-lang-pt.png" width="140" /><br /><b>Português</b></td>
     <td></td>
   </tr>
 </table>
+</details>
 
 ---
 
