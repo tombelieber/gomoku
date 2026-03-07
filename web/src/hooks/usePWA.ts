@@ -27,7 +27,8 @@ export const usePWA = create<PWAState>((set, get) => ({
   dismissed: localStorage.getItem(DISMISSED_KEY) === "1",
   isIOS:
     typeof navigator !== "undefined" &&
-    /iPad|iPhone|iPod/.test(navigator.userAgent),
+    (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)),
   isInstalled:
     typeof window !== "undefined" &&
     window.matchMedia("(display-mode: standalone)").matches,
