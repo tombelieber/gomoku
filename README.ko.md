@@ -4,7 +4,7 @@
 
 완전히 플레이 가능한 오목(五子棋) 게임으로, 무적의 AI 상대가 있으며 Rust WebAssembly와 React로 만들어졌습니다. 이것이 최첨단 AI가 주말에 만들 수 있는 것입니다. 완전히 무료이고 오픈 소스이며 교육용입니다. 클론하고 배우고 수정할 수 있습니다.
 
-**[▶ 지금 온라인 플레이](https://gomoku.pages.dev)** • [예시로 배우기](#학습-경로) • [코드 보기](#완전한-기술-분석)
+**[▶ 지금 온라인 플레이](https://open-open-gomoku.pages.dev)** • [예시로 배우기](#학습-경로) • [코드 보기](#완전한-기술-분석)
 
 ---
 
@@ -24,7 +24,7 @@
 ## 빠른 시작
 
 ### 온라인 플레이 (지금 바로)
-[Cloudflare Pages에서 플레이](https://gomoku.pages.dev)
+[Cloudflare Pages에서 플레이](https://open-open-gomoku.pages.dev)
 
 ### 로컬에서 실행
 ```bash

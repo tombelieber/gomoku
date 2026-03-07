@@ -4,7 +4,7 @@
 
 Rust WebAssemblyとReactで構築された、完全にプレイ可能なゴモク（五子棋）ゲーム。不敗のAI対戦相手を備えています。これは最先端のAIが1週末で構築できる成果です。無料、オープンソース、教育的です。クローンして、学んで、修正してください。
 
-**[▶ 今すぐオンラインでプレイ](https://gomoku.pages.dev)** • [例で学ぶ](#learning-paths) • [コードを見る](#technical-breakdown)
+**[▶ 今すぐオンラインでプレイ](https://open-open-gomoku.pages.dev)** • [例で学ぶ](#learning-paths) • [コードを見る](#technical-breakdown)
 
 ---
 
@@ -24,7 +24,7 @@ Rust WebAssemblyとReactで構築された、完全にプレイ可能なゴモ�
 ## クイックスタート
 
 ### オンラインでプレイ（今すぐ）
-[Cloudflare Pagesでプレイ](https://gomoku.pages.dev)
+[Cloudflare Pagesでプレイ](https://open-open-gomoku.pages.dev)
 
 ### ローカルで実行
 ```bash
