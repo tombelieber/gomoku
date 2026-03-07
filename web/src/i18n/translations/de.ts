@@ -1,28 +1,51 @@
 import type { Translation } from "../types";
 
 const de: Translation = {
-  subtitle: "GOMOKU",
-  difficulty: {
-    easy: "Leicht",
-    medium: "Mittel",
-    hard: "Schwer",
+  common: {
+    appTitle: "GOMOKU",
   },
-  loading: "Engine wird geladen...",
-  status: {
-    blackWins: "Schwarz gewinnt!",
-    whiteWins: "Weiß gewinnt!",
-    draw: "Unentschieden!",
-    yourTurnBlack: "Du bist dran — Schwarz",
-    yourTurnWhite: "Du bist dran — Weiß",
+  game: {
+    difficulty: {
+      easy: "Leicht",
+      medium: "Mittel",
+      hard: "Schwer",
+    },
+    status: {
+      blackWins: "Schwarz gewinnt!",
+      whiteWins: "Weiß gewinnt!",
+      draw: "Unentschieden!",
+      yourTurnBlack: "Du bist dran — Schwarz",
+      yourTurnWhite: "Du bist dran — Weiß",
+    },
+    controls: {
+      undo: "Rückgängig",
+      newGame: "Neues Spiel",
+    },
+    ai: {
+      thinking: "KI denkt nach",
+    },
+    loading: "Engine wird geladen...",
   },
-  aiThinking: "KI denkt nach",
-  undo: "Rückgängig",
-  newGame: "Neues Spiel",
+  history: {
+    panel: {
+      header: "Spielverlauf",
+    },
+    labels: {
+      won: "Gewonnen",
+      lost: "Verloren",
+      draw: "Unentschieden",
+    },
+    dates: {
+      today: "Heute",
+      yesterday: "Gestern",
+    },
+    moves: "Züge",
+  },
   gameEnd: {
-    winSubtitle: "Schwarz gewinnt!",
-    loseSubtitle: "Weiß gewinnt",
-    drawSubtitle: "Unentschieden!",
-    clickToRestart: "Klicke irgendwo für ein neues Spiel",
+    win: "Schwarz gewinnt!",
+    lose: "Weiß gewinnt",
+    draw: "Unentschieden!",
+    restartPrompt: "Klicke irgendwo für ein neues Spiel",
   },
   footer: {
     madeWith: "Erstellt mit",

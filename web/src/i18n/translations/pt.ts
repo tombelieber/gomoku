@@ -1,28 +1,51 @@
 import type { Translation } from "../types";
 
 const pt: Translation = {
-  subtitle: "GOMOKU",
-  difficulty: {
-    easy: "Fácil",
-    medium: "Médio",
-    hard: "Difícil",
+  common: {
+    appTitle: "GOMOKU",
   },
-  loading: "Carregando motor...",
-  status: {
-    blackWins: "Pretas vencem!",
-    whiteWins: "Brancas vencem!",
-    draw: "Empate!",
-    yourTurnBlack: "Sua vez — Pretas",
-    yourTurnWhite: "Sua vez — Brancas",
+  game: {
+    difficulty: {
+      easy: "Fácil",
+      medium: "Médio",
+      hard: "Difícil",
+    },
+    status: {
+      blackWins: "Pretas vencem!",
+      whiteWins: "Brancas vencem!",
+      draw: "Empate!",
+      yourTurnBlack: "Sua vez — Pretas",
+      yourTurnWhite: "Sua vez — Brancas",
+    },
+    controls: {
+      undo: "Desfazer",
+      newGame: "Nova partida",
+    },
+    ai: {
+      thinking: "IA pensando",
+    },
+    loading: "Carregando motor...",
   },
-  aiThinking: "IA pensando",
-  undo: "Desfazer",
-  newGame: "Nova partida",
+  history: {
+    panel: {
+      header: "Histórico de partidas",
+    },
+    labels: {
+      won: "Ganhou",
+      lost: "Perdeu",
+      draw: "Empate",
+    },
+    dates: {
+      today: "Hoje",
+      yesterday: "Ontem",
+    },
+    moves: "movimentos",
+  },
   gameEnd: {
-    winSubtitle: "Pretas vencem!",
-    loseSubtitle: "Brancas vencem",
-    drawSubtitle: "Empate!",
-    clickToRestart: "Clique em qualquer lugar para nova partida",
+    win: "Pretas vencem!",
+    lose: "Brancas vencem",
+    draw: "Empate!",
+    restartPrompt: "Clique em qualquer lugar para nova partida",
   },
   footer: {
     madeWith: "Feito com",

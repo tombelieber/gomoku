@@ -1,28 +1,51 @@
 import type { Translation } from "../types";
 
 const zhCN: Translation = {
-  subtitle: "GOMOKU",
-  difficulty: {
-    easy: "简单",
-    medium: "中等",
-    hard: "困难",
+  common: {
+    appTitle: "GOMOKU",
   },
-  loading: "加载引擎中...",
-  status: {
-    blackWins: "黑棋胜！",
-    whiteWins: "白棋胜！",
-    draw: "平局！",
-    yourTurnBlack: "你的回合 — 黑棋",
-    yourTurnWhite: "你的回合 — 白棋",
+  game: {
+    difficulty: {
+      easy: "简单",
+      medium: "中等",
+      hard: "困难",
+    },
+    status: {
+      blackWins: "黑棋胜！",
+      whiteWins: "白棋胜！",
+      draw: "平局！",
+      yourTurnBlack: "你的回合 — 黑棋",
+      yourTurnWhite: "你的回合 — 白棋",
+    },
+    controls: {
+      undo: "悔棋",
+      newGame: "新局",
+    },
+    ai: {
+      thinking: "AI 思考中",
+    },
+    loading: "加载引擎中...",
   },
-  aiThinking: "AI 思考中",
-  undo: "悔棋",
-  newGame: "新局",
+  history: {
+    panel: {
+      header: "游戏记录",
+    },
+    labels: {
+      won: "赢",
+      lost: "输",
+      draw: "平",
+    },
+    dates: {
+      today: "今天",
+      yesterday: "昨天",
+    },
+    moves: "步",
+  },
   gameEnd: {
-    winSubtitle: "黑棋胜！",
-    loseSubtitle: "白棋胜",
-    drawSubtitle: "平局！",
-    clickToRestart: "点击任意处开始新局",
+    win: "黑棋胜！",
+    lose: "白棋胜",
+    draw: "平局！",
+    restartPrompt: "点击任意处开始新局",
   },
   footer: {
     madeWith: "用心制作",

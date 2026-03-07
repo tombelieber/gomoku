@@ -1,28 +1,51 @@
 import type { Translation } from "../types";
 
 const it: Translation = {
-  subtitle: "GOMOKU",
-  difficulty: {
-    easy: "Facile",
-    medium: "Medio",
-    hard: "Difficile",
+  common: {
+    appTitle: "GOMOKU",
   },
-  loading: "Caricamento motore...",
-  status: {
-    blackWins: "Nero vince!",
-    whiteWins: "Bianco vince!",
-    draw: "Pareggio!",
-    yourTurnBlack: "Il tuo turno — Nero",
-    yourTurnWhite: "Il tuo turno — Bianco",
+  game: {
+    difficulty: {
+      easy: "Facile",
+      medium: "Medio",
+      hard: "Difficile",
+    },
+    status: {
+      blackWins: "Nero vince!",
+      whiteWins: "Bianco vince!",
+      draw: "Pareggio!",
+      yourTurnBlack: "Il tuo turno — Nero",
+      yourTurnWhite: "Il tuo turno — Bianco",
+    },
+    controls: {
+      undo: "Annulla",
+      newGame: "Nuova partita",
+    },
+    ai: {
+      thinking: "IA sta pensando",
+    },
+    loading: "Caricamento motore...",
   },
-  aiThinking: "IA sta pensando",
-  undo: "Annulla",
-  newGame: "Nuova partita",
+  history: {
+    panel: {
+      header: "Storico delle partite",
+    },
+    labels: {
+      won: "Vinto",
+      lost: "Perso",
+      draw: "Pareggio",
+    },
+    dates: {
+      today: "Oggi",
+      yesterday: "Ieri",
+    },
+    moves: "mosse",
+  },
   gameEnd: {
-    winSubtitle: "Nero vince!",
-    loseSubtitle: "Bianco vince",
-    drawSubtitle: "Pareggio!",
-    clickToRestart: "Clicca ovunque per una nuova partita",
+    win: "Nero vince!",
+    lose: "Bianco vince",
+    draw: "Pareggio!",
+    restartPrompt: "Clicca ovunque per una nuova partita",
   },
   footer: {
     madeWith: "Fatto con",

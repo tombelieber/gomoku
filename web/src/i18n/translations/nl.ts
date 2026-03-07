@@ -1,28 +1,51 @@
 import type { Translation } from "../types";
 
 const nl: Translation = {
-  subtitle: "GOMOKU",
-  difficulty: {
-    easy: "Makkelijk",
-    medium: "Gemiddeld",
-    hard: "Moeilijk",
+  common: {
+    appTitle: "GOMOKU",
   },
-  loading: "Engine laden...",
-  status: {
-    blackWins: "Zwart wint!",
-    whiteWins: "Wit wint!",
-    draw: "Gelijkspel!",
-    yourTurnBlack: "Jouw beurt — Zwart",
-    yourTurnWhite: "Jouw beurt — Wit",
+  game: {
+    difficulty: {
+      easy: "Makkelijk",
+      medium: "Gemiddeld",
+      hard: "Moeilijk",
+    },
+    status: {
+      blackWins: "Zwart wint!",
+      whiteWins: "Wit wint!",
+      draw: "Gelijkspel!",
+      yourTurnBlack: "Jouw beurt — Zwart",
+      yourTurnWhite: "Jouw beurt — Wit",
+    },
+    controls: {
+      undo: "Ongedaan maken",
+      newGame: "Nieuw spel",
+    },
+    ai: {
+      thinking: "AI denkt na",
+    },
+    loading: "Engine laden...",
   },
-  aiThinking: "AI denkt na",
-  undo: "Ongedaan maken",
-  newGame: "Nieuw spel",
+  history: {
+    panel: {
+      header: "Speelgeschiedenis",
+    },
+    labels: {
+      won: "Gewonnen",
+      lost: "Verloren",
+      draw: "Gelijkspel",
+    },
+    dates: {
+      today: "Vandaag",
+      yesterday: "Gisteren",
+    },
+    moves: "zetten",
+  },
   gameEnd: {
-    winSubtitle: "Zwart wint!",
-    loseSubtitle: "Wit wint",
-    drawSubtitle: "Gelijkspel!",
-    clickToRestart: "Klik ergens om een nieuw spel te starten",
+    win: "Zwart wint!",
+    lose: "Wit wint",
+    draw: "Gelijkspel!",
+    restartPrompt: "Klik ergens om een nieuw spel te starten",
   },
   footer: {
     madeWith: "Gemaakt met",

@@ -1,28 +1,51 @@
 import type { Translation } from "../types";
 
 const ja: Translation = {
-  subtitle: "五目並べ",
-  difficulty: {
-    easy: "かんたん",
-    medium: "ふつう",
-    hard: "むずかしい",
+  common: {
+    appTitle: "五目並べ",
   },
-  loading: "エンジン読み込み中...",
-  status: {
-    blackWins: "黒の勝ち！",
-    whiteWins: "白の勝ち！",
-    draw: "引き分け！",
-    yourTurnBlack: "あなたの番 — 黒",
-    yourTurnWhite: "あなたの番 — 白",
+  game: {
+    difficulty: {
+      easy: "かんたん",
+      medium: "ふつう",
+      hard: "むずかしい",
+    },
+    status: {
+      blackWins: "黒の勝ち！",
+      whiteWins: "白の勝ち！",
+      draw: "引き分け！",
+      yourTurnBlack: "あなたの番 — 黒",
+      yourTurnWhite: "あなたの番 — 白",
+    },
+    controls: {
+      undo: "待った",
+      newGame: "新しい対局",
+    },
+    ai: {
+      thinking: "AI 思考中",
+    },
+    loading: "エンジン読み込み中...",
   },
-  aiThinking: "AI 思考中",
-  undo: "待った",
-  newGame: "新しい対局",
+  history: {
+    panel: {
+      header: "対局記録",
+    },
+    labels: {
+      won: "勝",
+      lost: "負",
+      draw: "平",
+    },
+    dates: {
+      today: "今日",
+      yesterday: "昨日",
+    },
+    moves: "手",
+  },
   gameEnd: {
-    winSubtitle: "黒の勝ち！",
-    loseSubtitle: "白の勝ち",
-    drawSubtitle: "引き分け！",
-    clickToRestart: "クリックして新しい対局を開始",
+    win: "黒の勝ち！",
+    lose: "白の勝ち",
+    draw: "引き分け！",
+    restartPrompt: "クリックして新しい対局を開始",
   },
   footer: {
     madeWith: "Made with",

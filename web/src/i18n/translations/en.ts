@@ -1,28 +1,52 @@
+// web/src/i18n/translations/en.ts
 import type { Translation } from "../types";
 
 const en: Translation = {
-  subtitle: "GOMOKU",
-  difficulty: {
-    easy: "Easy",
-    medium: "Medium",
-    hard: "Hard",
+  common: {
+    appTitle: "GOMOKU",
   },
-  loading: "Loading engine...",
-  status: {
-    blackWins: "Black wins!",
-    whiteWins: "White wins!",
-    draw: "Draw!",
-    yourTurnBlack: "Your turn — Black",
-    yourTurnWhite: "Your turn — White",
+  game: {
+    difficulty: {
+      easy: "Easy",
+      medium: "Medium",
+      hard: "Hard",
+    },
+    status: {
+      blackWins: "Black wins!",
+      whiteWins: "White wins!",
+      draw: "Draw!",
+      yourTurnBlack: "Your turn — Black",
+      yourTurnWhite: "Your turn — White",
+    },
+    controls: {
+      undo: "Undo",
+      newGame: "New Game",
+    },
+    ai: {
+      thinking: "AI thinking",
+    },
+    loading: "Loading engine...",
   },
-  aiThinking: "AI thinking",
-  undo: "Undo",
-  newGame: "New Game",
+  history: {
+    panel: {
+      header: "Game Records",
+    },
+    labels: {
+      won: "Won",
+      lost: "Lost",
+      draw: "Draw",
+    },
+    dates: {
+      today: "Today",
+      yesterday: "Yesterday",
+    },
+    moves: "moves",
+  },
   gameEnd: {
-    winSubtitle: "Black wins!",
-    loseSubtitle: "White wins",
-    drawSubtitle: "Draw!",
-    clickToRestart: "Click anywhere to start a new game",
+    win: "Black wins!",
+    lose: "White wins",
+    draw: "Draw!",
+    restartPrompt: "Click anywhere to start a new game",
   },
   footer: {
     madeWith: "Made with",

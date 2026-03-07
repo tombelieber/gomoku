@@ -1,28 +1,51 @@
 import type { Translation } from "../types";
 
 const fr: Translation = {
-  subtitle: "GOMOKU",
-  difficulty: {
-    easy: "Facile",
-    medium: "Moyen",
-    hard: "Difficile",
+  common: {
+    appTitle: "GOMOKU",
   },
-  loading: "Chargement du moteur...",
-  status: {
-    blackWins: "Noir gagne !",
-    whiteWins: "Blanc gagne !",
-    draw: "Match nul !",
-    yourTurnBlack: "Ton tour — Noir",
-    yourTurnWhite: "Ton tour — Blanc",
+  game: {
+    difficulty: {
+      easy: "Facile",
+      medium: "Moyen",
+      hard: "Difficile",
+    },
+    status: {
+      blackWins: "Noir gagne !",
+      whiteWins: "Blanc gagne !",
+      draw: "Match nul !",
+      yourTurnBlack: "Ton tour — Noir",
+      yourTurnWhite: "Ton tour — Blanc",
+    },
+    controls: {
+      undo: "Annuler",
+      newGame: "Nouvelle partie",
+    },
+    ai: {
+      thinking: "IA réfléchit",
+    },
+    loading: "Chargement du moteur...",
   },
-  aiThinking: "IA réfléchit",
-  undo: "Annuler",
-  newGame: "Nouvelle partie",
+  history: {
+    panel: {
+      header: "Historique des parties",
+    },
+    labels: {
+      won: "Gagné",
+      lost: "Perdu",
+      draw: "Nul",
+    },
+    dates: {
+      today: "Aujourd'hui",
+      yesterday: "Hier",
+    },
+    moves: "coups",
+  },
   gameEnd: {
-    winSubtitle: "Noir gagne !",
-    loseSubtitle: "Blanc gagne",
-    drawSubtitle: "Match nul !",
-    clickToRestart: "Cliquez n'importe où pour une nouvelle partie",
+    win: "Noir gagne !",
+    lose: "Blanc gagne",
+    draw: "Match nul !",
+    restartPrompt: "Cliquez n'importe où pour une nouvelle partie",
   },
   footer: {
     madeWith: "Fait avec",
