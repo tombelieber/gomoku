@@ -23,17 +23,25 @@ const starPoints = STAR_COORDS.flatMap((sx) =>
   })),
 );
 
-export function Board() {
-  const { board, playMove, winner, isThinking, lastAiMove, lastPlayerMove, currentPlayer } =
+type BoardProps = {
+  replayBoard?: number[][];
+  replayLastMove?: { x: number; y: number } | null;
+};
+
+export function Board({ replayBoard, replayLastMove }: BoardProps) {
+  const isReplay = !!replayBoard;
+  const { board: gameBoard, playMove, winner, isThinking, lastAiMove, lastPlayerMove, currentPlayer } =
     useGame();
+  const board = replayBoard ?? gameBoard;
 
   const handleClick = useCallback(
     (x: number, y: number) => {
+      if (isReplay) return;
       if (winner || isThinking || currentPlayer !== "black") return;
       if (board[y][x] !== 0) return;
       playMove(x, y);
     },
-    [winner, isThinking, currentPlayer, board, playMove],
+    [isReplay, winner, isThinking, currentPlayer, board, playMove],
   );
 
   const cx = (x: number) => PAD + x * CELL;
@@ -188,19 +196,22 @@ export function Board() {
           })}
 
           {/* Last move marker */}
-          {lastAiMove && (
-            <circle
-              className="last-marker"
-              cx={cx(lastAiMove.x)}
-              cy={cy(lastAiMove.y)}
-              r={4}
-              fill="#A0342E"
-              style={{ animation: "pulse 2s ease-in-out infinite" }}
-            />
-          )}
+          {(() => {
+            const effectiveLastMove = isReplay ? replayLastMove : lastAiMove;
+            return effectiveLastMove ? (
+              <circle
+                className="last-marker"
+                cx={cx(effectiveLastMove.x)}
+                cy={cy(effectiveLastMove.y)}
+                r={4}
+                fill="#A0342E"
+                style={{ animation: "pulse 2s ease-in-out infinite" }}
+              />
+            ) : null;
+          })()}
 
           {/* Tap targets — use CSS :hover instead of React state */}
-          {emptyCards(emptycells, handleClick, cx, cy)}
+          {!isReplay && emptyCards(emptycells, handleClick, cx, cy)}
         </svg>
       </div>
     </div>
