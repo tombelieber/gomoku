@@ -57,14 +57,17 @@ export function GameControls() {
         <span style={{ fontSize: "1rem", color: "var(--ink-light)" }}>{statusText}</span>
       </div>
 
-      {/* Thinking indicator */}
+      {/* Thinking indicator — always in flow to prevent layout shift */}
       <div
         style={{
-          display: isThinking ? "flex" : "none",
+          display: "flex",
           alignItems: "center",
           gap: "0.35rem",
           fontSize: "0.85rem",
           color: "var(--accent)",
+          visibility: isThinking ? "visible" : "hidden",
+          opacity: isThinking ? 1 : 0,
+          transition: "opacity 0.25s ease",
         }}
       >
         <span>AI 思考中</span>
