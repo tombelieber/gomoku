@@ -19,7 +19,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   min-height: 100dvh;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -78,6 +78,21 @@ body::after {
   40% { opacity: 1; transform: scale(1.2); }
 }
 
+/* Responsive: tighten layout on small screens */
+@media (max-height: 700px) {
+  .site-footer {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    gap: 0.3rem !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .board-frame {
+    padding: 4px !important;
+  }
+}
+
 .stone-new {
   animation: stoneDrop 0.3s ease-out both;
 }
@@ -132,4 +147,53 @@ body::after {
   0% { opacity: 0; transform: translateY(0) translateX(0) rotate(0deg); }
   8% { opacity: 0.85; }
   100% { opacity: 0; transform: translateY(110vh) translateX(var(--drift, 0px)) rotate(540deg); }
+}
+
+/* Bottom sheet slide-up animation */
+@keyframes sheetSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Settings bar */
+.settings-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.settings-bar:active .settings-gear {
+  transform: rotate(30deg);
+}
+
+.settings-gear {
+  transition: transform 0.2s ease;
+}
+
+/* Responsive board sizing */
+.board-frame svg {
+  width: min(92vw, calc(100dvh - 200px)) !important;
+  height: min(92vw, calc(100dvh - 200px)) !important;
+}
+
+@media (min-width: 480px) {
+  .board-frame svg {
+    width: min(75vw, calc(100dvh - 220px), 560px) !important;
+    height: min(75vw, calc(100dvh - 220px), 560px) !important;
+  }
+}
+
+/* Safe area support */
+.app-root {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* LanguageSwitcher full-width in sheet context */
+.settings-sheet select {
+  width: 100%;
 }

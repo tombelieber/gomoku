@@ -99,8 +99,8 @@ export function Board({ replayBoard, replayLastMove }: BoardProps) {
         <svg
           viewBox={`0 0 ${TOTAL} ${TOTAL}`}
           style={{
-            width: "min(92vw, 400px)",
-            height: "min(92vw, 400px)",
+            width: "100%",
+            height: "100%",
             touchAction: "none",
             display: "block",
           }}
