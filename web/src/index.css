@@ -161,7 +161,7 @@ body::after {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 6px 0;
+  padding: 6px clamp(16px, 4vw, 32px);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
