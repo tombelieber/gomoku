@@ -23,6 +23,16 @@ This project supports 11 languages. **Every user-visible string must go through 
 - **Styling:** Inline styles + CSS custom properties (no Tailwind classes used despite dep)
 - **Pre-commit:** Lefthook
 
+## Versioning & Deploy
+
+- `bun run deploy` auto-bumps the version before build+deploy
+- Bump type is auto-detected from commits since last `release:` commit:
+  - Any `feat:` commit → **minor** bump (e.g. 1.0.0 → 1.1.0)
+  - Only `fix:`, `chore:`, `docs:`, etc. → **patch** bump (e.g. 1.0.0 → 1.0.1)
+- Both `package.json` and `web/package.json` are kept in sync
+- The script commits the version bump as `release: vX.Y.Z` before building
+- `APP_VERSION` is exposed to the frontend via Vite's `define` config
+
 ## Key Paths
 
 - `web/src/hooks/useGame.ts` — main game Zustand store
@@ -33,3 +43,4 @@ This project supports 11 languages. **Every user-visible string must go through 
 - `web/src/workers/engine.worker.ts` — WASM bridge worker
 - `scripts/validate-i18n.ts` — pre-commit: checks all locales have all keys
 - `scripts/check-hardcoded-jsx.ts` — pre-commit: detects hardcoded strings in JSX
+- `scripts/version-bump.ts` — auto version bump (patch/minor based on commit history)
