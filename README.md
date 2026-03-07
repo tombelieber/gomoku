@@ -7,7 +7,9 @@
 </p>
 
 <p align="center">
-  <img src="assets/demo.gif" alt="Gomoku gameplay demo" width="320" />
+  <video src="assets/demo.mp4" width="320" autoplay loop muted playsinline>
+    <img src="assets/screenshots/screenshot-midgame.png" alt="Gomoku gameplay demo" width="320" />
+  </video>
 </p>
 
 <p align="center">
