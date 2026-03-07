@@ -11,6 +11,7 @@ export class EngineBridge {
   private worker: Worker;
   private onState: Callback;
   private onReady: (() => void) | null = null;
+  private onInitError: ((err: Error) => void) | null = null;
   private onAiMove: ((result: { x: number; y: number; winner: string | null }) => void) | null = null;
   private onMoveResult: ((state: GameState) => void) | null = null;
 
@@ -42,14 +43,15 @@ export class EngineBridge {
         break;
       case "error":
         console.error("Engine failed to load:", msg.message);
-        this.onReady?.();
+        this.onInitError?.(new Error(String(msg.message)));
         break;
     }
   }
 
   init(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.onReady = resolve;
+      this.onInitError = reject;
       this.worker.postMessage({ type: "init" });
     });
   }

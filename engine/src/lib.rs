@@ -60,7 +60,9 @@ impl Game {
             _ => Difficulty::Medium,
         };
         let (x, y) = ai::best_move(&self.board, self.current_player, diff);
-        self.board.place(x, y, self.current_player).unwrap();
+        if self.board.place(x, y, self.current_player).is_err() {
+            return JsValue::NULL;
+        }
         self.move_history.push((x, y));
 
         let winner = self.board.check_winner().map(|c| match c {

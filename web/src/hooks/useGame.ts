@@ -45,8 +45,13 @@ export const useGame = create<GameStore>((set, get) => ({
       });
     });
     set({ bridge });
-    await bridge.init();
-    set({ isReady: true });
+    try {
+      await bridge.init();
+      set({ isReady: true });
+    } catch {
+      bridge.destroy();
+      set({ bridge: null, isReady: false });
+    }
   },
 
   playMove: async (x: number, y: number) => {
