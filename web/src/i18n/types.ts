@@ -73,6 +73,14 @@ export interface Translation {
     playFirst: string;
     playSecond: string;
   };
+  pwa: {
+    installTitle: string;
+    installAction: string;
+    iosGuide: string;
+    updateAvailable: string;
+    updateAction: string;
+    dismiss: string;
+  };
 }
 
 export const SUPPORTED_LOCALES = [

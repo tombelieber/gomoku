@@ -75,6 +75,14 @@ const ja: Translation = {
     playFirst: "先手 (黒)",
     playSecond: "後手 (白)",
   },
+  pwa: {
+    installTitle: "オフラインで遊ぶ",
+    installAction: "アプリをインストール",
+    iosGuide: "共有をタップして「ホーム画面に追加」を選択",
+    updateAvailable: "アップデートあり",
+    updateAction: "更新",
+    dismiss: "後で",
+  },
 };
 
 export default ja;

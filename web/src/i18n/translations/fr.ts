@@ -75,6 +75,14 @@ const fr: Translation = {
     playFirst: "Premier (Noir)",
     playSecond: "Second (Blanc)",
   },
+  pwa: {
+    installTitle: "Jouer hors ligne",
+    installAction: "Installer l'appli",
+    iosGuide: "Appuyez sur Partager puis \"Sur l'écran d'accueil\"",
+    updateAvailable: "Mise à jour disponible",
+    updateAction: "Rafraîchir",
+    dismiss: "Plus tard",
+  },
 };
 
 export default fr;

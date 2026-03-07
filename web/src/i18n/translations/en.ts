@@ -76,6 +76,14 @@ const en: Translation = {
     playFirst: "First (Black)",
     playSecond: "Second (White)",
   },
+  pwa: {
+    installTitle: "Play offline",
+    installAction: "Install App",
+    iosGuide: "Tap Share then \"Add to Home Screen\"",
+    updateAvailable: "Update available",
+    updateAction: "Refresh",
+    dismiss: "Not now",
+  },
 };
 
 export default en;

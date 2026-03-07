@@ -75,6 +75,14 @@ const zhCN: Translation = {
     playFirst: "先手 (黑)",
     playSecond: "后手 (白)",
   },
+  pwa: {
+    installTitle: "离线游玩",
+    installAction: "安装应用",
+    iosGuide: "点击分享，然后选择「添加到主屏幕」",
+    updateAvailable: "有新版本",
+    updateAction: "刷新",
+    dismiss: "暂不",
+  },
 };
 
 export default zhCN;

@@ -4,6 +4,7 @@ import { GameControls } from "@/components/GameControls";
 import { ReplayControls } from "@/components/ReplayControls";
 import { GameEndOverlay } from "@/components/GameEndOverlay";
 import { SettingsSheet } from "@/components/SettingsSheet";
+import { InstallBanner } from "@/components/InstallBanner";
 import { useGame } from "@/hooks/useGame";
 import { useReplay } from "@/hooks/useReplay";
 import { useI18n } from "@/i18n/store";
@@ -271,6 +272,7 @@ export default function App() {
       <SettingsSheet open={settingsOpen} onClose={() => setSettingsOpen(false)} />
 
       <GameEndOverlay />
+      <InstallBanner />
 
       {/* Decorative seal — stays Chinese */}
       <div

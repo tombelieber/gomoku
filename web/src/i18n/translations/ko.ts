@@ -75,6 +75,14 @@ const ko: Translation = {
     playFirst: "선공 (흑돌)",
     playSecond: "후공 (백돌)",
   },
+  pwa: {
+    installTitle: "오프라인 플레이",
+    installAction: "앱 설치",
+    iosGuide: "공유를 탭한 후 \"홈 화면에 추가\"를 선택",
+    updateAvailable: "업데이트 가능",
+    updateAction: "새로고침",
+    dismiss: "나중에",
+  },
 };
 
 export default ko;

@@ -75,6 +75,14 @@ const nl: Translation = {
     playFirst: "Eerste (Zwart)",
     playSecond: "Tweede (Wit)",
   },
+  pwa: {
+    installTitle: "Offline spelen",
+    installAction: "App installeren",
+    iosGuide: "Tik op Deel en dan \"Zet op beginscherm\"",
+    updateAvailable: "Update beschikbaar",
+    updateAction: "Vernieuwen",
+    dismiss: "Later",
+  },
 };
 
 export default nl;

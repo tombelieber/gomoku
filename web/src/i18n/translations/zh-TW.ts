@@ -75,6 +75,14 @@ const zhTW: Translation = {
     playFirst: "先手 (黑)",
     playSecond: "後手 (白)",
   },
+  pwa: {
+    installTitle: "離線遊玩",
+    installAction: "安裝應用",
+    iosGuide: "點選分享，然後選擇「加入主畫面」",
+    updateAvailable: "有新版本",
+    updateAction: "重新整理",
+    dismiss: "暫不",
+  },
 };
 
 export default zhTW;

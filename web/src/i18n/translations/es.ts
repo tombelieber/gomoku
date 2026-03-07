@@ -75,6 +75,14 @@ const es: Translation = {
     playFirst: "Primero (Negras)",
     playSecond: "Segundo (Blancas)",
   },
+  pwa: {
+    installTitle: "Jugar sin conexión",
+    installAction: "Instalar app",
+    iosGuide: "Toca Compartir y luego \"Añadir a pantalla de inicio\"",
+    updateAvailable: "Actualización disponible",
+    updateAction: "Actualizar",
+    dismiss: "Ahora no",
+  },
 };
 
 export default es;
