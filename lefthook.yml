@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: false
+  commands:
+    i18n-validate:
+      glob: "web/src/i18n/translations/*.ts"
+      run: bun scripts/validate-i18n.ts
+      stage_fixed: true
