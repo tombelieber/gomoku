@@ -42,7 +42,7 @@ impl Game {
             return false;
         }
         self.move_history.push((x, y));
-        if self.board.check_winner().is_some() {
+        if self.board.check_winner_at(x, y).is_some() {
             self.winner = Some(self.current_player);
         }
         self.current_player = self.current_player.opponent();
@@ -65,13 +65,13 @@ impl Game {
         }
         self.move_history.push((x, y));
 
-        let winner = self.board.check_winner().map(|c| match c {
+        let winner = self.board.check_winner_at(x, y).map(|c| match c {
             Cell::Black => "black".to_string(),
             Cell::White => "white".to_string(),
             Cell::Empty => unreachable!(),
         });
         if winner.is_some() {
-            self.winner = self.board.check_winner();
+            self.winner = self.board.check_winner_at(x, y);
         }
 
         self.current_player = self.current_player.opponent();
@@ -80,18 +80,17 @@ impl Game {
     }
 
     pub fn get_board(&self) -> JsValue {
-        let cells: Vec<Vec<u8>> = (0..SIZE)
-            .map(|y| {
-                (0..SIZE)
-                    .map(|x| match self.board.get(x, y) {
-                        Cell::Empty => 0,
-                        Cell::Black => 1,
-                        Cell::White => 2,
-                    })
-                    .collect()
-            })
-            .collect();
-        serde_wasm_bindgen::to_value(&cells).unwrap()
+        let mut flat = Vec::with_capacity(SIZE * SIZE);
+        for y in 0..SIZE {
+            for x in 0..SIZE {
+                flat.push(match self.board.get(x, y) {
+                    Cell::Empty => 0u8,
+                    Cell::Black => 1,
+                    Cell::White => 2,
+                });
+            }
+        }
+        serde_wasm_bindgen::to_value(&flat).unwrap()
     }
 
     pub fn get_winner(&self) -> JsValue {

@@ -104,7 +104,7 @@ export function GameControls() {
                 fontFamily: "'Noto Serif TC', serif",
                 fontSize: "0.85rem",
                 padding: "8px 20px",
-                border: isActive ? "1px solid var(--accent)" : "1px solid var(--accent)",
+                border: "1px solid var(--accent)",
                 background: isActive ? "var(--accent)" : "transparent",
                 color: isActive ? "var(--paper)" : "var(--accent)",
                 borderRadius: 24,

@@ -60,6 +60,23 @@ impl Board {
         self.move_count
     }
 
+    /// Check if placing at (x, y) created a win. Only examines the 4 lines
+    /// through that cell — O(1) instead of O(n²).
+    pub fn check_winner_at(&self, x: usize, y: usize) -> Option<Cell> {
+        let cell = self.cells[y][x];
+        if cell == Cell::Empty {
+            return None;
+        }
+        let directions: [(i32, i32); 4] = [(1, 0), (0, 1), (1, 1), (1, -1)];
+        for &(dx, dy) in &directions {
+            if self.count_line_through(x, y, dx, dy, cell) >= 5 {
+                return Some(cell);
+            }
+        }
+        None
+    }
+
+    /// Full-board scan fallback (used only for undo/reset correctness).
     pub fn check_winner(&self) -> Option<Cell> {
         let directions = [(1, 0), (0, 1), (1, 1), (1, -1i32)];
         for y in 0..SIZE {
@@ -69,7 +86,7 @@ impl Board {
                     continue;
                 }
                 for &(dx, dy) in &directions {
-                    if self.count_direction(x, y, dx, dy, cell) >= 5 {
+                    if self.count_line_through(x, y, dx, dy, cell) >= 5 {
                         return Some(cell);
                     }
                 }
@@ -78,16 +95,30 @@ impl Board {
         None
     }
 
-    fn count_direction(&self, x: usize, y: usize, dx: i32, dy: i32, stone: Cell) -> usize {
-        let mut count = 0;
-        for i in 0..5 {
+    /// Count consecutive stones through (x,y) in both directions along (dx,dy).
+    fn count_line_through(&self, x: usize, y: usize, dx: i32, dy: i32, stone: Cell) -> usize {
+        let mut count = 1; // the stone itself
+        // Forward
+        for i in 1..5 {
             let nx = x as i32 + dx * i;
             let ny = y as i32 + dy * i;
             if nx < 0 || nx >= SIZE as i32 || ny < 0 || ny >= SIZE as i32 {
-                return count;
+                break;
             }
             if self.cells[ny as usize][nx as usize] != stone {
-                return count;
+                break;
+            }
+            count += 1;
+        }
+        // Backward
+        for i in 1..5 {
+            let nx = x as i32 - dx * i;
+            let ny = y as i32 - dy * i;
+            if nx < 0 || nx >= SIZE as i32 || ny < 0 || ny >= SIZE as i32 {
+                break;
+            }
+            if self.cells[ny as usize][nx as usize] != stone {
+                break;
             }
             count += 1;
         }

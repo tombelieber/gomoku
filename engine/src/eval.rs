@@ -9,6 +9,19 @@ const SCORE_HALF_THREE: i32 = 500;
 const SCORE_OPEN_TWO: i32 = 200;
 const SCORE_HALF_TWO: i32 = 50;
 
+fn pattern_score(count: usize, open_ends: usize) -> i32 {
+    match (count, open_ends) {
+        (5.., _) => SCORE_FIVE,
+        (4, 2) => SCORE_OPEN_FOUR,
+        (4, 1) => SCORE_HALF_FOUR,
+        (3, 2) => SCORE_OPEN_THREE,
+        (3, 1) => SCORE_HALF_THREE,
+        (2, 2) => SCORE_OPEN_TWO,
+        (2, 1) => SCORE_HALF_TWO,
+        _ => 0,
+    }
+}
+
 pub fn evaluate(board: &Board, player: Cell) -> i32 {
     let opponent = player.opponent();
     let mut score = 0i32;
@@ -23,35 +36,24 @@ pub fn evaluate(board: &Board, player: Cell) -> i32 {
             }
 
             for &(dx, dy) in &directions {
-                // Only count from the "start" of a sequence to avoid double-counting
                 let px = x as i32 - dx;
                 let py = y as i32 - dy;
                 if px >= 0 && px < SIZE as i32 && py >= 0 && py < SIZE as i32 {
                     if board.get(px as usize, py as usize) == cell {
-                        continue; // not the start of the sequence
+                        continue;
                     }
                 }
 
                 let (count, open_ends) = count_line(board, x, y, dx, dy, cell);
-                let pattern_score = match (count, open_ends) {
-                    (5.., _) => SCORE_FIVE,
-                    (4, 2) => SCORE_OPEN_FOUR,
-                    (4, 1) => SCORE_HALF_FOUR,
-                    (3, 2) => SCORE_OPEN_THREE,
-                    (3, 1) => SCORE_HALF_THREE,
-                    (2, 2) => SCORE_OPEN_TWO,
-                    (2, 1) => SCORE_HALF_TWO,
-                    _ => 0,
-                };
+                let ps = pattern_score(count, open_ends);
 
                 if cell == player {
-                    score += pattern_score;
+                    score += ps;
                 } else if cell == opponent {
-                    score -= pattern_score;
+                    score -= ps;
                 }
             }
 
-            // Small center preference
             if cell == player {
                 let center_dist = ((x as i32 - 7).abs() + (y as i32 - 7).abs()) as i32;
                 score += (14 - center_dist).max(0);
@@ -81,14 +83,12 @@ fn count_line(board: &Board, x: usize, y: usize, dx: i32, dy: i32, stone: Cell) 
 
     let mut open_ends = 0;
 
-    // Check end after the sequence
     if nx >= 0 && nx < SIZE as i32 && ny >= 0 && ny < SIZE as i32 {
         if board.get(nx as usize, ny as usize) == Cell::Empty {
             open_ends += 1;
         }
     }
 
-    // Check end before the sequence
     let bx = x as i32 - dx;
     let by = y as i32 - dy;
     if bx >= 0 && bx < SIZE as i32 && by >= 0 && by < SIZE as i32 {

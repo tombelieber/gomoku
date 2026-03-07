@@ -34,12 +34,12 @@ pub fn best_move(board: &Board, player: Cell, difficulty: Difficulty) -> (usize,
         let mut b = board.clone();
         b.place(x, y, player).unwrap();
 
-        // Immediate win check
-        if b.check_winner() == Some(player) {
+        // Immediate win check (incremental — only checks around the placed stone)
+        if b.check_winner_at(x, y) == Some(player) {
             return (x, y);
         }
 
-        let score = minimax(&mut b, depth - 1, i32::MIN, i32::MAX, false, player);
+        let score = minimax(&mut b, depth - 1, i32::MIN, i32::MAX, false, player, (x, y));
         if score > best_score {
             best_score = score;
             best = (x, y);
@@ -56,18 +56,27 @@ fn minimax(
     mut beta: i32,
     is_maximizing: bool,
     ai_player: Cell,
+    last_move: (usize, usize),
 ) -> i32 {
-    if depth == 0 || board.check_winner().is_some() || board.is_full() {
+    // Use incremental winner check on the last placed move
+    if board.check_winner_at(last_move.0, last_move.1).is_some() || depth == 0 || board.is_full() {
         return evaluate(board, ai_player);
     }
 
-    let candidates = board.get_candidates(2);
+    let mut candidates = board.get_candidates(2);
+
+    // Move ordering: sort candidates by quick heuristic evaluation (descending)
+    // so alpha-beta prunes more aggressively
+    let current_player = if is_maximizing { ai_player } else { ai_player.opponent() };
+    candidates.sort_by_cached_key(|&(x, y)| {
+        std::cmp::Reverse(quick_score(board, x, y, current_player))
+    });
 
     if is_maximizing {
         let mut max_score = i32::MIN;
         for &(x, y) in &candidates {
             board.place(x, y, ai_player).unwrap();
-            let score = minimax(board, depth - 1, alpha, beta, false, ai_player);
+            let score = minimax(board, depth - 1, alpha, beta, false, ai_player, (x, y));
             board.undo(x, y);
             max_score = max_score.max(score);
             alpha = alpha.max(score);
@@ -81,7 +90,7 @@ fn minimax(
         let mut min_score = i32::MAX;
         for &(x, y) in &candidates {
             board.place(x, y, opponent).unwrap();
-            let score = minimax(board, depth - 1, alpha, beta, true, ai_player);
+            let score = minimax(board, depth - 1, alpha, beta, true, ai_player, (x, y));
             board.undo(x, y);
             min_score = min_score.min(score);
             beta = beta.min(score);
@@ -91,6 +100,35 @@ fn minimax(
         }
         min_score
     }
+}
+
+/// Quick heuristic for move ordering — scores a candidate move by how many
+/// friendly/enemy stones surround it. Cheap O(1) per candidate.
+fn quick_score(board: &Board, x: usize, y: usize, player: Cell) -> i32 {
+    let mut score = 0i32;
+    let directions: [(i32, i32); 8] = [
+        (1, 0), (-1, 0), (0, 1), (0, -1),
+        (1, 1), (-1, -1), (1, -1), (-1, 1),
+    ];
+    let opponent = player.opponent();
+    for &(dx, dy) in &directions {
+        for dist in 1..=2i32 {
+            let nx = x as i32 + dx * dist;
+            let ny = y as i32 + dy * dist;
+            if nx < 0 || nx >= 15 || ny < 0 || ny >= 15 {
+                break;
+            }
+            let cell = board.get(nx as usize, ny as usize);
+            if cell == player {
+                score += 3 - dist; // closer = better
+            } else if cell == opponent {
+                score += 2 - dist; // blocking is also valuable
+            }
+        }
+    }
+    // Center preference
+    score += (7 - (x as i32 - 7).abs() + 7 - (y as i32 - 7).abs()) / 2;
+    score
 }
 
 #[cfg(test)]

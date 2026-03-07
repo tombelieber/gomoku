@@ -2,6 +2,17 @@ import init, { Game } from "@/wasm/engine/gomoku_engine";
 
 let game: Game | null = null;
 
+const SIZE = 15;
+
+/** Convert flat u8[225] from WASM to number[15][15] for the UI */
+function toGrid(flat: number[]): number[][] {
+  const grid: number[][] = [];
+  for (let y = 0; y < SIZE; y++) {
+    grid.push(flat.slice(y * SIZE, (y + 1) * SIZE));
+  }
+  return grid;
+}
+
 type Command =
   | { type: "init" }
   | { type: "play_move"; x: number; y: number }
@@ -17,7 +28,7 @@ self.onmessage = async (e: MessageEvent<Command>) => {
     try {
       await init();
       game = new Game();
-      self.postMessage({ type: "ready", board: game.get_board(), currentPlayer: game.current_player(), winner: null });
+      self.postMessage({ type: "ready", board: toGrid(game.get_board()), currentPlayer: game.current_player(), winner: null });
     } catch (err) {
       self.postMessage({ type: "error", message: String(err) });
     }
@@ -32,7 +43,7 @@ self.onmessage = async (e: MessageEvent<Command>) => {
       self.postMessage({
         type: "move_result",
         ok,
-        board: game.get_board(),
+        board: toGrid(game.get_board()),
         winner: game.get_winner(),
         isDraw: game.is_draw(),
         currentPlayer: game.current_player(),
@@ -44,7 +55,7 @@ self.onmessage = async (e: MessageEvent<Command>) => {
       self.postMessage({
         type: "ai_result",
         result,
-        board: game.get_board(),
+        board: toGrid(game.get_board()),
         winner: game.get_winner(),
         isDraw: game.is_draw(),
         currentPlayer: game.current_player(),
@@ -57,7 +68,7 @@ self.onmessage = async (e: MessageEvent<Command>) => {
       game.undo();
       self.postMessage({
         type: "state",
-        board: game.get_board(),
+        board: toGrid(game.get_board()),
         winner: game.get_winner(),
         currentPlayer: game.current_player(),
       });
@@ -67,7 +78,7 @@ self.onmessage = async (e: MessageEvent<Command>) => {
       game.reset();
       self.postMessage({
         type: "state",
-        board: game.get_board(),
+        board: toGrid(game.get_board()),
         winner: null,
         currentPlayer: game.current_player(),
       });
@@ -76,7 +87,7 @@ self.onmessage = async (e: MessageEvent<Command>) => {
     case "get_state": {
       self.postMessage({
         type: "state",
-        board: game.get_board(),
+        board: toGrid(game.get_board()),
         winner: game.get_winner(),
         currentPlayer: game.current_player(),
       });

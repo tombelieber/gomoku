@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useGame } from "@/hooks/useGame";
 
 const SIZE = 15;
@@ -9,11 +9,23 @@ const TOTAL = 540;
 
 const STAR_COORDS = [3, 7, 11];
 
-export function Board() {
-  const { board, playMove, winner, isThinking, lastAiMove, currentPlayer } =
-    useGame();
+// Pre-compute static grid lines and star points (never changes)
+const gridLines = Array.from({ length: SIZE }, (_, i) => {
+  const pos = PAD + i * CELL;
+  return { i, pos };
+});
 
-  const [hoveredCell, setHoveredCell] = useState<string | null>(null);
+const starPoints = STAR_COORDS.flatMap((sx) =>
+  STAR_COORDS.map((sy) => ({
+    key: `star-${sx}-${sy}`,
+    cx: PAD + sx * CELL,
+    cy: PAD + sy * CELL,
+  })),
+);
+
+export function Board() {
+  const { board, playMove, winner, isThinking, lastAiMove, lastPlayerMove, currentPlayer } =
+    useGame();
 
   const handleClick = useCallback(
     (x: number, y: number) => {
@@ -26,6 +38,35 @@ export function Board() {
 
   const cx = (x: number) => PAD + x * CELL;
   const cy = (y: number) => PAD + y * CELL;
+
+  // Determine which stone was most recently placed (for animation)
+  const lastMove = lastAiMove ?? lastPlayerMove;
+
+  // Memoize stone and tap-target lists to avoid re-creating arrays every render
+  const stones = useMemo(() => {
+    const result: { x: number; y: number; isBlack: boolean }[] = [];
+    for (let y = 0; y < SIZE; y++) {
+      for (let x = 0; x < SIZE; x++) {
+        const cell = board[y][x];
+        if (cell !== 0) {
+          result.push({ x, y, isBlack: cell === 1 });
+        }
+      }
+    }
+    return result;
+  }, [board]);
+
+  const emptycells = useMemo(() => {
+    const result: { x: number; y: number }[] = [];
+    for (let y = 0; y < SIZE; y++) {
+      for (let x = 0; x < SIZE; x++) {
+        if (board[y][x] === 0) {
+          result.push({ x, y });
+        }
+      }
+    }
+    return result;
+  }, [board]);
 
   return (
     <div
@@ -57,22 +98,6 @@ export function Board() {
           }}
         >
           <defs>
-            <filter id="woodGrain">
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.04 0.003"
-                numOctaves={5}
-                seed={3}
-                result="noise"
-              />
-              <feColorMatrix
-                type="saturate"
-                values="0"
-                in="noise"
-                result="gray"
-              />
-              <feBlend in="SourceGraphic" in2="gray" mode="multiply" />
-            </filter>
             <radialGradient id="blackStone" cx="40%" cy="35%">
               <stop offset="0%" stopColor="#555" />
               <stop offset="50%" stopColor="#222" />
@@ -85,31 +110,46 @@ export function Board() {
             </radialGradient>
           </defs>
 
-          {/* Wood background */}
+          {/* Wood background — simple gradient instead of expensive feTurbulence */}
+          <rect width={TOTAL} height={TOTAL} rx={2} fill="url(#woodBg)" />
+          <defs>
+            <linearGradient id="woodBg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#DBA95A" />
+              <stop offset="30%" stopColor="#D4A056" />
+              <stop offset="60%" stopColor="#C89648" />
+              <stop offset="100%" stopColor="#D4A056" />
+            </linearGradient>
+          </defs>
+          {/* Subtle grain lines using lightweight stripes */}
           <rect
             width={TOTAL}
             height={TOTAL}
             rx={2}
-            fill="#D4A056"
-            filter="url(#woodGrain)"
+            fill="url(#grainPattern)"
+            opacity={0.08}
           />
+          <defs>
+            <pattern id="grainPattern" width="4" height="4" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="4" y2="4" stroke="#5a3a1a" strokeWidth="0.5" />
+            </pattern>
+          </defs>
 
           {/* Grid lines */}
-          {Array.from({ length: SIZE }, (_, i) => (
+          {gridLines.map(({ i, pos }) => (
             <g key={`lines-${i}`}>
               <line
                 x1={cx(0)}
-                y1={cy(i)}
+                y1={pos}
                 x2={cx(SIZE - 1)}
-                y2={cy(i)}
+                y2={pos}
                 stroke="#5a3a1a"
                 strokeWidth={0.7}
                 opacity={0.7}
               />
               <line
-                x1={cx(i)}
+                x1={pos}
                 y1={cy(0)}
-                x2={cx(i)}
+                x2={pos}
                 y2={cy(SIZE - 1)}
                 stroke="#5a3a1a"
                 strokeWidth={0.7}
@@ -119,39 +159,33 @@ export function Board() {
           ))}
 
           {/* Star points */}
-          {STAR_COORDS.flatMap((sx) =>
-            STAR_COORDS.map((sy) => (
-              <circle
-                key={`star-${sx}-${sy}`}
-                cx={cx(sx)}
-                cy={cy(sy)}
-                r={3}
-                fill="#5a3a1a"
-                opacity={0.7}
-              />
-            )),
-          )}
+          {starPoints.map(({ key, cx, cy }) => (
+            <circle
+              key={key}
+              cx={cx}
+              cy={cy}
+              r={3}
+              fill="#5a3a1a"
+              opacity={0.7}
+            />
+          ))}
 
-          {/* Stones */}
-          {board.map((row, y) =>
-            row.map((cell, x) => {
-              if (cell === 0) return null;
-              const isBlack = cell === 1;
-              return (
-                <circle
-                  key={`stone-${x}-${y}`}
-                  className="stone-placed"
-                  cx={cx(x)}
-                  cy={cy(y)}
-                  r={R}
-                  fill={isBlack ? "url(#blackStone)" : "url(#whiteStone)"}
-                  stroke={isBlack ? undefined : "#bbb"}
-                  strokeWidth={isBlack ? undefined : 0.5}
-                  style={{ animation: "stoneDrop 0.3s ease-out both" }}
-                />
-              );
-            }),
-          )}
+          {/* Stones — only the latest stone gets the drop animation */}
+          {stones.map(({ x, y, isBlack }) => {
+            const isLatest = lastMove?.x === x && lastMove?.y === y;
+            return (
+              <circle
+                key={`stone-${x}-${y}`}
+                className={isLatest ? "stone-new" : undefined}
+                cx={cx(x)}
+                cy={cy(y)}
+                r={R}
+                fill={isBlack ? "url(#blackStone)" : "url(#whiteStone)"}
+                stroke={isBlack ? undefined : "#bbb"}
+                strokeWidth={isBlack ? undefined : 0.5}
+              />
+            );
+          })}
 
           {/* Last move marker */}
           {lastAiMove && (
@@ -165,34 +199,32 @@ export function Board() {
             />
           )}
 
-          {/* Tap targets */}
-          {board.map((row, y) =>
-            row.map((cell, x) => {
-              if (cell !== 0) return null;
-              const key = `${x}-${y}`;
-              return (
-                <rect
-                  key={`tap-${key}`}
-                  className="tap-target"
-                  x={cx(x) - CELL / 2}
-                  y={cy(y) - CELL / 2}
-                  width={CELL}
-                  height={CELL}
-                  fill={
-                    hoveredCell === key
-                      ? "rgba(139, 69, 19, 0.08)"
-                      : "transparent"
-                  }
-                  onClick={() => handleClick(x, y)}
-                  onMouseEnter={() => setHoveredCell(key)}
-                  onMouseLeave={() => setHoveredCell(null)}
-                  style={{ cursor: "pointer" }}
-                />
-              );
-            }),
-          )}
+          {/* Tap targets — use CSS :hover instead of React state */}
+          {emptyCards(emptycells, handleClick, cx, cy)}
         </svg>
       </div>
     </div>
   );
+}
+
+/** Render tap targets without hover state — uses CSS :hover for zero-cost highlighting */
+function emptyCards(
+  cells: { x: number; y: number }[],
+  handleClick: (x: number, y: number) => void,
+  cx: (x: number) => number,
+  cy: (y: number) => number,
+) {
+  return cells.map(({ x, y }) => (
+    <rect
+      key={`tap-${x}-${y}`}
+      className="tap-target"
+      x={cx(x) - CELL / 2}
+      y={cy(y) - CELL / 2}
+      width={CELL}
+      height={CELL}
+      fill="transparent"
+      onClick={() => handleClick(x, y)}
+      style={{ cursor: "pointer" }}
+    />
+  ));
 }

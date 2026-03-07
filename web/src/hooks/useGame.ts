@@ -12,6 +12,7 @@ type GameStore = {
   isThinking: boolean;
   isReady: boolean;
   lastAiMove: { x: number; y: number } | null;
+  lastPlayerMove: { x: number; y: number } | null;
 
   bridge: EngineBridge | null;
   init: () => Promise<void>;
@@ -33,6 +34,7 @@ export const useGame = create<GameStore>((set, get) => ({
   isThinking: false,
   isReady: false,
   lastAiMove: null,
+  lastPlayerMove: null,
   bridge: null,
 
   init: async () => {
@@ -58,6 +60,7 @@ export const useGame = create<GameStore>((set, get) => ({
     const { bridge, winner, isThinking, difficulty } = get();
     if (!bridge || winner || isThinking) return;
 
+    set({ lastPlayerMove: { x, y } });
     const moveState = await bridge.playMove(x, y);
 
     if (moveState.winner || moveState.isDraw) return;
@@ -74,7 +77,7 @@ export const useGame = create<GameStore>((set, get) => ({
 
   reset: () => {
     get().bridge?.reset();
-    set({ winner: null, isDraw: false, isThinking: false, lastAiMove: null });
+    set({ winner: null, isDraw: false, isThinking: false, lastAiMove: null, lastPlayerMove: null });
   },
 
   setDifficulty: (d) => set({ difficulty: d }),
