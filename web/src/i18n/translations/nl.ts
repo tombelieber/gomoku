@@ -82,6 +82,7 @@ const nl: Translation = {
     updateAvailable: "Update beschikbaar",
     updateAction: "Vernieuwen",
     dismiss: "Later",
+    installed: "Geïnstalleerd",
   },
 };
 

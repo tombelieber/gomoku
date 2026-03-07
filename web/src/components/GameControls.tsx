@@ -3,7 +3,11 @@ import { useGame } from "@/hooks/useGame";
 import { useI18n } from "@/i18n/store";
 import { getStats } from "@/lib/game-history";
 
-export function GameControls() {
+type GameControlsProps = {
+  onOpenSettings?: () => void;
+};
+
+export function GameControls({ onOpenSettings }: GameControlsProps) {
   const {
     reset,
     undo,
@@ -12,9 +16,11 @@ export function GameControls() {
     isThinking,
     currentPlayer,
     isReady,
+    difficulty,
   } = useGame();
   const turnStartTime = useGame((s) => s.turnStartTime);
   const { t } = useI18n();
+  const difficultyLabel = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard][difficulty];
 
   const [elapsed, setElapsed] = useState(0);
 
@@ -106,6 +112,33 @@ export function GameControls() {
           </span>
         )}
       </div>
+
+      {/* Difficulty badge — tappable to open settings */}
+      <button
+        onClick={onOpenSettings}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.3em",
+          padding: "2px 10px",
+          background: "rgba(139,69,19,0.06)",
+          border: "1px solid rgba(139,69,19,0.12)",
+          borderRadius: 12,
+          cursor: "pointer",
+          fontSize: "clamp(0.7rem, 1.3dvh, 0.8rem)",
+          fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
+          color: "var(--accent)",
+          opacity: 0.7,
+          transition: "opacity 0.2s",
+          lineHeight: 1.4,
+        }}
+      >
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+        </svg>
+        {difficultyLabel}
+      </button>
 
       {/* Stats bar */}
       <CompactStats />

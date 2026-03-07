@@ -82,6 +82,7 @@ const ko: Translation = {
     updateAvailable: "업데이트 가능",
     updateAction: "새로고침",
     dismiss: "나중에",
+    installed: "설치됨",
   },
 };
 

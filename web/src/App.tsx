@@ -128,7 +128,7 @@ export default function App() {
 
       {/* Game controls / Replay controls */}
       <div style={{ position: "relative", zIndex: 1, padding: "0 clamp(8px, 2vw, 16px)" }}>
-        {isReplaying ? <ReplayControls /> : <GameControls />}
+        {isReplaying ? <ReplayControls /> : <GameControls onOpenSettings={() => setSettingsOpen(true)} />}
       </div>
 
       {/* Settings gear bar */}

@@ -83,6 +83,7 @@ const en: Translation = {
     updateAvailable: "Update available",
     updateAction: "Refresh",
     dismiss: "Not now",
+    installed: "Installed",
   },
 };
 

@@ -82,6 +82,7 @@ const zhTW: Translation = {
     updateAvailable: "有新版本",
     updateAction: "重新整理",
     dismiss: "暫不",
+    installed: "已安裝",
   },
 };
 

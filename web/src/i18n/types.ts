@@ -80,6 +80,7 @@ export interface Translation {
     updateAvailable: string;
     updateAction: string;
     dismiss: string;
+    installed: string;
   };
 }
 

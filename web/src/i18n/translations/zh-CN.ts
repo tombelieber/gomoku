@@ -82,6 +82,7 @@ const zhCN: Translation = {
     updateAvailable: "有新版本",
     updateAction: "刷新",
     dismiss: "暂不",
+    installed: "已安装",
   },
 };
 

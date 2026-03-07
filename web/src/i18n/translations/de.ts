@@ -82,6 +82,7 @@ const de: Translation = {
     updateAvailable: "Update verfügbar",
     updateAction: "Aktualisieren",
     dismiss: "Später",
+    installed: "Installiert",
   },
 };
 

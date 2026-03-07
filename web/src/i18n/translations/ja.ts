@@ -82,6 +82,7 @@ const ja: Translation = {
     updateAvailable: "アップデートあり",
     updateAction: "更新",
     dismiss: "後で",
+    installed: "インストール済み",
   },
 };
 

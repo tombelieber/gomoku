@@ -24,7 +24,7 @@ export default defineConfig({
     wasm(),
     VitePWA({
       registerType: "prompt",
-      includeAssets: ["icon.svg", "icon-192.png", "icon-512.png"],
+      includeAssets: ["icon.svg", "icon-192.png", "icon-512.png", "screenshot-1.png", "screenshot-2.png"],
       manifest: {
         name: "GOMOKU — 五子棋",
         short_name: "Gomoku",
@@ -45,6 +45,22 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable",
+          },
+        ],
+        screenshots: [
+          {
+            src: "screenshot-1.png",
+            sizes: "1179x1977",
+            type: "image/png",
+            form_factor: "narrow",
+            label: "Gomoku — start a new game",
+          },
+          {
+            src: "screenshot-2.png",
+            sizes: "1179x1977",
+            type: "image/png",
+            form_factor: "narrow",
+            label: "Gomoku — tactical midgame",
           },
         ],
       },
