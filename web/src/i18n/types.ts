@@ -1,6 +1,7 @@
 export interface Translation {
   common: {
     appTitle: string;
+    brandTitle: string;
   };
   game: {
     difficulty: {

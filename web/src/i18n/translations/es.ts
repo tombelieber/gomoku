@@ -3,6 +3,7 @@ import type { Translation } from "../types";
 const es: Translation = {
   common: {
     appTitle: "GOMOKU",
+    brandTitle: "GOMOKU",
   },
   game: {
     difficulty: {

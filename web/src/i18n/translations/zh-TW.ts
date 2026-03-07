@@ -3,6 +3,7 @@ import type { Translation } from "../types";
 const zhTW: Translation = {
   common: {
     appTitle: "GOMOKU",
+    brandTitle: "五子棋",
   },
   game: {
     difficulty: {

@@ -17,6 +17,7 @@ export default function App() {
   const replayBoard = useReplay((s) => s.board);
   const replayStep = useReplay((s) => s.step);
   const { t, locale } = useI18n();
+  const isCJK = /^(zh|ja|ko)/.test(locale);
   const [starCount, setStarCount] = useState<number | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -67,26 +68,32 @@ export default function App() {
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <h1
             style={{
-              fontFamily: "'ZCOOL KuaiLe', 'Noto Serif TC', serif",
+              fontFamily: isCJK
+                ? "'ZCOOL KuaiLe', 'Noto Serif TC', serif"
+                : "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif",
               fontSize: "clamp(1.6rem, 3.5dvh, 2.4rem)",
-              letterSpacing: "0.3em",
+              fontWeight: isCJK ? 400 : 700,
+              letterSpacing: isCJK ? "0.3em" : "0.18em",
               color: "var(--ink)",
               margin: 0,
               lineHeight: 1,
             }}
           >
-            五子棋
+            {t.common.brandTitle}
           </h1>
           <span
             style={{
+              fontFamily: isCJK
+                ? "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif"
+                : "'ZCOOL KuaiLe', 'Noto Serif TC', serif",
               fontSize: "clamp(0.75rem, 1.5dvh, 1rem)",
               color: "var(--accent)",
-              letterSpacing: "0.3em",
+              letterSpacing: isCJK ? "0.3em" : "0.2em",
               opacity: 0.7,
               marginTop: 2,
             }}
           >
-            {t.common.appTitle}
+            {isCJK ? "GOMOKU" : "五子棋"}
           </span>
         </div>
         <div
