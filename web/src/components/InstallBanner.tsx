@@ -13,53 +13,52 @@ export function InstallBanner() {
 
   const canShowInstall = !isInstalled && !dismissed && (!!installPrompt || isIOS);
 
-  // Show update banner immediately when available
-  if (needsUpdate) {
-    return (
-      <Banner>
-        <span style={{ flex: 1, fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>
-          {t.pwa.updateAvailable}
-        </span>
-        <BannerButton onClick={updateApp}>{t.pwa.updateAction}</BannerButton>
-      </Banner>
-    );
-  }
-
-  // Show install banner only after first game ends
-  if (!canShowInstall || !winner) return null;
-
   return (
     <>
-      <Banner onDismiss={dismiss} dismissLabel={t.pwa.dismiss}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
-          <img
-            src="/icon-192.png"
-            alt=""
-            style={{ width: 36, height: 36, borderRadius: 8, flexShrink: 0 }}
-          />
-          <div style={{ minWidth: 0 }}>
-            <div style={{
-              fontWeight: 600,
-              fontSize: "0.85rem",
-              color: "var(--ink)",
-              lineHeight: 1.2,
-            }}>
-              {t.pwa.installTitle}
+      {/* iOS guide modal — always mountable (triggered from Settings or banner) */}
+      {showIOSGuide && <IOSGuideModal onClose={() => setShowIOSGuide(false)} />}
+
+      {/* Update banner */}
+      {needsUpdate && (
+        <Banner>
+          <span style={{ flex: 1, fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>
+            {t.pwa.updateAvailable}
+          </span>
+          <BannerButton onClick={updateApp}>{t.pwa.updateAction}</BannerButton>
+        </Banner>
+      )}
+
+      {/* Install banner — only after first game ends */}
+      {canShowInstall && winner && (
+        <Banner onDismiss={dismiss} dismissLabel={t.pwa.dismiss}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
+            <img
+              src="/icon-192.png"
+              alt=""
+              style={{ width: 36, height: 36, borderRadius: 8, flexShrink: 0 }}
+            />
+            <div style={{ minWidth: 0 }}>
+              <div style={{
+                fontWeight: 600,
+                fontSize: "0.85rem",
+                color: "var(--ink)",
+                lineHeight: 1.2,
+              }}>
+                {t.pwa.installTitle}
+              </div>
             </div>
           </div>
-        </div>
-        {isIOS ? (
-          <BannerButton onClick={() => setShowIOSGuide(true)}>
-            {t.pwa.installAction}
-          </BannerButton>
-        ) : (
-          <BannerButton onClick={promptInstall}>
-            {t.pwa.installAction}
-          </BannerButton>
-        )}
-      </Banner>
-
-      {showIOSGuide && <IOSGuideModal onClose={() => setShowIOSGuide(false)} />}
+          {isIOS ? (
+            <BannerButton onClick={() => setShowIOSGuide(true)}>
+              {t.pwa.installAction}
+            </BannerButton>
+          ) : (
+            <BannerButton onClick={promptInstall}>
+              {t.pwa.installAction}
+            </BannerButton>
+          )}
+        </Banner>
+      )}
     </>
   );
 }
