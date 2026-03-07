@@ -201,11 +201,6 @@ body::after {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* LanguageSwitcher full-width in sheet context */
-.settings-sheet select {
-  width: 100%;
-}
-
 /* ── Apple-style scrollbars ─────────────────── */
 
 /* Firefox */
