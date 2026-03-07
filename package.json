@@ -1,7 +1,7 @@
 {
   "name": "open-gomoku",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Gomoku (五子棋) — State-of-the-art AI game built in Rust + WASM. Play online or learn how modern AI works.",
   "scripts": {
     "dev": "cd web && bun dev",
