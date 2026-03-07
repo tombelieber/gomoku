@@ -84,8 +84,8 @@ export function Board() {
             return (
               <rect
                 key={`tap-${x}-${y}`}
-                x={x * CELL_SIZE}
-                y={y * CELL_SIZE}
+                x={PADDING + x * CELL_SIZE - CELL_SIZE / 2}
+                y={PADDING + y * CELL_SIZE - CELL_SIZE / 2}
                 width={CELL_SIZE}
                 height={CELL_SIZE}
                 fill="transparent"

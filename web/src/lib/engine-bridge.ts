@@ -12,6 +12,7 @@ export class EngineBridge {
   private onState: Callback;
   private onReady: (() => void) | null = null;
   private onAiMove: ((result: { x: number; y: number; winner: string | null }) => void) | null = null;
+  private onMoveResult: ((state: GameState) => void) | null = null;
 
   constructor(onState: Callback) {
     this.onState = onState;
@@ -30,6 +31,7 @@ export class EngineBridge {
         break;
       case "move_result":
         this.onState(msg as unknown as GameState);
+        this.onMoveResult?.(msg as unknown as GameState);
         break;
       case "ai_result":
         this.onState(msg as unknown as GameState);
@@ -37,6 +39,10 @@ export class EngineBridge {
         break;
       case "state":
         this.onState(msg as unknown as GameState);
+        break;
+      case "error":
+        console.error("Engine failed to load:", msg.message);
+        this.onReady?.();
         break;
     }
   }
@@ -48,8 +54,11 @@ export class EngineBridge {
     });
   }
 
-  playMove(x: number, y: number) {
-    this.worker.postMessage({ type: "play_move", x, y });
+  playMove(x: number, y: number): Promise<GameState> {
+    return new Promise((resolve) => {
+      this.onMoveResult = resolve;
+      this.worker.postMessage({ type: "play_move", x, y });
+    });
   }
 
   aiMove(difficulty: number): Promise<{ x: number; y: number; winner: string | null }> {

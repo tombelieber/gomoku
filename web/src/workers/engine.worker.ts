@@ -14,9 +14,13 @@ self.onmessage = async (e: MessageEvent<Command>) => {
   const cmd = e.data;
 
   if (cmd.type === "init") {
-    await init();
-    game = new Game();
-    self.postMessage({ type: "ready", board: game.get_board() });
+    try {
+      await init();
+      game = new Game();
+      self.postMessage({ type: "ready", board: game.get_board() });
+    } catch (err) {
+      self.postMessage({ type: "error", message: String(err) });
+    }
     return;
   }
 

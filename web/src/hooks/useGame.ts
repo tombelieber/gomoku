@@ -53,12 +53,9 @@ export const useGame = create<GameStore>((set, get) => ({
     const { bridge, winner, isThinking, difficulty } = get();
     if (!bridge || winner || isThinking) return;
 
-    bridge.playMove(x, y);
+    const moveState = await bridge.playMove(x, y);
 
-    // Wait a tick for state update, then trigger AI
-    await new Promise((r) => setTimeout(r, 10));
-
-    if (get().winner || get().isDraw) return;
+    if (moveState.winner || moveState.isDraw) return;
 
     set({ isThinking: true });
     const result = await bridge.aiMove(difficulty);
@@ -79,6 +76,6 @@ export const useGame = create<GameStore>((set, get) => ({
 
   destroy: () => {
     get().bridge?.destroy();
-    set({ bridge: null, isReady: false });
+    set({ bridge: null, isReady: false, isThinking: false });
   },
 }));
