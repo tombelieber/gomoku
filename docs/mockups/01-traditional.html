@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>五子棋 — Traditional Elegant</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=ZCOOL+KuaiLe&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --wood: #D4A056;
+    --wood-dark: #B8863C;
+    --wood-light: #E8C88A;
+    --paper: #F5E6C8;
+    --paper-dark: #E8D4B0;
+    --ink: #1A1008;
+    --ink-light: #3D2B1F;
+    --accent: #8B4513;
+    --red: #A0342E;
+  }
+
+  body {
+    font-family: 'Noto Serif TC', serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,69,19,0.015) 2px, rgba(139,69,19,0.015) 4px),
+      repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(139,69,19,0.01) 3px, rgba(139,69,19,0.01) 6px);
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(ellipse, rgba(139,69,19,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    width: 100%;
+    max-width: 440px;
+    animation: fadeIn 1.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .title {
+    font-family: 'ZCOOL KuaiLe', 'Noto Serif TC', serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.3em;
+    color: var(--ink);
+    position: relative;
+    padding-bottom: 8px;
+  }
+  .title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .subtitle {
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.5em;
+    margin-top: -8px;
+    opacity: 0.7;
+  }
+
+  .board-frame {
+    background: linear-gradient(145deg, #C49A3C, #A07828);
+    padding: 6px;
+    border-radius: 4px;
+    box-shadow:
+      0 8px 32px rgba(26,16,8,0.25),
+      0 2px 8px rgba(26,16,8,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    animation: boardAppear 0.8s ease 0.3s both;
+  }
+  @keyframes boardAppear {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .board-surface { position: relative; border-radius: 2px; overflow: hidden; }
+
+  svg.board {
+    display: block;
+    width: min(92vw, 400px);
+    height: min(92vw, 400px);
+    touch-action: none;
+  }
+
+  .stone-placed {
+    animation: stoneDrop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes stoneDrop {
+    from { r: 0; opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .tap-target { fill: transparent; cursor: pointer; }
+  .tap-target:hover { fill: rgba(139, 69, 19, 0.08); }
+
+  .last-marker { animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .status {
+    font-size: 1rem;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.6s ease 0.5s both;
+  }
+  .stone-indicator {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .thinking {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--accent);
+    align-items: center;
+    gap: 6px;
+  }
+  .thinking.visible { display: flex; }
+  .thinking-dot {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: thinkBounce 1.4s ease-in-out infinite;
+  }
+  .thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+  .thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes thinkBounce {
+    0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .difficulty-row {
+    display: flex;
+    gap: 8px;
+    animation: fadeIn 0.6s ease 0.6s both;
+  }
+  .diff-btn {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.85rem;
+    padding: 8px 20px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.1em;
+  }
+  .diff-btn:hover { background: rgba(139,69,19,0.08); }
+  .diff-btn.active { background: var(--accent); color: var(--paper); }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    animation: fadeIn 0.6s ease 0.7s both;
+  }
+  .action-btn {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.85rem;
+    padding: 8px 24px;
+    border: none;
+    background: var(--paper-dark);
+    color: var(--ink-light);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.1em;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .action-btn:hover {
+    background: var(--wood-light);
+    color: var(--ink);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .action-btn:active { transform: scale(0.97); }
+
+  .seal {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    width: 48px; height: 48px;
+    border: 2px solid var(--red);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'ZCOOL KuaiLe', serif;
+    font-size: 1rem;
+    color: var(--red);
+    transform: rotate(-8deg);
+    opacity: 0.35;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="title">五子棋</h1>
+  <span class="subtitle">GOMOKU</span>
+
+  <div class="board-frame">
+    <div class="board-surface">
+      <svg class="board" viewBox="0 0 540 540" id="board">
+        <defs>
+          <filter id="woodGrain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04 0.003" numOctaves="5" seed="3" result="noise"/>
+            <feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+            <feBlend in="SourceGraphic" in2="gray" mode="multiply"/>
+          </filter>
+          <radialGradient id="blackStone" cx="40%" cy="35%">
+            <stop offset="0%" stop-color="#555"/>
+            <stop offset="50%" stop-color="#222"/>
+            <stop offset="100%" stop-color="#0a0a0a"/>
+          </radialGradient>
+          <radialGradient id="whiteStone" cx="40%" cy="35%">
+            <stop offset="0%" stop-color="#fff"/>
+            <stop offset="60%" stop-color="#f0ece4"/>
+            <stop offset="100%" stop-color="#d4cfc4"/>
+          </radialGradient>
+        </defs>
+        <rect width="540" height="540" rx="2" fill="#D4A056" filter="url(#woodGrain)"/>
+        <g id="gridLines"></g>
+        <g id="starPoints"></g>
+        <g id="stones"></g>
+        <g id="tapTargets"></g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="status">
+    <span class="stone-indicator" id="turnIndicator"></span>
+    <span id="statusText">你嘅回合 — 黑棋</span>
+  </div>
+
+  <div class="thinking" id="thinking">
+    <span>AI 思考中</span>
+    <span class="thinking-dot"></span>
+    <span class="thinking-dot"></span>
+    <span class="thinking-dot"></span>
+  </div>
+
+  <div class="difficulty-row">
+    <button class="diff-btn" data-diff="0">簡單</button>
+    <button class="diff-btn active" data-diff="1">中等</button>
+    <button class="diff-btn" data-diff="2">困難</button>
+  </div>
+
+  <div class="actions">
+    <button class="action-btn" id="undoBtn">悔棋</button>
+    <button class="action-btn" id="resetBtn">開新局</button>
+  </div>
+</div>
+
+<div class="seal">棋</div>
+
+<script>
+const SIZE = 15, CELL = 34, PAD = 27, R = CELL * 0.43;
+const NS = 'http://www.w3.org/2000/svg';
+const board = Array.from({length:SIZE}, ()=>Array(SIZE).fill(0));
+const demoMoves = [[7,7,1],[8,6,2],[6,8,1],[8,7,2],[5,9,1],[8,8,2],[9,5,1],[8,5,2],[6,6,1],[9,9,2],[6,7,1],[7,6,2],[10,4,1],[5,6,2],[4,10,1]];
+let lastMove = null;
+
+function el(tag, attrs) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, v);
+  return e;
+}
+
+function initGrid() {
+  const g = document.getElementById('gridLines');
+  const s = document.getElementById('starPoints');
+  for (let i=0;i<SIZE;i++){
+    const p = PAD+i*CELL;
+    g.appendChild(el('line',{x1:PAD,y1:p,x2:PAD+(SIZE-1)*CELL,y2:p,stroke:'#5a3a1a','stroke-width':'0.7',opacity:'0.7'}));
+    g.appendChild(el('line',{x1:p,y1:PAD,x2:p,y2:PAD+(SIZE-1)*CELL,stroke:'#5a3a1a','stroke-width':'0.7',opacity:'0.7'}));
+  }
+  [3,7,11].forEach(x=>[3,7,11].forEach(y=>{
+    s.appendChild(el('circle',{cx:PAD+x*CELL,cy:PAD+y*CELL,r:3,fill:'#5a3a1a',opacity:'0.7'}));
+  }));
+}
+
+function render() {
+  const sg = document.getElementById('stones');
+  const tg = document.getElementById('tapTargets');
+  while(sg.firstChild) sg.removeChild(sg.firstChild);
+  while(tg.firstChild) tg.removeChild(tg.firstChild);
+
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++){
+    const c = board[y][x];
+    if(c===0) continue;
+    const cx=PAD+x*CELL, cy_=PAD+y*CELL;
+    const stone = el('circle',{cx,cy:cy_,r:R,fill:c===1?'url(#blackStone)':'url(#whiteStone)',class:'stone-placed'});
+    if(c===2){stone.setAttribute('stroke','#bbb');stone.setAttribute('stroke-width','0.5');}
+    sg.appendChild(stone);
+    if(lastMove&&lastMove[0]===x&&lastMove[1]===y){
+      sg.appendChild(el('circle',{cx,cy:cy_,r:4,fill:'#A0342E',class:'last-marker'}));
+    }
+  }
+
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++){
+    if(board[y][x]!==0) continue;
+    const r = el('rect',{x:PAD+x*CELL-CELL/2,y:PAD+y*CELL-CELL/2,width:CELL,height:CELL,class:'tap-target'});
+    r.addEventListener('click',(()=>{const xx=x,yy=y;return()=>placeStone(xx,yy);})());
+    tg.appendChild(r);
+  }
+}
+
+function placeStone(x,y){
+  if(board[y][x]!==0) return;
+  board[y][x]=1; lastMove=[x,y]; render();
+  document.getElementById('thinking').classList.add('visible');
+  document.getElementById('statusText').textContent='AI 思考中...';
+  setTimeout(()=>{
+    const cands=[];
+    for(let dy=-2;dy<=2;dy++) for(let dx=-2;dx<=2;dx++){
+      const nx=x+dx,ny=y+dy;
+      if(nx>=0&&nx<SIZE&&ny>=0&&ny<SIZE&&board[ny][nx]===0) cands.push([nx,ny]);
+    }
+    if(cands.length){const[ax,ay]=cands[Math.floor(Math.random()*cands.length)];board[ay][ax]=2;lastMove=[ax,ay];}
+    render();
+    document.getElementById('thinking').classList.remove('visible');
+    document.getElementById('statusText').textContent='你嘅回合 — 黑棋';
+  },800);
+}
+
+document.querySelectorAll('.diff-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.diff-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++) board[y][x]=0;
+  lastMove=null; render();
+  document.getElementById('statusText').textContent='你嘅回合 — 黑棋';
+});
+
+initGrid();
+// Auto-play demo
+let di=0;
+function demoStep(){
+  if(di>=demoMoves.length) return;
+  const[x,y,c]=demoMoves[di]; board[y][x]=c; lastMove=[x,y]; render(); di++;
+  setTimeout(demoStep,250);
+}
+setTimeout(demoStep,600);
+</script>
+</body>
+</html>

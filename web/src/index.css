@@ -1,1 +1,71 @@
 @import "tailwindcss";
+
+:root {
+  --wood: #D4A056;
+  --wood-dark: #B8863C;
+  --wood-light: #E8C88A;
+  --paper: #F5E6C8;
+  --paper-dark: #E8D4B0;
+  --ink: #1A1008;
+  --ink-light: #3D2B1F;
+  --accent: #8B4513;
+  --red: #A0342E;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Serif TC', serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100dvh;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,69,19,0.015) 2px, rgba(139,69,19,0.015) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(139,69,19,0.01) 3px, rgba(139,69,19,0.01) 6px);
+  pointer-events: none;
+  z-index: 100;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(ellipse, rgba(139,69,19,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes boardAppear {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes stoneDrop {
+  from { r: 0; opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes thinkBounce {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}

@@ -17,7 +17,7 @@ self.onmessage = async (e: MessageEvent<Command>) => {
     try {
       await init();
       game = new Game();
-      self.postMessage({ type: "ready", board: game.get_board() });
+      self.postMessage({ type: "ready", board: game.get_board(), currentPlayer: game.current_player(), winner: null });
     } catch (err) {
       self.postMessage({ type: "error", message: String(err) });
     }

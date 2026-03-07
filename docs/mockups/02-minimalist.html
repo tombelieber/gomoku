@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>五子棋 — Modern Minimalist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Sora:wght@300;400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #FAFAF6;
+    --bg-warm: #F5F2EC;
+    --text: #2C2C2C;
+    --text-light: #8A8A82;
+    --accent: #C4A77D;
+    --accent-dark: #A08560;
+    --grid: #D8D4CC;
+    --black-stone: #2C2C2C;
+    --white-stone: #F8F6F2;
+    --white-stroke: #D0CCC4;
+    --highlight: #D4785C;
+  }
+
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 16px;
+    width: 100%;
+    max-width: 440px;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--text);
+  }
+  .subtitle {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.6em;
+    color: var(--text-light);
+    text-transform: uppercase;
+  }
+
+  /* Board */
+  .board-wrap {
+    background: var(--bg-warm);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    animation: boardIn 0.6s ease 0.2s both;
+  }
+  @keyframes boardIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  svg.board {
+    display: block;
+    width: min(92vw, 400px);
+    height: min(92vw, 400px);
+    touch-action: none;
+  }
+
+  .stone-anim {
+    animation: stoneAppear 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes stoneAppear {
+    from { r: 0; opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .tap-target { fill: transparent; cursor: pointer; }
+  .tap-target:hover { fill: rgba(196,167,125,0.1); }
+
+  .last-dot {
+    animation: gentlePulse 2.5s ease-in-out infinite;
+  }
+  @keyframes gentlePulse {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Status */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 400;
+    animation: fadeIn 0.5s ease 0.4s both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .turn-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--black-stone);
+    transition: background 0.3s;
+  }
+
+  .thinking {
+    display: none;
+    font-size: 0.8rem;
+    color: var(--accent-dark);
+    align-items: center;
+    gap: 8px;
+  }
+  .thinking.visible { display: flex; }
+  .think-bar {
+    width: 48px; height: 3px;
+    background: var(--grid);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .think-bar::after {
+    content: '';
+    position: absolute;
+    left: -30%;
+    top: 0; bottom: 0;
+    width: 30%;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: barSlide 1s ease-in-out infinite;
+  }
+  @keyframes barSlide {
+    0% { left: -30%; }
+    100% { left: 100%; }
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    animation: fadeIn 0.5s ease 0.5s both;
+  }
+
+  .diff-row {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-warm);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .diff-btn {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 0.8rem;
+    padding: 6px 16px;
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-weight: 400;
+  }
+  .diff-btn:hover { color: var(--text); }
+  .diff-btn.active {
+    background: white;
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    font-weight: 500;
+  }
+
+  .action-row {
+    display: flex;
+    gap: 24px;
+  }
+  .action-link {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .action-link:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent);
+  }
+
+  /* Footer */
+  .footer {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.55rem;
+    color: var(--grid);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1 class="title">五子棋</h1>
+    <span class="subtitle">gomoku</span>
+  </div>
+
+  <div class="board-wrap">
+    <svg class="board" viewBox="0 0 540 540" id="board">
+      <rect width="540" height="540" rx="8" fill="#F5F2EC"/>
+      <g id="gridLines"></g>
+      <g id="starPoints"></g>
+      <g id="stones"></g>
+      <g id="tapTargets"></g>
+    </svg>
+  </div>
+
+  <div class="status-bar">
+    <span class="turn-dot" id="turnDot"></span>
+    <span id="statusText">你嘅回合</span>
+  </div>
+
+  <div class="thinking" id="thinking">
+    <span>思考中</span>
+    <div class="think-bar"></div>
+  </div>
+
+  <div class="controls">
+    <div class="diff-row">
+      <button class="diff-btn" data-diff="0">簡單</button>
+      <button class="diff-btn active" data-diff="1">中等</button>
+      <button class="diff-btn" data-diff="2">困難</button>
+    </div>
+
+    <div class="action-row">
+      <button class="action-link" id="undoBtn">悔棋</button>
+      <button class="action-link" id="resetBtn">開新局</button>
+    </div>
+  </div>
+
+  <div class="footer">rust + wasm</div>
+</div>
+
+<script>
+const SIZE=15,CELL=34,PAD=27,R=CELL*0.40;
+const NS='http://www.w3.org/2000/svg';
+const board=Array.from({length:SIZE},()=>Array(SIZE).fill(0));
+const demoMoves=[[7,7,1],[8,6,2],[6,8,1],[8,7,2],[5,9,1],[8,8,2],[9,5,1],[8,5,2],[6,6,1],[9,9,2],[6,7,1],[7,6,2],[10,4,1],[5,6,2],[4,10,1]];
+let lastMove=null;
+
+function el(tag,attrs){
+  const e=document.createElementNS(NS,tag);
+  for(const[k,v] of Object.entries(attrs)) e.setAttribute(k,v);
+  return e;
+}
+
+function initGrid(){
+  const g=document.getElementById('gridLines');
+  const s=document.getElementById('starPoints');
+  for(let i=0;i<SIZE;i++){
+    const p=PAD+i*CELL;
+    g.appendChild(el('line',{x1:PAD,y1:p,x2:PAD+(SIZE-1)*CELL,y2:p,stroke:'#D8D4CC','stroke-width':'0.8'}));
+    g.appendChild(el('line',{x1:p,y1:PAD,x2:p,y2:PAD+(SIZE-1)*CELL,stroke:'#D8D4CC','stroke-width':'0.8'}));
+  }
+  [3,7,11].forEach(x=>[3,7,11].forEach(y=>{
+    s.appendChild(el('circle',{cx:PAD+x*CELL,cy:PAD+y*CELL,r:2.5,fill:'#C8C4BC'}));
+  }));
+}
+
+function render(){
+  const sg=document.getElementById('stones');
+  const tg=document.getElementById('tapTargets');
+  while(sg.firstChild) sg.removeChild(sg.firstChild);
+  while(tg.firstChild) tg.removeChild(tg.firstChild);
+
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++){
+    const c=board[y][x];
+    if(c===0) continue;
+    const cx=PAD+x*CELL,cy_=PAD+y*CELL;
+    if(c===1){
+      sg.appendChild(el('circle',{cx,cy:cy_,r:R,fill:'#2C2C2C',class:'stone-anim'}));
+    } else {
+      const s=el('circle',{cx,cy:cy_,r:R,fill:'#F8F6F2',stroke:'#D0CCC4','stroke-width':'1',class:'stone-anim'});
+      sg.appendChild(s);
+    }
+    if(lastMove&&lastMove[0]===x&&lastMove[1]===y){
+      sg.appendChild(el('circle',{cx,cy:cy_,r:3,fill:'#D4785C',class:'last-dot'}));
+    }
+  }
+
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++){
+    if(board[y][x]!==0) continue;
+    const r=el('rect',{x:PAD+x*CELL-CELL/2,y:PAD+y*CELL-CELL/2,width:CELL,height:CELL,class:'tap-target'});
+    r.addEventListener('click',(()=>{const xx=x,yy=y;return()=>placeStone(xx,yy);})());
+    tg.appendChild(r);
+  }
+}
+
+function placeStone(x,y){
+  if(board[y][x]!==0)return;
+  board[y][x]=1;lastMove=[x,y];render();
+  document.getElementById('thinking').classList.add('visible');
+  document.getElementById('statusText').textContent='';
+  setTimeout(()=>{
+    const cands=[];
+    for(let dy=-2;dy<=2;dy++) for(let dx=-2;dx<=2;dx++){
+      const nx=x+dx,ny=y+dy;
+      if(nx>=0&&nx<SIZE&&ny>=0&&ny<SIZE&&board[ny][nx]===0) cands.push([nx,ny]);
+    }
+    if(cands.length){const[ax,ay]=cands[Math.floor(Math.random()*cands.length)];board[ay][ax]=2;lastMove=[ax,ay];}
+    render();
+    document.getElementById('thinking').classList.remove('visible');
+    document.getElementById('statusText').textContent='你嘅回合';
+  },800);
+}
+
+document.querySelectorAll('.diff-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.diff-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++) board[y][x]=0;
+  lastMove=null;render();
+  document.getElementById('statusText').textContent='你嘅回合';
+});
+
+initGrid();
+let di=0;
+function demoStep(){
+  if(di>=demoMoves.length)return;
+  const[x,y,c]=demoMoves[di];board[y][x]=c;lastMove=[x,y];render();di++;
+  setTimeout(demoStep,250);
+}
+setTimeout(demoStep,600);
+</script>
+</body>
+</html>

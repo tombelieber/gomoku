@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>五子棋 — Retro Arcade</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&family=Press+Start+2P&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0A0A1A;
+    --bg-lighter: #12122A;
+    --neon-pink: #FF2D6B;
+    --neon-cyan: #00FFD0;
+    --neon-gold: #FFD700;
+    --neon-blue: #4D6BFF;
+    --text: #E0E0F0;
+    --text-dim: #6A6A8A;
+    --grid-color: #1E1E3A;
+    --grid-line: #2A2A4A;
+  }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* Ambient glow blobs */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(ellipse, rgba(255,45,107,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .glow-blob {
+    position: fixed;
+    bottom: -20%;
+    right: -15%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(ellipse, rgba(0,255,208,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    width: 100%;
+    max-width: 440px;
+    animation: glitchIn 0.6s ease;
+  }
+
+  @keyframes glitchIn {
+    0% { opacity: 0; transform: translateX(-4px); }
+    20% { opacity: 0.7; transform: translateX(2px); }
+    40% { opacity: 0.9; transform: translateX(-1px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Title */
+  .title-block {
+    text-align: center;
+    position: relative;
+  }
+  .title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: var(--neon-cyan);
+    text-shadow:
+      0 0 10px rgba(0,255,208,0.5),
+      0 0 30px rgba(0,255,208,0.2);
+  }
+  .title-cn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    color: var(--neon-pink);
+    text-shadow: 0 0 8px rgba(255,45,107,0.4);
+    margin-top: 2px;
+  }
+
+  /* Neon border board */
+  .board-outer {
+    position: relative;
+    padding: 3px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan), var(--neon-blue), var(--neon-pink));
+    background-size: 300% 300%;
+    animation: borderGlow 4s ease-in-out infinite;
+    box-shadow:
+      0 0 20px rgba(255,45,107,0.15),
+      0 0 40px rgba(0,255,208,0.1);
+  }
+  @keyframes borderGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .board-inner {
+    background: var(--bg-lighter);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  svg.board {
+    display: block;
+    width: min(92vw, 400px);
+    height: min(92vw, 400px);
+    touch-action: none;
+  }
+
+  .stone-anim {
+    animation: stoneGlow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes stoneGlow {
+    from { r: 0; opacity: 0; }
+    50% { opacity: 1; }
+    to { opacity: 1; }
+  }
+
+  .tap-target { fill: transparent; cursor: pointer; }
+  .tap-target:hover { fill: rgba(0,255,208,0.06); }
+
+  .last-ring {
+    fill: none;
+    stroke: var(--neon-pink);
+    stroke-width: 2;
+    animation: ringPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes ringPulse {
+    0%, 100% { opacity: 1; r: 8; }
+    50% { opacity: 0.3; r: 12; }
+  }
+
+  /* HUD status */
+  .hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 380px;
+    animation: fadeIn 0.5s ease 0.3s both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .hud-left, .hud-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .hud-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .hud-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    color: var(--neon-gold);
+    text-shadow: 0 0 6px rgba(255,215,0,0.3);
+  }
+  .hud-center {
+    font-size: 0.85rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hud-center .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--text);
+    box-shadow: 0 0 4px rgba(255,255,255,0.3);
+  }
+
+  .thinking {
+    display: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 6px rgba(0,255,208,0.4);
+    align-items: center;
+    gap: 8px;
+  }
+  .thinking.visible { display: flex; }
+  .loading-bar {
+    display: flex;
+    gap: 3px;
+  }
+  .loading-bar span {
+    width: 6px; height: 12px;
+    background: var(--neon-cyan);
+    opacity: 0.3;
+    animation: barPulse 0.8s ease-in-out infinite;
+  }
+  .loading-bar span:nth-child(2) { animation-delay: 0.1s; }
+  .loading-bar span:nth-child(3) { animation-delay: 0.2s; }
+  .loading-bar span:nth-child(4) { animation-delay: 0.3s; }
+  .loading-bar span:nth-child(5) { animation-delay: 0.4s; }
+  @keyframes barPulse {
+    0%, 100% { opacity: 0.2; transform: scaleY(0.5); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    animation: fadeIn 0.5s ease 0.4s both;
+  }
+
+  .diff-row {
+    display: flex;
+    gap: 6px;
+  }
+  .diff-btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    border: 1px solid var(--grid-line);
+    background: var(--bg-lighter);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    letter-spacing: 0.1em;
+  }
+  .diff-btn:hover {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+  }
+  .diff-btn.active {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    background: rgba(255,45,107,0.1);
+    text-shadow: 0 0 8px rgba(255,45,107,0.4);
+  }
+
+  .action-row {
+    display: flex;
+    gap: 10px;
+  }
+  .action-btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    border: 1px solid var(--grid-line);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.08em;
+  }
+  .action-btn:hover {
+    border-color: var(--neon-gold);
+    color: var(--neon-gold);
+    box-shadow: 0 0 12px rgba(255,215,0,0.1);
+  }
+  .action-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* Score bar */
+  .score-bar {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.5s ease 0.5s both;
+  }
+  .score-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.5rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  .score-track {
+    flex: 1;
+    height: 4px;
+    background: var(--grid-line);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .score-fill {
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 6px rgba(0,255,208,0.3);
+  }
+  .score-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    color: var(--neon-gold);
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-blob"></div>
+
+<div class="container">
+  <div class="title-block">
+    <h1 class="title">GOMOKU</h1>
+    <div class="title-cn">五 子 棋</div>
+  </div>
+
+  <div class="board-outer">
+    <div class="board-inner">
+      <svg class="board" viewBox="0 0 540 540" id="board">
+        <rect width="540" height="540" fill="#12122A"/>
+        <g id="gridLines"></g>
+        <g id="starPoints"></g>
+        <g id="stones"></g>
+        <g id="tapTargets"></g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hud">
+    <div class="hud-left">
+      <span class="hud-label">Moves</span>
+      <span class="hud-value" id="moveCount">000</span>
+    </div>
+    <div class="hud-center">
+      <span class="dot" id="turnDot"></span>
+      <span id="statusText">你嘅回合</span>
+    </div>
+    <div class="hud-right" style="text-align:right">
+      <span class="hud-label">Level</span>
+      <span class="hud-value" id="levelDisplay">MED</span>
+    </div>
+  </div>
+
+  <div class="thinking" id="thinking">
+    <span>PROCESSING</span>
+    <div class="loading-bar">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="diff-row">
+      <button class="diff-btn" data-diff="0">簡單</button>
+      <button class="diff-btn active" data-diff="1">中等</button>
+      <button class="diff-btn" data-diff="2">困難</button>
+    </div>
+
+    <div class="action-row">
+      <button class="action-btn" id="undoBtn">← 悔棋</button>
+      <button class="action-btn" id="resetBtn">開新局 ↺</button>
+    </div>
+  </div>
+
+  <div class="score-bar">
+    <span class="score-label">PWR</span>
+    <div class="score-track">
+      <div class="score-fill" id="scoreFill"></div>
+    </div>
+    <span class="score-value" id="scoreVal">50%</span>
+  </div>
+</div>
+
+<script>
+const SIZE=15,CELL=34,PAD=27,R=CELL*0.40;
+const NS='http://www.w3.org/2000/svg';
+const board=Array.from({length:SIZE},()=>Array(SIZE).fill(0));
+const demoMoves=[[7,7,1],[8,6,2],[6,8,1],[8,7,2],[5,9,1],[8,8,2],[9,5,1],[8,5,2],[6,6,1],[9,9,2],[6,7,1],[7,6,2],[10,4,1],[5,6,2],[4,10,1]];
+let lastMove=null, moveNum=0;
+const levels=['EZY','MED','HRD'];
+
+function el(tag,attrs){
+  const e=document.createElementNS(NS,tag);
+  for(const[k,v] of Object.entries(attrs)) e.setAttribute(k,v);
+  return e;
+}
+
+function initGrid(){
+  const g=document.getElementById('gridLines');
+  const s=document.getElementById('starPoints');
+  for(let i=0;i<SIZE;i++){
+    const p=PAD+i*CELL;
+    g.appendChild(el('line',{x1:PAD,y1:p,x2:PAD+(SIZE-1)*CELL,y2:p,stroke:'#2A2A4A','stroke-width':'0.8'}));
+    g.appendChild(el('line',{x1:p,y1:PAD,x2:p,y2:PAD+(SIZE-1)*CELL,stroke:'#2A2A4A','stroke-width':'0.8'}));
+  }
+  [3,7,11].forEach(x=>[3,7,11].forEach(y=>{
+    s.appendChild(el('circle',{cx:PAD+x*CELL,cy:PAD+y*CELL,r:2.5,fill:'#3A3A5A'}));
+  }));
+}
+
+function render(){
+  const sg=document.getElementById('stones');
+  const tg=document.getElementById('tapTargets');
+  while(sg.firstChild) sg.removeChild(sg.firstChild);
+  while(tg.firstChild) tg.removeChild(tg.firstChild);
+
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++){
+    const c=board[y][x];
+    if(c===0) continue;
+    const cx=PAD+x*CELL,cy_=PAD+y*CELL;
+    if(c===1){
+      // Black stone with subtle glow
+      sg.appendChild(el('circle',{cx,cy:cy_,r:R+2,fill:'none',stroke:'rgba(0,255,208,0.15)','stroke-width':'1'}));
+      sg.appendChild(el('circle',{cx,cy:cy_,r:R,fill:'#1a1a2e',stroke:'#00FFD0','stroke-width':'0.8',class:'stone-anim'}));
+    } else {
+      // White stone with subtle glow
+      sg.appendChild(el('circle',{cx,cy:cy_,r:R+2,fill:'none',stroke:'rgba(255,45,107,0.15)','stroke-width':'1'}));
+      sg.appendChild(el('circle',{cx,cy:cy_,r:R,fill:'#e8e8f0',stroke:'#FF2D6B','stroke-width':'0.5',class:'stone-anim'}));
+    }
+    if(lastMove&&lastMove[0]===x&&lastMove[1]===y){
+      sg.appendChild(el('circle',{cx,cy:cy_,r:8,class:'last-ring'}));
+    }
+  }
+
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++){
+    if(board[y][x]!==0) continue;
+    const r=el('rect',{x:PAD+x*CELL-CELL/2,y:PAD+y*CELL-CELL/2,width:CELL,height:CELL,class:'tap-target'});
+    r.addEventListener('click',(()=>{const xx=x,yy=y;return()=>placeStone(xx,yy);})());
+    tg.appendChild(r);
+  }
+
+  document.getElementById('moveCount').textContent=String(moveNum).padStart(3,'0');
+}
+
+function placeStone(x,y){
+  if(board[y][x]!==0)return;
+  board[y][x]=1;lastMove=[x,y];moveNum++;render();
+  document.getElementById('thinking').classList.add('visible');
+  document.getElementById('statusText').textContent='PROCESSING';
+  setTimeout(()=>{
+    const cands=[];
+    for(let dy=-2;dy<=2;dy++) for(let dx=-2;dx<=2;dx++){
+      const nx=x+dx,ny=y+dy;
+      if(nx>=0&&nx<SIZE&&ny>=0&&ny<SIZE&&board[ny][nx]===0) cands.push([nx,ny]);
+    }
+    if(cands.length){const[ax,ay]=cands[Math.floor(Math.random()*cands.length)];board[ay][ax]=2;lastMove=[ax,ay];moveNum++;}
+    render();
+    document.getElementById('thinking').classList.remove('visible');
+    document.getElementById('statusText').textContent='你嘅回合';
+    // Update fake power bar
+    const pct = Math.max(20, 50 + (Math.random()-0.5)*30);
+    document.getElementById('scoreFill').style.width = pct+'%';
+    document.getElementById('scoreVal').textContent = Math.round(pct)+'%';
+  },800);
+}
+
+document.querySelectorAll('.diff-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.diff-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('levelDisplay').textContent=levels[parseInt(b.dataset.diff)];
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  for(let y=0;y<SIZE;y++) for(let x=0;x<SIZE;x++) board[y][x]=0;
+  lastMove=null;moveNum=0;render();
+  document.getElementById('statusText').textContent='你嘅回合';
+  document.getElementById('scoreFill').style.width='50%';
+  document.getElementById('scoreVal').textContent='50%';
+});
+
+initGrid();
+let di=0;
+function demoStep(){
+  if(di>=demoMoves.length)return;
+  const[x,y,c]=demoMoves[di];board[y][x]=c;lastMove=[x,y];moveNum++;render();di++;
+  setTimeout(demoStep,250);
+}
+setTimeout(demoStep,600);
+</script>
+</body>
+</html>
