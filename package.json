@@ -9,8 +9,8 @@
     "build:web": "cd web && bun run build",
     "build": "bun run build:engine && bun run build:web",
     "deploy": "bun scripts/version-bump.ts && bun run build && cd web && bunx wrangler pages deploy dist --project-name open-gomoku",
-    "demo": "bun run scripts/record-demo.ts",
-    "demo:screenshots": "bun run scripts/screenshot-themes.ts"
+    "demo:preview": "bun run scripts/record-demo.ts --preview",
+    "demo": "bun run scripts/record-demo.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
