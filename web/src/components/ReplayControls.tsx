@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useReplay } from "@/hooks/useReplay";
+import { loadHistory } from "@/lib/game-history";
 
 const DIFFICULTY_LABELS = ["簡單", "中等", "困難"] as const;
 const SYSTEM_FONT =
@@ -75,6 +76,13 @@ export function ReplayControls() {
     return () => clearInterval(id);
   }, [isPlaying, record]);
 
+  const gameNumber = useMemo(() => {
+    if (!record) return 0;
+    const history = loadHistory();
+    const idx = history.findIndex((g) => g.id === record.id);
+    return idx >= 0 ? history.length - idx : 0;
+  }, [record]);
+
   if (!record) return null;
 
   const totalMoves = record.moves.length;
@@ -101,6 +109,7 @@ export function ReplayControls() {
           letterSpacing: "0.1em",
         }}
       >
+        {gameNumber > 0 && <span style={{ opacity: 0.5 }}>#{gameNumber}</span>}{" "}
         {resultText(record.winner)} · {diffLabel}
       </div>
 

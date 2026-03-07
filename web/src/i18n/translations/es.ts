@@ -45,7 +45,8 @@ const es: Translation = {
     win: "¡Negras ganan!",
     lose: "Blancas ganan",
     draw: "¡Empate!",
-    restartPrompt: "Haz clic en cualquier lugar para nueva partida",
+    playAgain: "Jugar de nuevo",
+    review: "Revisar",
   },
   footer: {
     madeWith: "Hecho con",

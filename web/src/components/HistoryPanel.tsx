@@ -46,20 +46,12 @@ export function HistoryPanel() {
         maxWidth: 440,
         fontFamily: SYSTEM_FONT,
         animation: "fadeIn 0.6s ease",
-        opacity: 0.5,
-        transition: "opacity 0.3s ease",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.opacity = "1";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.opacity = "0.5";
       }}
     >
       {/* Header */}
       <div
         style={{
-          fontSize: "0.78rem",
+          fontSize: "0.85rem",
           fontWeight: 600,
           color: "var(--ink-light)",
           letterSpacing: "0.15em",
@@ -72,12 +64,14 @@ export function HistoryPanel() {
       {/* Scrollable list */}
       <div
         style={{
-          maxHeight: 200,
+          maxHeight: 180,
           overflowY: "auto",
           borderTop: "1px solid rgba(139,69,19,0.1)",
+          paddingBottom: 12,
         }}
       >
-        {history.map((record) => {
+        {history.map((record, index) => {
+          const gameNumber = history.length - index;
           const { text: resultText, color: resultColor } = resultLabel(record.winner, t);
           const diffLabels = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard];
           const diffLabel = diffLabels[record.difficulty] ?? diffLabels[1];
@@ -91,7 +85,7 @@ export function HistoryPanel() {
                 alignItems: "center",
                 gap: "0.6rem",
                 padding: "6px 4px",
-                fontSize: "0.72rem",
+                fontSize: "0.85rem",
                 color: "var(--ink-light)",
                 cursor: "pointer",
                 borderBottom: "1px solid rgba(139,69,19,0.06)",
@@ -104,6 +98,11 @@ export function HistoryPanel() {
                 e.currentTarget.style.background = "transparent";
               }}
             >
+              {/* Game number */}
+              <span style={{ color: "var(--accent)", opacity: 0.6, flexShrink: 0 }}>
+                #{gameNumber}
+              </span>
+
               {/* Result */}
               <span
                 style={{
@@ -118,10 +117,10 @@ export function HistoryPanel() {
               </span>
 
               {/* Difficulty */}
-              <span style={{ opacity: 0.7, flexShrink: 0 }}>{diffLabel}</span>
+              <span style={{ flexShrink: 0 }}>{diffLabel}</span>
 
               {/* Move count */}
-              <span style={{ opacity: 0.5, flexShrink: 0 }}>
+              <span style={{ flexShrink: 0 }}>
                 {record.totalMoves} {t.history.moves}
               </span>
 
@@ -129,7 +128,7 @@ export function HistoryPanel() {
               <span style={{ flex: 1 }} />
 
               {/* Date */}
-              <span style={{ opacity: 0.4, flexShrink: 0 }}>
+              <span style={{ flexShrink: 0, color: "var(--accent)" }}>
                 {relativeDate(record.date, t)}
               </span>
             </div>

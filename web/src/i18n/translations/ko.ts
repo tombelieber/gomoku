@@ -45,7 +45,8 @@ const ko: Translation = {
     win: "흑돌 승리!",
     lose: "백돌 승리",
     draw: "무승부!",
-    restartPrompt: "아무 곳이나 클릭하여 새 게임 시작",
+    playAgain: "다시 하기",
+    review: "복기",
   },
   footer: {
     madeWith: "Made with",

@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useGame } from "@/hooks/useGame";
+import { useReplay } from "@/hooks/useReplay";
+import { loadHistory } from "@/lib/game-history";
 import { useI18n } from "@/i18n/store";
 
 export function GameEndOverlay() {
   const { winner, isDraw, reset } = useGame();
+  const startReplay = useReplay((s) => s.startReplay);
   const { t } = useI18n();
   const [visible, setVisible] = useState(false);
 
@@ -35,6 +38,15 @@ export function GameEndOverlay() {
     }));
   }, [isPlayerWin]);
 
+  const handleReview = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const history = loadHistory();
+    if (history.length > 0) {
+      startReplay(history[0]);
+      reset();
+    }
+  };
+
   if (!visible) return null;
 
   let mainChar: string;
@@ -46,28 +58,31 @@ export function GameEndOverlay() {
     mainChar = "\u52DD";
     subtitle = t.gameEnd.win;
     bgGradient =
-      "radial-gradient(ellipse at center, rgba(196,154,60,0.12) 0%, rgba(26,16,8,0.7) 100%)";
+      "radial-gradient(ellipse at center, rgba(196,154,60,0.25) 0%, rgba(26,16,8,0.88) 100%)";
     charStyle = {
-      color: "#C49A3C",
-      textShadow: "0 0 60px rgba(196,154,60,0.5), 0 4px 24px rgba(0,0,0,0.4)",
+      color: "#EDCB6A",
+      textShadow:
+        "0 0 80px rgba(237,203,106,0.6), 0 0 40px rgba(196,154,60,0.5), 0 4px 24px rgba(0,0,0,0.6)",
     };
   } else if (isAiWin) {
     mainChar = "\u6557";
     subtitle = t.gameEnd.lose;
     bgGradient =
-      "radial-gradient(ellipse at center, rgba(26,16,8,0.3) 0%, rgba(26,16,8,0.78) 100%)";
+      "radial-gradient(ellipse at center, rgba(26,16,8,0.55) 0%, rgba(26,16,8,0.92) 100%)";
     charStyle = {
-      color: "var(--ink-light)",
-      textShadow: "0 4px 24px rgba(0,0,0,0.5)",
+      color: "#E8E0D4",
+      textShadow:
+        "0 0 60px rgba(232,224,212,0.35), 0 4px 24px rgba(0,0,0,0.7)",
     };
   } else {
     mainChar = "\u548C";
     subtitle = t.gameEnd.draw;
     bgGradient =
-      "radial-gradient(ellipse at center, rgba(139,69,19,0.08) 0%, rgba(26,16,8,0.6) 100%)";
+      "radial-gradient(ellipse at center, rgba(139,69,19,0.2) 0%, rgba(26,16,8,0.85) 100%)";
     charStyle = {
-      color: "var(--accent)",
-      textShadow: "0 4px 24px rgba(0,0,0,0.3)",
+      color: "#D4B896",
+      textShadow:
+        "0 0 60px rgba(212,184,150,0.35), 0 4px 24px rgba(0,0,0,0.5)",
     };
   }
 
@@ -83,9 +98,7 @@ export function GameEndOverlay() {
         justifyContent: "center",
         background: bgGradient,
         animation: "overlayFadeIn 0.6s ease both",
-        cursor: "pointer",
       }}
-      onClick={reset}
     >
       <div
         style={{
@@ -127,19 +140,65 @@ export function GameEndOverlay() {
         }}
       />
 
-      <div
+      {/* Primary CTA — Play Again */}
+      <button
+        onClick={(e) => { e.stopPropagation(); reset(); }}
         style={{
           fontFamily: "'Noto Serif TC', serif",
-          fontSize: "0.9rem",
-          color: "var(--paper)",
-          opacity: 0.5,
+          fontSize: "1.1rem",
+          padding: "12px 40px",
           marginTop: "1.5rem",
-          letterSpacing: "0.15em",
-          animation: "fadeIn 0.6s ease 1s both",
+          background: "rgba(255,255,255,0.18)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          color: "var(--paper)",
+          border: "1px solid rgba(255,255,255,0.3)",
+          borderRadius: 28,
+          letterSpacing: "0.25em",
+          cursor: "pointer",
+          animation: "fadeIn 0.6s ease 0.8s both",
+          transition: "background 0.2s, border-color 0.2s, transform 0.15s",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = "rgba(255,255,255,0.28)";
+          e.currentTarget.style.borderColor = "rgba(255,255,255,0.45)";
+          e.currentTarget.style.transform = "scale(1.04)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+          e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+          e.currentTarget.style.transform = "scale(1)";
         }}
       >
-        {t.gameEnd.restartPrompt}
-      </div>
+        {t.gameEnd.playAgain}
+      </button>
+
+      {/* Secondary — Review */}
+      <button
+        onClick={handleReview}
+        style={{
+          fontFamily: "'Noto Serif TC', serif",
+          fontSize: "0.85rem",
+          padding: "6px 20px",
+          marginTop: "0.75rem",
+          background: "transparent",
+          color: "var(--paper)",
+          border: "none",
+          letterSpacing: "0.2em",
+          cursor: "pointer",
+          opacity: 0.5,
+          animation: "fadeIn 0.6s ease 1s both",
+          transition: "opacity 0.2s",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = "0.85";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = "0.5";
+        }}
+      >
+        {t.gameEnd.review}
+      </button>
 
       {particles.map((p) => (
         <div

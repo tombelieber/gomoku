@@ -45,15 +45,15 @@ export function GameControls() {
         <span
           style={{
             display: "inline-block",
-            width: 14,
-            height: 14,
+            width: "clamp(14px, 2dvh, 20px)",
+            height: "clamp(14px, 2dvh, 20px)",
             borderRadius: "50%",
             background: stoneColor,
             boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
             flexShrink: 0,
           }}
         />
-        <span style={{ fontSize: "0.9rem", color: "var(--ink-light)", whiteSpace: "nowrap" }}>
+        <span style={{ fontSize: "clamp(0.9rem, 2dvh, 1.2rem)", color: "var(--ink-light)", whiteSpace: "nowrap" }}>
           {statusText}
         </span>
         {isThinking && (
@@ -76,15 +76,15 @@ export function GameControls() {
       </div>
 
       {/* Action buttons */}
-      <div style={{ display: "flex", gap: "0.5rem", width: "100%", maxWidth: 320 }}>
+      <div style={{ display: "flex", gap: "0.5rem", width: "100%", maxWidth: "clamp(280px, 40dvh, 400px)" }}>
         <button
           onClick={undo}
           disabled={isThinking || !!winner}
           style={{
             flex: 1,
             fontFamily: "'Noto Serif TC', serif",
-            fontSize: "1rem",
-            padding: "10px 0",
+            fontSize: "clamp(0.9rem, 2dvh, 1.15rem)",
+            padding: "clamp(8px, 1.5dvh, 14px) 0",
             background: "var(--paper-dark)",
             color: "var(--ink-light)",
             borderRadius: 8,
@@ -102,8 +102,8 @@ export function GameControls() {
           style={{
             flex: 1,
             fontFamily: "'Noto Serif TC', serif",
-            fontSize: "1rem",
-            padding: "10px 0",
+            fontSize: "clamp(0.9rem, 2dvh, 1.15rem)",
+            padding: "clamp(8px, 1.5dvh, 14px) 0",
             background: "var(--paper-dark)",
             color: "var(--ink-light)",
             borderRadius: 8,

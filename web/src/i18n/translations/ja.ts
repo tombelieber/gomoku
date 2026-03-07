@@ -45,7 +45,8 @@ const ja: Translation = {
     win: "黒の勝ち！",
     lose: "白の勝ち",
     draw: "引き分け！",
-    restartPrompt: "クリックして新しい対局を開始",
+    playAgain: "もう一局",
+    review: "検討",
   },
   footer: {
     madeWith: "Made with",

@@ -43,7 +43,8 @@ export interface Translation {
     win: string;
     lose: string;
     draw: string;
-    restartPrompt: string;
+    playAgain: string;
+    review: string;
   };
   footer: {
     madeWith: string;

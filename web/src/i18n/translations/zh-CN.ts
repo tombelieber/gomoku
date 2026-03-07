@@ -45,7 +45,8 @@ const zhCN: Translation = {
     win: "黑棋胜！",
     lose: "白棋胜",
     draw: "平局！",
-    restartPrompt: "点击任意处开始新局",
+    playAgain: "再来一局",
+    review: "复盘",
   },
   footer: {
     madeWith: "用心制作",

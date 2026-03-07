@@ -117,6 +117,14 @@ body::after {
   background: rgba(139, 69, 19, 0.08) !important;
   color: var(--ink) !important;
 }
+.github-cta:hover {
+  border-color: rgba(139, 69, 19, 0.3) !important;
+  background: rgba(139, 69, 19, 0.1) !important;
+  color: var(--ink) !important;
+}
+.github-cta:active {
+  transform: scale(0.97);
+}
 
 /* Game end overlay */
 @keyframes overlayFadeIn {

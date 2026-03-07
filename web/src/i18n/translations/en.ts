@@ -46,7 +46,8 @@ const en: Translation = {
     win: "Black wins!",
     lose: "White wins",
     draw: "Draw!",
-    restartPrompt: "Click anywhere to start a new game",
+    playAgain: "Play Again",
+    review: "Review",
   },
   footer: {
     madeWith: "Made with",

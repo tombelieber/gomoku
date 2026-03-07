@@ -11,10 +11,46 @@ pub enum Difficulty {
 impl Difficulty {
     pub fn depth(self) -> usize {
         match self {
-            Difficulty::Easy => 2,
-            Difficulty::Medium => 4,
-            Difficulty::Hard => 6,
+            Difficulty::Easy => 1,
+            Difficulty::Medium => 2,
+            Difficulty::Hard => 4,
         }
+    }
+
+    pub fn candidate_radius(self) -> usize {
+        match self {
+            Difficulty::Easy => 1,
+            Difficulty::Medium => 2,
+            Difficulty::Hard => 2,
+        }
+    }
+
+    /// Noise amplitude added to move scores — higher means more mistakes.
+    pub fn noise_amplitude(self) -> i32 {
+        match self {
+            Difficulty::Easy => 5000,
+            Difficulty::Medium => 800,
+            Difficulty::Hard => 0,
+        }
+    }
+}
+
+/// Generate a random noise value in [-amplitude, +amplitude].
+fn random_noise(amplitude: i32) -> i32 {
+    if amplitude == 0 {
+        return 0;
+    }
+    #[cfg(target_arch = "wasm32")]
+    {
+        ((js_sys::Math::random() * 2.0 - 1.0) * amplitude as f64) as i32
+    }
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        let c = COUNTER.fetch_add(1, Ordering::Relaxed);
+        let hash = c.wrapping_mul(2654435761) ^ c.wrapping_mul(2246822519).rotate_right(16);
+        ((hash % (2 * amplitude as usize + 1)) as i32) - amplitude
     }
 }
 
@@ -25,7 +61,8 @@ pub fn best_move(board: &Board, player: Cell, difficulty: Difficulty) -> (usize,
     }
 
     let depth = difficulty.depth();
-    let candidates = board.get_candidates(2);
+    let candidates = board.get_candidates(difficulty.candidate_radius());
+    let noise_amp = difficulty.noise_amplitude();
 
     let mut best_score = i32::MIN;
     let mut best = candidates[0];
@@ -34,12 +71,13 @@ pub fn best_move(board: &Board, player: Cell, difficulty: Difficulty) -> (usize,
         let mut b = board.clone();
         b.place(x, y, player).unwrap();
 
-        // Immediate win check (incremental — only checks around the placed stone)
+        // Immediate win check (always take the win)
         if b.check_winner_at(x, y) == Some(player) {
             return (x, y);
         }
 
-        let score = minimax(&mut b, depth - 1, i32::MIN, i32::MAX, false, player, (x, y));
+        let mut score = minimax(&mut b, depth - 1, i32::MIN, i32::MAX, false, player, (x, y));
+        score += random_noise(noise_amp);
         if score > best_score {
             best_score = score;
             best = (x, y);
@@ -164,16 +202,17 @@ mod tests {
     #[test]
     fn test_ai_blocks_opponent_four() {
         let mut board = Board::new();
-        // Black has open four
+        // Black has half-four along the board edge (only one open end at (4,0))
+        board.place(0, 0, Cell::Black).unwrap();
         board.place(1, 0, Cell::Black).unwrap();
         board.place(2, 0, Cell::Black).unwrap();
         board.place(3, 0, Cell::Black).unwrap();
-        board.place(4, 0, Cell::Black).unwrap();
 
         let (x, y) = best_move(&board, Cell::White, Difficulty::Medium);
-        assert!(
-            (x == 0 && y == 0) || (x == 5 && y == 0),
-            "AI should block at (0,0) or (5,0), got ({x},{y})"
+        assert_eq!(
+            (x, y),
+            (4, 0),
+            "AI should block at (4,0), got ({x},{y})"
         );
     }
 

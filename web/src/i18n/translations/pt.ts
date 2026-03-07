@@ -45,7 +45,8 @@ const pt: Translation = {
     win: "Pretas vencem!",
     lose: "Brancas vencem",
     draw: "Empate!",
-    restartPrompt: "Clique em qualquer lugar para nova partida",
+    playAgain: "Jogar novamente",
+    review: "Revisar",
   },
   footer: {
     madeWith: "Feito com",

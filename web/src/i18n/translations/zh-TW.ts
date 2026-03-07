@@ -45,7 +45,8 @@ const zhTW: Translation = {
     win: "黑棋勝！",
     lose: "白棋勝",
     draw: "和棋！",
-    restartPrompt: "點擊任意處開新局",
+    playAgain: "再來一局",
+    review: "覆盤",
   },
   footer: {
     madeWith: "用心製作",

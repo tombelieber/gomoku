@@ -45,7 +45,8 @@ const it: Translation = {
     win: "Nero vince!",
     lose: "Bianco vince",
     draw: "Pareggio!",
-    restartPrompt: "Clicca ovunque per una nuova partita",
+    playAgain: "Gioca ancora",
+    review: "Rivedi",
   },
   footer: {
     madeWith: "Fatto con",

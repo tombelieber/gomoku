@@ -45,7 +45,8 @@ const nl: Translation = {
     win: "Zwart wint!",
     lose: "Wit wint",
     draw: "Gelijkspel!",
-    restartPrompt: "Klik ergens om een nieuw spel te starten",
+    playAgain: "Opnieuw spelen",
+    review: "Terugkijken",
   },
   footer: {
     madeWith: "Gemaakt met",

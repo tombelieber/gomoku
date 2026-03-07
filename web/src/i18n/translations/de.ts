@@ -45,7 +45,8 @@ const de: Translation = {
     win: "Schwarz gewinnt!",
     lose: "Weiß gewinnt",
     draw: "Unentschieden!",
-    restartPrompt: "Klicke irgendwo für ein neues Spiel",
+    playAgain: "Nochmal spielen",
+    review: "Nachspiel",
   },
   footer: {
     madeWith: "Erstellt mit",
