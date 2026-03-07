@@ -9,7 +9,7 @@ export function InstallBanner() {
   const dismiss = usePWA((s) => s.dismiss);
   const setShowIOSGuide = usePWA((s) => s.setShowIOSGuide);
   const { t } = useI18n();
-  const winner = useGame((s) => s.winner);
+  const hasPlayed = useGame((s) => s.moveLog.length > 0);
 
   const canShowInstall = !isInstalled && !dismissed && (!!installPrompt || isIOS);
 
@@ -28,8 +28,8 @@ export function InstallBanner() {
         </Banner>
       )}
 
-      {/* Install banner — only after first game ends */}
-      {canShowInstall && winner && (
+      {/* Install banner — after user's first move */}
+      {canShowInstall && hasPlayed && (
         <Banner onDismiss={dismiss} dismissLabel={t.pwa.dismiss}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
             <img
