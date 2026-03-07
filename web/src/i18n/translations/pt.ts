@@ -44,8 +44,8 @@ const pt: Translation = {
     back: "Voltar",
   },
   gameEnd: {
-    win: "Pretas vencem!",
-    lose: "Brancas vencem",
+    win: "Vitória!",
+    lose: "Derrota!",
     draw: "Empate!",
     playAgain: "Jogar novamente",
     review: "Revisar",

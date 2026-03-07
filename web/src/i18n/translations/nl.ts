@@ -44,8 +44,8 @@ const nl: Translation = {
     back: "Terug",
   },
   gameEnd: {
-    win: "Zwart wint!",
-    lose: "Wit wint",
+    win: "Gewonnen!",
+    lose: "Verloren!",
     draw: "Gelijkspel!",
     playAgain: "Opnieuw spelen",
     review: "Terugkijken",

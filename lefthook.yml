@@ -5,3 +5,6 @@ pre-commit:
       glob: "web/src/i18n/translations/*.ts"
       run: bun scripts/validate-i18n.ts
       stage_fixed: true
+    no-hardcoded-strings:
+      glob: "web/src/**/*.tsx"
+      run: bun scripts/check-hardcoded-jsx.ts

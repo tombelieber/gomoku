@@ -44,8 +44,8 @@ const it: Translation = {
     back: "Indietro",
   },
   gameEnd: {
-    win: "Nero vince!",
-    lose: "Bianco vince",
+    win: "Hai vinto!",
+    lose: "Hai perso!",
     draw: "Pareggio!",
     playAgain: "Gioca ancora",
     review: "Rivedi",
