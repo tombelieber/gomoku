@@ -53,6 +53,11 @@ const en: Translation = {
     by: "by",
     starOnGithub: "Star on GitHub",
   },
+  settings: {
+    title: "Settings",
+    difficulty: "Difficulty",
+    language: "Language",
+  },
 };
 
 export default en;

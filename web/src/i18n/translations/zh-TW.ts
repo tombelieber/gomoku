@@ -52,6 +52,11 @@ const zhTW: Translation = {
     by: "by",
     starOnGithub: "在 GitHub 上加星",
   },
+  settings: {
+    title: "設定",
+    difficulty: "難度",
+    language: "語言",
+  },
 };
 
 export default zhTW;

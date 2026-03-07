@@ -52,6 +52,11 @@ const fr: Translation = {
     by: "par",
     starOnGithub: "Étoile sur GitHub",
   },
+  settings: {
+    title: "Paramètres",
+    difficulty: "Difficulté",
+    language: "Langue",
+  },
 };
 
 export default fr;

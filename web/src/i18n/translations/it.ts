@@ -52,6 +52,11 @@ const it: Translation = {
     by: "da",
     starOnGithub: "Stella su GitHub",
   },
+  settings: {
+    title: "Impostazioni",
+    difficulty: "Difficoltà",
+    language: "Lingua",
+  },
 };
 
 export default it;

@@ -52,6 +52,11 @@ const ja: Translation = {
     by: "by",
     starOnGithub: "GitHub でスター",
   },
+  settings: {
+    title: "設定",
+    difficulty: "難易度",
+    language: "言語",
+  },
 };
 
 export default ja;

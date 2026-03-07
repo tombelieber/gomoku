@@ -50,6 +50,11 @@ export interface Translation {
     by: string;
     starOnGithub: string;
   };
+  settings: {
+    title: string;
+    difficulty: string;
+    language: string;
+  };
 }
 
 export const SUPPORTED_LOCALES = [

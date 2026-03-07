@@ -52,6 +52,11 @@ const nl: Translation = {
     by: "door",
     starOnGithub: "Ster op GitHub",
   },
+  settings: {
+    title: "Instellingen",
+    difficulty: "Moeilijkheid",
+    language: "Taal",
+  },
 };
 
 export default nl;

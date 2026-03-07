@@ -52,6 +52,11 @@ const zhCN: Translation = {
     by: "by",
     starOnGithub: "在 GitHub 上加星",
   },
+  settings: {
+    title: "设置",
+    difficulty: "难度",
+    language: "语言",
+  },
 };
 
 export default zhCN;

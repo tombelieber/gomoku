@@ -52,6 +52,11 @@ const ko: Translation = {
     by: "by",
     starOnGithub: "GitHub에서 스타",
   },
+  settings: {
+    title: "설정",
+    difficulty: "난이도",
+    language: "언어",
+  },
 };
 
 export default ko;
