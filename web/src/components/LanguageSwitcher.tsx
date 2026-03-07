@@ -38,7 +38,7 @@ export function LanguageSwitcher() {
       }}
     >
       {SUPPORTED_LOCALES.map((loc) => (
-        <option key={loc} value={loc}>
+        <option key={loc} value={loc} style={{ fontSize: "0.9rem" }}>
           {LOCALE_LABELS[loc]}
         </option>
       ))}
