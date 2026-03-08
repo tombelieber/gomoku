@@ -14,13 +14,13 @@ export function GameControls({ onOpenSettings }: GameControlsProps) {
     winner,
     isDraw,
     isThinking,
-    currentPlayer,
     isReady,
     difficulty,
+    playerColor,
   } = useGame();
   const turnStartTime = useGame((s) => s.turnStartTime);
   const { t } = useI18n();
-  const difficultyLabel = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard][difficulty];
+  const difficultyLabel = [t.game.difficulty.easy, t.game.difficulty.medium, t.game.difficulty.hard, t.game.difficulty.expert, t.game.difficulty.master][difficulty];
 
   const [elapsed, setElapsed] = useState(0);
 
@@ -46,14 +46,18 @@ export function GameControls({ onOpenSettings }: GameControlsProps) {
     );
   }
 
-  const isBlack = currentPlayer === "black";
-  const stoneColor = isBlack ? "#1a1a1a" : "#f5f5f5";
+  // Stone indicator reflects whose turn it actually is:
+  // during AI thinking, show the AI's stone; during player's turn, show the player's stone.
+  const isPlayerTurn = !isThinking && !winner && !isDraw;
+  const displayColor = isPlayerTurn ? playerColor : (playerColor === "black" ? "white" : "black");
+  const stoneColor = displayColor === "black" ? "#1a1a1a" : "#f5f5f5";
 
   let statusText = "";
   if (winner === "black") statusText = t.game.status.blackWins;
   else if (winner === "white") statusText = t.game.status.whiteWins;
   else if (isDraw) statusText = t.game.status.draw;
-  else statusText = isBlack ? t.game.status.yourTurnBlack : t.game.status.yourTurnWhite;
+  else if (isThinking) statusText = t.game.status.thinking;
+  else statusText = playerColor === "black" ? t.game.status.yourTurnBlack : t.game.status.yourTurnWhite;
 
   return (
     <div

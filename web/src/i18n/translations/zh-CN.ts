@@ -10,6 +10,8 @@ const zhCN: Translation = {
       easy: "简单",
       medium: "中等",
       hard: "困难",
+      expert: "达人",
+      master: "最强",
     },
     status: {
       blackWins: "黑棋胜！",

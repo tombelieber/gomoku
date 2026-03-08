@@ -10,6 +10,8 @@ const zhTW: Translation = {
       easy: "簡單",
       medium: "中等",
       hard: "困難",
+      expert: "達人",
+      master: "最強",
     },
     status: {
       blackWins: "黑棋勝！",

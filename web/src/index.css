@@ -168,18 +168,15 @@ body::after {
   to { transform: translateY(0); }
 }
 
-/* Settings bar */
-.settings-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 6px clamp(16px, 4vw, 32px);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+/* Settings button */
+.settings-btn:hover {
+  background: rgba(139,69,19,0.12) !important;
+  border-color: rgba(139,69,19,0.28) !important;
 }
-
-.settings-bar:active .settings-gear {
+.settings-btn:active {
+  transform: scale(0.97);
+}
+.settings-btn:active .settings-gear {
   transform: rotate(30deg);
 }
 

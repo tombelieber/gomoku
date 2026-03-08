@@ -131,30 +131,42 @@ export default function App() {
         {isReplaying ? <ReplayControls /> : <GameControls onOpenSettings={() => setSettingsOpen(true)} />}
       </div>
 
-      {/* Settings gear bar */}
+      {/* Settings button */}
       <div
-        className="settings-bar"
-        onClick={() => setSettingsOpen(true)}
-        role="button"
-        aria-label="Settings"
-        tabIndex={0}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          padding: "4px 0 2px",
+        }}
       >
-        <div style={{
-          flex: 1,
-          height: 1,
-          background: "linear-gradient(90deg, transparent, var(--accent), transparent)",
-          opacity: 0.3,
-        }} />
-        <svg className="settings-gear" style={{ width: "clamp(20px, 3dvh, 28px)", height: "clamp(20px, 3dvh, 28px)", opacity: 0.6 }} viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
-        </svg>
-        <div style={{
-          flex: 1,
-          height: 1,
-          background: "linear-gradient(90deg, transparent, var(--accent), transparent)",
-          opacity: 0.3,
-        }} />
+        <button
+          className="settings-btn"
+          onClick={() => setSettingsOpen(true)}
+          aria-label={t.settings.title}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4em",
+            padding: "7px 18px",
+            background: "rgba(139,69,19,0.07)",
+            border: "1px solid rgba(139,69,19,0.18)",
+            borderRadius: 20,
+            cursor: "pointer",
+            fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
+            fontSize: "clamp(0.78rem, 1.5dvh, 0.9rem)",
+            fontWeight: 500,
+            color: "var(--accent)",
+            letterSpacing: "0.02em",
+            transition: "background 0.2s, border-color 0.2s",
+            WebkitTapHighlightColor: "transparent",
+          }}
+        >
+          <svg className="settings-gear" style={{ width: 14, height: 14, flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+          </svg>
+          {t.settings.title}
+        </button>
       </div>
 
       {/* Footer — compact attribution only */}

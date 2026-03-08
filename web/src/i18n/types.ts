@@ -8,6 +8,8 @@ export interface Translation {
       easy: string;
       medium: string;
       hard: string;
+      expert: string;
+      master: string;
     };
     status: {
       blackWins: string;

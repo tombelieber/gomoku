@@ -10,6 +10,8 @@ const ko: Translation = {
       easy: "쉬움",
       medium: "보통",
       hard: "어려움",
+      expert: "전문가",
+      master: "최강",
     },
     status: {
       blackWins: "흑돌 승리!",

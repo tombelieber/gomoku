@@ -57,6 +57,8 @@ impl Game {
         let diff = match difficulty {
             0 => Difficulty::Easy,
             2 => Difficulty::Hard,
+            3 => Difficulty::Expert,
+            4 => Difficulty::Master,
             _ => Difficulty::Medium,
         };
         let (x, y) = ai::best_move(&self.board, self.current_player, diff);

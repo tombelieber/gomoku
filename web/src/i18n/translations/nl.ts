@@ -10,6 +10,8 @@ const nl: Translation = {
       easy: "Makkelijk",
       medium: "Gemiddeld",
       hard: "Moeilijk",
+      expert: "Expert",
+      master: "Meester",
     },
     status: {
       blackWins: "Zwart wint!",

@@ -10,6 +10,8 @@ const pt: Translation = {
       easy: "Fácil",
       medium: "Médio",
       hard: "Difícil",
+      expert: "Expert",
+      master: "Mestre",
     },
     status: {
       blackWins: "Pretas vencem!",

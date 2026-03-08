@@ -6,6 +6,8 @@ pub enum Difficulty {
     Easy,
     Medium,
     Hard,
+    Expert,
+    Master,
 }
 
 impl Difficulty {
@@ -14,6 +16,8 @@ impl Difficulty {
             Difficulty::Easy => 1,
             Difficulty::Medium => 2,
             Difficulty::Hard => 4,
+            Difficulty::Expert => 6,
+            Difficulty::Master => 8,
         }
     }
 
@@ -22,6 +26,19 @@ impl Difficulty {
             Difficulty::Easy => 1,
             Difficulty::Medium => 2,
             Difficulty::Hard => 2,
+            Difficulty::Expert => 2,
+            Difficulty::Master => 2,
+        }
+    }
+
+    /// Max candidates to evaluate at each node — caps branching factor.
+    pub fn max_candidates(self) -> usize {
+        match self {
+            Difficulty::Easy => usize::MAX,
+            Difficulty::Medium => usize::MAX,
+            Difficulty::Hard => usize::MAX,
+            Difficulty::Expert => 20,
+            Difficulty::Master => 12,
         }
     }
 
@@ -31,6 +48,8 @@ impl Difficulty {
             Difficulty::Easy => 5000,
             Difficulty::Medium => 800,
             Difficulty::Hard => 0,
+            Difficulty::Expert => 0,
+            Difficulty::Master => 0,
         }
     }
 }
@@ -61,8 +80,17 @@ pub fn best_move(board: &Board, player: Cell, difficulty: Difficulty) -> (usize,
     }
 
     let depth = difficulty.depth();
-    let candidates = board.get_candidates(difficulty.candidate_radius());
+    let max_candidates = difficulty.max_candidates();
     let noise_amp = difficulty.noise_amplitude();
+
+    let mut candidates = board.get_candidates(difficulty.candidate_radius());
+    // Sort and cap candidates to bound the branching factor
+    if candidates.len() > max_candidates {
+        candidates.sort_by_cached_key(|&(x, y)| {
+            std::cmp::Reverse(quick_score(board, x, y, player))
+        });
+        candidates.truncate(max_candidates);
+    }
 
     let mut best_score = i32::MIN;
     let mut best = candidates[0];
@@ -76,7 +104,7 @@ pub fn best_move(board: &Board, player: Cell, difficulty: Difficulty) -> (usize,
             return (x, y);
         }
 
-        let mut score = minimax(&mut b, depth - 1, i32::MIN, i32::MAX, false, player, (x, y));
+        let mut score = minimax(&mut b, depth - 1, i32::MIN, i32::MAX, false, player, (x, y), max_candidates);
         score += random_noise(noise_amp);
         if score > best_score {
             best_score = score;
@@ -95,26 +123,28 @@ fn minimax(
     is_maximizing: bool,
     ai_player: Cell,
     last_move: (usize, usize),
+    max_candidates: usize,
 ) -> i32 {
     // Use incremental winner check on the last placed move
     if board.check_winner_at(last_move.0, last_move.1).is_some() || depth == 0 || board.is_full() {
         return evaluate(board, ai_player);
     }
 
+    let current_player = if is_maximizing { ai_player } else { ai_player.opponent() };
     let mut candidates = board.get_candidates(2);
 
     // Move ordering: sort candidates by quick heuristic evaluation (descending)
     // so alpha-beta prunes more aggressively
-    let current_player = if is_maximizing { ai_player } else { ai_player.opponent() };
     candidates.sort_by_cached_key(|&(x, y)| {
         std::cmp::Reverse(quick_score(board, x, y, current_player))
     });
+    candidates.truncate(max_candidates);
 
     if is_maximizing {
         let mut max_score = i32::MIN;
         for &(x, y) in &candidates {
             board.place(x, y, ai_player).unwrap();
-            let score = minimax(board, depth - 1, alpha, beta, false, ai_player, (x, y));
+            let score = minimax(board, depth - 1, alpha, beta, false, ai_player, (x, y), max_candidates);
             board.undo(x, y);
             max_score = max_score.max(score);
             alpha = alpha.max(score);
@@ -128,7 +158,7 @@ fn minimax(
         let mut min_score = i32::MAX;
         for &(x, y) in &candidates {
             board.place(x, y, opponent).unwrap();
-            let score = minimax(board, depth - 1, alpha, beta, true, ai_player, (x, y));
+            let score = minimax(board, depth - 1, alpha, beta, true, ai_player, (x, y), max_candidates);
             board.undo(x, y);
             min_score = min_score.min(score);
             beta = beta.min(score);

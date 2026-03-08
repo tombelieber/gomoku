@@ -10,6 +10,8 @@ const de: Translation = {
       easy: "Leicht",
       medium: "Mittel",
       hard: "Schwer",
+      expert: "Experte",
+      master: "Meister",
     },
     status: {
       blackWins: "Schwarz gewinnt!",

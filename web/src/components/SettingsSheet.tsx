@@ -72,6 +72,8 @@ export function SettingsSheet({ open, onClose }: Props) {
     t.game.difficulty.easy,
     t.game.difficulty.medium,
     t.game.difficulty.hard,
+    t.game.difficulty.expert,
+    t.game.difficulty.master,
   ];
 
   return (
@@ -241,13 +243,13 @@ export function SettingsSheet({ open, onClose }: Props) {
           >
             {difficultyLabels.map((label, i) => {
               const isActive = difficulty === i;
-              const testIds = ["difficulty-easy", "difficulty-medium", "difficulty-hard"] as const;
+              const testIds = ["difficulty-easy", "difficulty-medium", "difficulty-hard", "difficulty-expert", "difficulty-master"] as const;
               return (
                 <button
                   key={i}
                   data-testid={testIds[i]}
                   onClick={() => {
-                    setDifficulty(i as 0 | 1 | 2);
+                    setDifficulty(i as 0 | 1 | 2 | 3 | 4);
                     reset();
                   }}
                   style={{

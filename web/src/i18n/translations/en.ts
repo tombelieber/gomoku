@@ -11,6 +11,8 @@ const en: Translation = {
       easy: "Easy",
       medium: "Medium",
       hard: "Hard",
+      expert: "Expert",
+      master: "Master",
     },
     status: {
       blackWins: "Black wins!",

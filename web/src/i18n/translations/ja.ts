@@ -10,6 +10,8 @@ const ja: Translation = {
       easy: "かんたん",
       medium: "ふつう",
       hard: "むずかしい",
+      expert: "たつじん",
+      master: "さいきょう",
     },
     status: {
       blackWins: "黒の勝ち！",

@@ -39,7 +39,7 @@ https://github.com/user-attachments/assets/432a75ab-832d-4c30-bd60-d53037197331
     <td align="center" width="50%">
       <img src="assets/zh-TW/screenshots/settings.png" alt="Settings sheet" width="280" />
       <br /><b>Customize Everything</b>
-      <br /><sub>3 difficulty levels, play as Black or White, W/L/D stats</sub>
+      <br /><sub>5 difficulty levels, play as Black or White, W/L/D stats</sub>
     </td>
     <td align="center" width="50%">
       <img src="assets/zh-TW/screenshots/replay.png" alt="Move-by-move replay" width="280" />

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { EngineBridge, type GameState } from "@/lib/engine-bridge";
 import { saveGame } from "@/lib/game-history";
 
-type Difficulty = 0 | 1 | 2;
+type Difficulty = 0 | 1 | 2 | 3 | 4;
 
 type GameStore = {
   board: number[][];
