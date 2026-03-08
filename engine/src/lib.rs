@@ -49,7 +49,7 @@ impl Game {
         true
     }
 
-    /// difficulty: 0=easy, 1=medium, 2=hard
+    /// difficulty: 0=easy, 1=medium, 2=hard, 3=expert, 4=master
     pub fn ai_move(&mut self, difficulty: u8) -> JsValue {
         if self.winner.is_some() {
             return JsValue::NULL;

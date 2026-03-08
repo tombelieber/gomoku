@@ -37,8 +37,8 @@ impl Difficulty {
             Difficulty::Easy => usize::MAX,
             Difficulty::Medium => usize::MAX,
             Difficulty::Hard => usize::MAX,
-            Difficulty::Expert => 20,
-            Difficulty::Master => 12,
+            Difficulty::Expert => usize::MAX,
+            Difficulty::Master => 20,
         }
     }
 
