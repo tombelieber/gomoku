@@ -32,13 +32,15 @@ impl Difficulty {
     }
 
     /// Max candidates to evaluate at each node — caps branching factor.
+    /// With alpha-beta, effective nodes ≈ max_candidates^(depth/2).
+    /// Tuned to <500ms native release → <2s WASM.
     pub fn max_candidates(self) -> usize {
         match self {
             Difficulty::Easy => usize::MAX,
             Difficulty::Medium => usize::MAX,
-            Difficulty::Hard => usize::MAX,
-            Difficulty::Expert => usize::MAX,
-            Difficulty::Master => 20,
+            Difficulty::Hard => 15,  // ~17ms native
+            Difficulty::Expert => 8, // ~?ms native at depth 6
+            Difficulty::Master => 6, // target ~300ms native → ~1s WASM
         }
     }
 
