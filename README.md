@@ -52,7 +52,7 @@
 - **Unbeatable AI** — Rust-powered engine compiled to WebAssembly. Sub-100ms moves. Good luck.
 - **Runs in your browser** — No app to install, no account to create. Works on any device.
 - **Mobile-first** — Touch-optimized for phones and tablets. Instant load.
-- **11 languages** — English, 中文, 日本語, 한국어, Deutsch, Español, Français, Italiano, Nederlands, Português.
+- **11 languages** — English, 繁體中文, 简体中文, 日本語, 한국어, Deutsch, Español, Français, Italiano, Nederlands, Português.
 - **Game history & replay** — Every game saved. Step through any past match move-by-move.
 
 ---
