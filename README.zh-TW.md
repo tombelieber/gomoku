@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/zh-TW/screenshots/midgame.png" alt="五子棋遊戲畫面" width="320" />
+  <video src="assets/zh-TW/videos/demo.mp4" alt="五子棋遊戲畫面" width="320" controls playsinline></video>
 </p>
 
 <p align="center">
