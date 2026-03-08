@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <video src="assets/en/videos/demo.mp4" alt="Gomoku gameplay demo" width="320" controls playsinline></video>
+  <img src="assets/en/videos/demo.gif" alt="Gomoku gameplay demo" width="320" />
 </p>
 
 <p align="center">
