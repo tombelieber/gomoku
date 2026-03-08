@@ -10,7 +10,11 @@
   <a href="https://open-gomoku.pages.dev"><img src="https://img.shields.io/badge/%E2%96%B6%EF%B8%8F_%E7%AB%8B%E5%8D%B3%E9%96%8B%E7%8E%A9-open--gomoku.pages.dev-black?style=for-the-badge&labelColor=000" alt="立即開玩" /></a>
 </p>
 
+<div align="center">
+
 https://github.com/user-attachments/assets/7fadbdeb-ee44-4709-8eab-ee5a3a35a893
+
+</div>
 
 <p align="center">
   免費。無需註冊。無需下載。直接開玩。

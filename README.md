@@ -10,7 +10,11 @@
   <a href="https://open-gomoku.pages.dev"><img src="https://img.shields.io/badge/%E2%96%B6%EF%B8%8F_Play_Now-open--gomoku.pages.dev-black?style=for-the-badge&labelColor=000" alt="Play Now" /></a>
 </p>
 
+<div align="center">
+
 https://github.com/user-attachments/assets/432a75ab-832d-4c30-bd60-d53037197331
+
+</div>
 
 <p align="center">
   Free. No signup. No download. Just play.
