@@ -33,14 +33,27 @@ This project supports 11 languages. **Every user-visible string must go through 
 - The script commits the version bump as `release: vX.Y.Z` before building
 - `APP_VERSION` is exposed to the frontend via Vite's `define` config
 
+## M1 Max Performance: Always Use Hardware Acceleration
+
+This project runs on M1 Max. **Never use software encoders/renderers when hardware alternatives exist.**
+
+- **ffmpeg:** Always use `h264_videotoolbox` (or `hevc_videotoolbox`) — never `libx264`/`libx265`. The M1 Max media engine encodes near-instantly at zero CPU cost. Use `-hwaccel videotoolbox` for decode, `-q:v 55` for quality (not `-crf`, not `-preset`).
+- **Chromium/Playwright:** Launch with `--use-angle=metal --enable-gpu --enable-gpu-rasterization --ignore-gpu-blocklist` to use the 32-core GPU for rendering instead of CPU software rasterization.
+- **Video capture:** Record at target output resolution directly (e.g. 1080px wide) — don't record small then upscale in post. The DPR 3 render (1179px) is already larger than 1080, so capture downscales for free.
+- **General rule:** If a tool has a hardware-accelerated path on Apple Silicon, use it. CPU = last resort.
+
 ## Key Paths
 
 - `web/src/hooks/useGame.ts` — main game Zustand store
 - `web/src/hooks/useReplay.ts` — replay mode Zustand store
 - `web/src/i18n/types.ts` — Translation interface (source of truth for keys)
+- `web/src/i18n/store.ts` — Zustand i18n store + `window.__gomokuSetLocale()` automation API
 - `web/src/i18n/translations/` — 11 locale files, all must satisfy `Translation`
 - `web/src/lib/game-history.ts` — localStorage persistence for game records
 - `web/src/workers/engine.worker.ts` — WASM bridge worker
+- `assets/{lang}/screenshots/` — per-language screenshots (6 per locale)
+- `assets/{lang}/videos/` — per-language demo videos
+- `assets/demo.mp4` — hero video for README (English)
 - `scripts/validate-i18n.ts` — pre-commit: checks all locales have all keys
 - `scripts/check-hardcoded-jsx.ts` — pre-commit: detects hardcoded strings in JSX
 - `scripts/version-bump.ts` — auto version bump (patch/minor based on commit history)

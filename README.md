@@ -8,7 +8,7 @@
 
 <p align="center">
   <video src="assets/demo.mp4" width="320" autoplay loop muted playsinline>
-    <img src="assets/screenshots/en/midgame.png" alt="Gomoku gameplay demo" width="320" />
+    <img src="assets/en/screenshots/midgame.png" alt="Gomoku gameplay demo" width="320" />
   </video>
 </p>
 
@@ -21,24 +21,24 @@
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="assets/screenshots/en/midgame.png" alt="Gameplay" width="280" />
+      <img src="assets/ja/screenshots/midgame.png" alt="Gameplay with timer and controls" width="280" />
       <br /><b>Real-time Gameplay</b>
-      <br /><sub>Turn timer, AI thinking indicator, undo</sub>
+      <br /><sub>Turn timer, AI thinking indicator, undo — all at your fingertips</sub>
     </td>
     <td align="center" width="50%">
-      <img src="assets/screenshots/en/win.png" alt="Victory screen" width="280" />
+      <img src="assets/ko/screenshots/win.png" alt="Game end screen" width="280" />
       <br /><b>Can You Beat the AI?</b>
-      <br /><sub>Dramatic endings with animated kaomoji</sub>
+      <br /><sub>Dramatic endings with animated kaomoji — win or lose</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="50%">
-      <img src="assets/screenshots/en/settings.png" alt="Settings" width="280" />
+      <img src="assets/fr/screenshots/settings.png" alt="Settings sheet" width="280" />
       <br /><b>Customize Everything</b>
-      <br /><sub>3 difficulty levels, play as Black or White</sub>
+      <br /><sub>3 difficulty levels, play as Black or White, W/L/D stats</sub>
     </td>
     <td align="center" width="50%">
-      <img src="assets/screenshots/en/replay.png" alt="Replay" width="280" />
+      <img src="assets/zh-TW/screenshots/replay.png" alt="Move-by-move replay" width="280" />
       <br /><b>Review Any Game</b>
       <br /><sub>Step through moves, see AI thinking time</sub>
     </td>

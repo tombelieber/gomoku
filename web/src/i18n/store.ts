@@ -44,3 +44,10 @@ export const useI18n = create<I18nStore>((set) => ({
     set({ locale, t: translations[locale] });
   },
 }));
+
+// Expose for automation (screenshot pipeline, testing)
+(window as any).__gomokuSetLocale = (locale: string) => {
+  if (locale in translations) {
+    useI18n.getState().setLocale(locale as Locale);
+  }
+};

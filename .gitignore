@@ -4,7 +4,7 @@ target/
 .tmp/
 *.log
 web/src/wasm/
-assets/*.webm
+assets/**/*.webm
 # Private: "how I build" — process, plans, GTM, Claude config (not open-sourced)
 .claude/
 scripts/ai-demo/
