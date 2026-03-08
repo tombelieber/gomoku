@@ -21,19 +21,19 @@
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="assets/ja/screenshots/midgame.png" alt="Gameplay with timer and controls" width="280" />
+      <img src="assets/en/screenshots/midgame.png" alt="Gameplay with timer and controls" width="280" />
       <br /><b>Real-time Gameplay</b>
       <br /><sub>Turn timer, AI thinking indicator, undo — all at your fingertips</sub>
     </td>
     <td align="center" width="50%">
-      <img src="assets/ko/screenshots/win.png" alt="Game end screen" width="280" />
+      <img src="assets/en/screenshots/win.png" alt="Game end screen" width="280" />
       <br /><b>Can You Beat the AI?</b>
       <br /><sub>Dramatic endings with animated kaomoji — win or lose</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="50%">
-      <img src="assets/fr/screenshots/settings.png" alt="Settings sheet" width="280" />
+      <img src="assets/zh-TW/screenshots/settings.png" alt="Settings sheet" width="280" />
       <br /><b>Customize Everything</b>
       <br /><sub>3 difficulty levels, play as Black or White, W/L/D stats</sub>
     </td>
