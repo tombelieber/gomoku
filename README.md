@@ -81,6 +81,16 @@ bun run dev            # http://localhost:5173
 | Frontend | React 19, TypeScript, Zustand, Vite |
 | Hosting | Cloudflare Pages |
 
+**AI Engine Benchmark** (minimax + alpha-beta pruning, mid-game position):
+
+| Difficulty | Search Depth | Candidates/Node | Native (M1 Max) | WASM (Browser) |
+|------------|--------------|-----------------|-----------------|----------------|
+| Easy       | 1            | all             | < 1 ms          | < 1 ms         |
+| Medium     | 2            | all             | < 1 ms          | < 1 ms         |
+| Hard       | 4            | 15              | ~9 ms           | ~30 ms         |
+| Expert     | 6            | 10              | ~35 ms          | ~150 ms        |
+| Master     | 8            | 8               | ~312 ms         | ~1.2 s         |
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [ARCHITECTURE.md](docs/ARCHITECTURE.md) for deep dives.
 
 </details>
