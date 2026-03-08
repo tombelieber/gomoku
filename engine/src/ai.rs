@@ -33,14 +33,13 @@ impl Difficulty {
 
     /// Max candidates to evaluate at each node — caps branching factor.
     /// With alpha-beta, effective nodes ≈ max_candidates^(depth/2).
-    /// Tuned to <500ms native release → <2s WASM.
     pub fn max_candidates(self) -> usize {
         match self {
             Difficulty::Easy => usize::MAX,
             Difficulty::Medium => usize::MAX,
-            Difficulty::Hard => 15,  // ~17ms native
-            Difficulty::Expert => 8, // ~?ms native at depth 6
-            Difficulty::Master => 6, // target ~300ms native → ~1s WASM
+            Difficulty::Hard => 15,
+            Difficulty::Expert => 10,
+            Difficulty::Master => 8,
         }
     }
 
@@ -172,33 +171,54 @@ fn minimax(
     }
 }
 
-/// Quick heuristic for move ordering — scores a candidate move by how many
-/// friendly/enemy stones surround it. Cheap O(1) per candidate.
+/// Quick heuristic for move ordering — scores a candidate move by checking
+/// how it extends friendly lines and blocks opponent lines through this cell.
+/// Runs in O(1) per candidate (bounded by 4 directions × up to 4 steps each).
 fn quick_score(board: &Board, x: usize, y: usize, player: Cell) -> i32 {
     let mut score = 0i32;
-    let directions: [(i32, i32); 8] = [
-        (1, 0), (-1, 0), (0, 1), (0, -1),
-        (1, 1), (-1, -1), (1, -1), (-1, 1),
-    ];
     let opponent = player.opponent();
-    for &(dx, dy) in &directions {
-        for dist in 1..=2i32 {
-            let nx = x as i32 + dx * dist;
-            let ny = y as i32 + dy * dist;
-            if nx < 0 || nx >= 15 || ny < 0 || ny >= 15 {
-                break;
-            }
-            let cell = board.get(nx as usize, ny as usize);
-            if cell == player {
-                score += 3 - dist; // closer = better
-            } else if cell == opponent {
-                score += 2 - dist; // blocking is also valuable
-            }
-        }
+    // Check each of 4 axes through (x,y) — count consecutive stones in both directions
+    let axes: [(i32, i32); 4] = [(1, 0), (0, 1), (1, 1), (1, -1)];
+    for &(dx, dy) in &axes {
+        // Count friendly stones extending through this cell
+        let own = count_consecutive(board, x, y, dx, dy, player)
+                + count_consecutive(board, x, y, -dx, -dy, player);
+        // Count opponent stones this cell would block
+        let opp = count_consecutive(board, x, y, dx, dy, opponent)
+                + count_consecutive(board, x, y, -dx, -dy, opponent);
+        // Prioritize: 4-in-a-row > blocking 4 > 3-in-a-row > blocking 3 > ...
+        score += match own {
+            4.. => 10000, // completing a five
+            3 => 1000,    // making an open four
+            2 => 100,     // making a three
+            1 => 10,
+            _ => 0,
+        };
+        score += match opp {
+            4.. => 9000,  // must block opponent's five
+            3 => 900,     // block opponent's four
+            2 => 80,      // block opponent's three
+            1 => 5,
+            _ => 0,
+        };
     }
-    // Center preference
+    // Center preference (tiebreaker)
     score += (7 - (x as i32 - 7).abs() + 7 - (y as i32 - 7).abs()) / 2;
     score
+}
+
+/// Count consecutive stones of `stone` color starting from (x,y) in direction (dx,dy),
+/// NOT counting (x,y) itself.
+fn count_consecutive(board: &Board, x: usize, y: usize, dx: i32, dy: i32, stone: Cell) -> i32 {
+    let mut count = 0;
+    let mut nx = x as i32 + dx;
+    let mut ny = y as i32 + dy;
+    while nx >= 0 && nx < 15 && ny >= 0 && ny < 15 && board.get(nx as usize, ny as usize) == stone {
+        count += 1;
+        nx += dx;
+        ny += dy;
+    }
+    count
 }
 
 #[cfg(test)]
@@ -253,5 +273,30 @@ mod tests {
         let board = Board::new();
         let (x, y) = best_move(&board, Cell::Black, Difficulty::Easy);
         assert_eq!((x, y), (7, 7), "First move should be center");
+    }
+
+    /// Strength test: Master must block an open-three that Hard also blocks.
+    #[test]
+    fn test_master_blocks_open_three() {
+        let mut board = Board::new();
+        // Black open three at row 7: (5,7)(6,7)(7,7) with both ends open
+        board.place(5, 7, Cell::Black).unwrap();
+        board.place(6, 7, Cell::Black).unwrap();
+        board.place(7, 7, Cell::Black).unwrap();
+        // White stones elsewhere
+        board.place(0, 0, Cell::White).unwrap();
+        board.place(1, 1, Cell::White).unwrap();
+
+        let hard_move = best_move(&board, Cell::White, Difficulty::Hard);
+        let master_move = best_move(&board, Cell::White, Difficulty::Master);
+        // Both must block — either (4,7) or (8,7)
+        assert!(
+            hard_move == (4, 7) || hard_move == (8, 7),
+            "Hard should block open-three, got ({},{})", hard_move.0, hard_move.1
+        );
+        assert!(
+            master_move == (4, 7) || master_move == (8, 7),
+            "Master should block open-three, got ({},{})", master_move.0, master_move.1
+        );
     }
 }
