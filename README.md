@@ -1,3 +1,7 @@
+<p align="center">
+  <b>English</b> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.ja.md">日本語</a> · <a href="README.ko.md">한국어</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.it.md">Italiano</a> · <a href="README.nl.md">Nederlands</a> · <a href="README.pt.md">Português</a>
+</p>
+
 # GOMOKU
 
 ### Think you can beat an AI at the world's oldest strategy game?
@@ -7,9 +11,7 @@
 </p>
 
 <p align="center">
-  <video src="assets/demo.mp4" width="320" autoplay loop muted playsinline>
-    <img src="assets/en/screenshots/midgame.png" alt="Gomoku gameplay demo" width="320" />
-  </video>
+  <img src="assets/en/screenshots/midgame.png" alt="Gomoku gameplay demo" width="320" />
 </p>
 
 <p align="center">
@@ -90,5 +92,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [ARCHITECTURE.md](docs/ARCHITECTURE.m
 </p>
 
 <p align="center">
-  <a href="https://github.com/tombelieber/gomoku">Star on GitHub</a> · MIT License · Made by <a href="https://github.com/tombelieber">Tom Tang</a>
+  <a href="https://github.com/tombelieber/gomoku">Star on GitHub</a> · <a href="https://open-gomoku.pages.dev">open-gomoku.pages.dev</a> · MIT License · Made by <a href="https://github.com/tombelieber">Tom Tang</a>
 </p>
