@@ -56,7 +56,7 @@ export function GameControls({ onOpenSettings }: GameControlsProps) {
   if (winner === "black") statusText = t.game.status.blackWins;
   else if (winner === "white") statusText = t.game.status.whiteWins;
   else if (isDraw) statusText = t.game.status.draw;
-  else if (isThinking) statusText = t.game.status.thinking;
+  else if (isThinking) statusText = t.game.ai.thinking;
   else statusText = playerColor === "black" ? t.game.status.yourTurnBlack : t.game.status.yourTurnWhite;
 
   return (
