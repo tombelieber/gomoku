@@ -37,7 +37,7 @@ export const useGame = create<GameStore>((set, get) => ({
   winner: null,
   isDraw: false,
   currentPlayer: "black",
-  difficulty: 1,
+  difficulty: 0,
   isThinking: false,
   isReady: false,
   lastAiMove: null,
