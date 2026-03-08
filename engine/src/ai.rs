@@ -24,7 +24,7 @@ impl Difficulty {
     pub fn candidate_radius(self) -> usize {
         match self {
             Difficulty::Easy => 1,
-            Difficulty::Medium => 2,
+            Difficulty::Medium => 1,
             Difficulty::Hard => 2,
             Difficulty::Expert => 2,
             Difficulty::Master => 2,
@@ -32,12 +32,13 @@ impl Difficulty {
     }
 
     /// Max candidates to evaluate at each node — caps branching factor.
+    /// This is the primary knob keeping all modes snappy.
     pub fn max_candidates(self) -> usize {
         match self {
-            Difficulty::Easy => usize::MAX,
-            Difficulty::Medium => usize::MAX,
-            Difficulty::Hard => usize::MAX,
-            Difficulty::Expert => 20,
+            Difficulty::Easy => 4,
+            Difficulty::Medium => 6,
+            Difficulty::Hard => 10,
+            Difficulty::Expert => 15,
             Difficulty::Master => 12,
         }
     }
@@ -84,13 +85,30 @@ pub fn best_move(board: &Board, player: Cell, difficulty: Difficulty) -> (usize,
     let noise_amp = difficulty.noise_amplitude();
 
     let mut candidates = board.get_candidates(difficulty.candidate_radius());
-    // Sort and cap candidates to bound the branching factor
-    if candidates.len() > max_candidates {
-        candidates.sort_by_cached_key(|&(x, y)| {
-            std::cmp::Reverse(quick_score(board, x, y, player))
-        });
-        candidates.truncate(max_candidates);
+
+    // Immediate win / must-block checks run on full candidate list before capping
+    for &(x, y) in &candidates {
+        let mut b = board.clone();
+        b.place(x, y, player).unwrap();
+        if b.check_winner_at(x, y) == Some(player) {
+            return (x, y);
+        }
     }
+    // Block opponent's immediate win
+    let opponent = player.opponent();
+    for &(x, y) in &candidates {
+        let mut b = board.clone();
+        b.place(x, y, opponent).unwrap();
+        if b.check_winner_at(x, y) == Some(opponent) {
+            return (x, y);
+        }
+    }
+
+    // Sort and cap candidates to bound the branching factor
+    candidates.sort_by_cached_key(|&(x, y)| {
+        std::cmp::Reverse(quick_score(board, x, y, player))
+    });
+    candidates.truncate(max_candidates);
 
     let mut best_score = i32::MIN;
     let mut best = candidates[0];
@@ -98,11 +116,6 @@ pub fn best_move(board: &Board, player: Cell, difficulty: Difficulty) -> (usize,
     for &(x, y) in &candidates {
         let mut b = board.clone();
         b.place(x, y, player).unwrap();
-
-        // Immediate win check (always take the win)
-        if b.check_winner_at(x, y) == Some(player) {
-            return (x, y);
-        }
 
         let mut score = minimax(&mut b, depth - 1, i32::MIN, i32::MAX, false, player, (x, y), max_candidates);
         score += random_noise(noise_amp);
