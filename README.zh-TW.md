@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/zh-TW/screenshots/midgame.png" alt="五子棋遊戲畫面" width="320" />
+  <video src="https://open-gomoku.pages.dev/videos/demo-zh-tw.mp4" alt="五子棋遊戲畫面" width="320" controls muted></video>
 </p>
 
 <p align="center">

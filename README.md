@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/en/screenshots/midgame.png" alt="Gomoku gameplay demo" width="320" />
+  <video src="https://open-gomoku.pages.dev/videos/demo-en.mp4" alt="Gomoku gameplay demo" width="320" controls muted></video>
 </p>
 
 <p align="center">
