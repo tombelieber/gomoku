@@ -40,8 +40,15 @@ const MCP_SERVERS = [
 ];
 
 const ALL_TOOLS = [
-  { type: "agent_toolset_20260401" as const, default_config: { enabled: true } },
-  { type: "mcp_toolset" as const, mcp_server_name: "github" },
+  {
+    type: "agent_toolset_20260401" as const,
+    default_config: { enabled: true, permission_policy: { type: "always_allow" } },
+  },
+  {
+    type: "mcp_toolset" as const,
+    mcp_server_name: "github",
+    default_config: { permission_policy: { type: "always_allow" } },
+  },
 ];
 
 type SkillRef =

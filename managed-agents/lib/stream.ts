@@ -68,10 +68,32 @@ export async function runSession(
 
       case "agent.tool_use":
         console.log(`\n  [tool] ${(event as any).name ?? "built-in"}`);
+        // Auto-approve tools that need confirmation (always_ask policy)
+        if ((event as any).evaluated_permission === "ask") {
+          console.log(`  [auto-approve] ${(event as any).name}`);
+          await client.beta.sessions.events.send(session.id, {
+            events: [{
+              type: "user.tool_confirmation",
+              tool_use_id: event.id,
+              result: "allow",
+            } as any],
+          });
+        }
         break;
 
       case "agent.mcp_tool_use":
         console.log(`\n  [mcp]  ${(event as any).name ?? "mcp-tool"}`);
+        // Auto-approve MCP tools that need confirmation
+        if ((event as any).evaluated_permission === "ask") {
+          console.log(`  [auto-approve] ${(event as any).name}`);
+          await client.beta.sessions.events.send(session.id, {
+            events: [{
+              type: "user.tool_confirmation",
+              tool_use_id: event.id,
+              result: "allow",
+            } as any],
+          });
+        }
         break;
 
       case "agent.thinking":
