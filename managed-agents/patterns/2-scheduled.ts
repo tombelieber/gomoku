@@ -1,12 +1,11 @@
 /**
  * Pattern 2: Scheduled (Cron)
  *
- * Simulates: Daily cron → agent generates a repo health report → result posted to Lark
+ * Agent generates a repo health report and posts to Lark.
  *
- * In production, a cron job (GitHub Actions, AWS EventBridge, etc.) would trigger this.
- * Here we run it manually.
- *
- * Usage: bun run pattern:scheduled
+ * Usage:
+ *   bun run pattern:scheduled                              # default health report
+ *   bun run pattern:scheduled "focus on dependency audit"   # custom focus
  */
 import Anthropic from "@anthropic-ai/sdk";
 import { resolveConfig } from "../lib/config.js";
@@ -16,8 +15,9 @@ const client = new Anthropic();
 const config = resolveConfig("scheduled");
 
 const today = new Date().toISOString().split("T")[0];
+const arg = process.argv.slice(2).find((a) => !a.startsWith("-"));
 
-const message = `
+const baseMessage = `
 Generate a daily repo health report for ${today}.
 
 Tasks:
@@ -38,6 +38,8 @@ Format the report as:
 ### Recommendations
 (1-3 actionable items)
 `.trim();
+
+const message = arg ? `${baseMessage}\n\nAdditional focus: ${arg}` : baseMessage;
 
 console.log("=== Pattern 2: Scheduled (Daily repo health report) ===\n");
 

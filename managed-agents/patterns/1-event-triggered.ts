@@ -1,12 +1,15 @@
 /**
  * Pattern 1: Event-Triggered
  *
- * Simulates: GitHub webhook (PR push) → agent analyzes the PR → result posted to Lark
+ * Agent analyzes a PR and posts results to Lark.
  *
- * In production, a webhook handler would receive the GitHub event and call this.
- * Here we simulate it with a hardcoded PR description.
+ * Usage:
+ *   bun run pattern:event 4                          # review PR #4
+ *   bun run pattern:event "review PR #4 for i18n"    # freeform prompt
+ *   bun run pattern:event                            # uses default demo PR
  *
- * Usage: bun run pattern:event
+ * The agent has GitHub MCP tools — it fetches PR details, reads diffs, and
+ * analyzes the codebase automatically. Just give it a PR number or a question.
  */
 import Anthropic from "@anthropic-ai/sdk";
 import { resolveConfig } from "../lib/config.js";
@@ -15,32 +18,59 @@ import { runSession, archiveSession } from "../lib/stream.js";
 const client = new Anthropic();
 const config = resolveConfig("event");
 
-const simulatedPR = {
-  number: 42,
-  title: "feat: add AI difficulty selector",
-  author: "tombelieber",
-  branch: "feat/difficulty-selector",
-  files_changed: ["web/src/hooks/useGame.ts", "web/src/components/GameControls.tsx"],
-};
+// CLI arg: skip --shared and any flags starting with -
+const arg = process.argv.slice(2).find((a) => !a.startsWith("-"));
 
-const message = `
+function buildMessage(input: string | undefined): { message: string; title: string } {
+  // PR number
+  if (input && /^\d+$/.test(input)) {
+    return {
+      message: `
+Review PR #${input} on tombelieber/gomoku.
+
+Tasks:
+1. Use GitHub MCP tools to fetch the PR details and diff
+2. Read the affected files in the repo at /workspace/gomoku
+3. Assess code quality, correctness, and adherence to project conventions
+4. Write a concise review summary (3-5 bullet points)
+`.trim(),
+      title: `Event: PR #${input} Review`,
+    };
+  }
+
+  // Freeform prompt
+  if (input) {
+    return {
+      message: `${input}\n\nThe repo is at /workspace/gomoku. Use GitHub MCP tools if you need PR data.`,
+      title: `Event: ${input.slice(0, 50)}`,
+    };
+  }
+
+  // Default demo
+  return {
+    message: `
 A new PR was just opened on the Gomoku repo. Analyze it and post a summary.
 
 PR details:
-- #${simulatedPR.number}: "${simulatedPR.title}" by @${simulatedPR.author}
-- Branch: ${simulatedPR.branch}
-- Files changed: ${simulatedPR.files_changed.join(", ")}
+- #42: "feat: add AI difficulty selector" by @tombelieber
+- Branch: feat/difficulty-selector
+- Files changed: web/src/hooks/useGame.ts, web/src/components/GameControls.tsx
 
 Tasks:
 1. Read the repo structure to understand the codebase
 2. Analyze what these files do and assess the PR's impact
 3. Write a brief code review summary (3-5 bullet points)
-`.trim();
+`.trim(),
+    title: "Event: PR #42 Review (demo)",
+  };
+}
 
-console.log("=== Pattern 1: Event-Triggered (PR webhook → analysis → Lark) ===\n");
+const { message, title } = buildMessage(arg);
+
+console.log("=== Pattern 1: Event-Triggered (PR → analysis → Lark) ===\n");
 
 async function main() {
-  const { sessionId } = await runSession(client, config, message, "Event: PR #42 Review");
+  const { sessionId } = await runSession(client, config, message, title);
   await archiveSession(client, sessionId);
 }
 
