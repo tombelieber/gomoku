@@ -29,10 +29,14 @@ function buildMessage(input: string | undefined): { message: string; title: stri
 Review PR #${input} on tombelieber/gomoku.
 
 Tasks:
-1. Use GitHub MCP tools to fetch the PR details and diff
-2. Read the affected files in the repo at /workspace/gomoku
+1. The repo is at /workspace/gomoku. Use bash to fetch PR info:
+   - cd /workspace/gomoku && git fetch origin 'pull/${input}/head:pr-${input}' && git diff main...pr-${input}
+   - Or: curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/tombelieber/gomoku/pulls/${input}
+2. Read the affected files to understand context
 3. Assess code quality, correctness, and adherence to project conventions
 4. Write a concise review summary (3-5 bullet points)
+
+Do NOT use GitHub MCP tools for reading — use bash and git instead.
 `.trim(),
       title: `Event: PR #${input} Review`,
     };
