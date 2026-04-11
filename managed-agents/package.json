@@ -1,0 +1,22 @@
+{
+  "name": "gomoku-managed-agents",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "bun setup.ts",
+    "pattern:event": "bun patterns/1-event-triggered.ts",
+    "pattern:scheduled": "bun patterns/2-scheduled.ts",
+    "pattern:pr": "bun patterns/3-fire-and-forget-pr.ts",
+    "pattern:research": "bun patterns/4-research-dashboard.ts",
+    "cleanup": "bun cleanup.ts",
+    "monitor": "bun monitor.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.87.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

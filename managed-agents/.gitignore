@@ -1,0 +1,4 @@
+.env
+.managed-agents.json
+node_modules/
+dist/
